@@ -10,8 +10,10 @@ class Level1:public RUBELayer
 {
 protected:
 public: 
+	cocos2d::Sprite* bgSp;
 	b2Body* m_backgroundBody;
-
+	b2Body* m_obstacleControl;
+	float32 rotateAngle;
 	static cocos2d::Scene* scene();
 	
 	Level1();
