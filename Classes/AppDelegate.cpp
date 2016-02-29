@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "StartScene.h"
+#include "Level1.h"
 
 USING_NS_CC;
 
@@ -51,7 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
+    director->setAnimationInterval(1.0f / 60.0f);
 
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
@@ -75,7 +76,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = StartScene::createScene();
+    /*auto scene = StartScene::createScene();*/
+	auto scene = Level1::scene();
 
     // run
     director->runWithScene(scene);

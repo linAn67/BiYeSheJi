@@ -5,7 +5,7 @@
 
 USING_NS_CC;
 
-using namespace cocostudio::timeline;
+
 using namespace ui;
 
 Scene* StartScene::createScene()
@@ -30,14 +30,12 @@ bool StartScene::init()
 		return false;
 	}
 
-	
-
 	auto rootNode = CSLoader::createNode("StartScene.csb");
 	addChild(rootNode);
 
 	Button* startBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode,"StartBtn");
 	startBtn->addTouchEventListener(CC_CALLBACK_2(StartScene::touchEvent, this));
-	
+
 
 	return true;
 }
@@ -50,7 +48,6 @@ void StartScene::touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEven
 	switch (type)
 	{
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
-		
 		break;
 	case cocos2d::ui::Widget::TouchEventType::MOVED:
 		break;
