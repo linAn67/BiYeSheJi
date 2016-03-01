@@ -1,5 +1,5 @@
 #include "HelloWorldScene.h"
-
+#include "ControllerLayer.h"
 
 USING_NS_CC;
 
@@ -63,7 +63,8 @@ bool HelloWorld::init()
 		m_world->SetDebugDraw(m_debugDraw);
 	}
 
-
+	ControllerLayer*con = ControllerLayer::create();
+	addChild(con);
 
 	return true;
 }

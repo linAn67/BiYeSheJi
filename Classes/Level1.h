@@ -1,5 +1,6 @@
 #include "cocos2d.h"
 #include "RUBELayer.h"
+#include "ControllerLayer.h"
 
 #ifndef __LEVEL1_H__
 #define __LEVEL1_H__
@@ -14,7 +15,10 @@ public:
 	b2Body* m_backgroundBody;
 	b2Body* m_obstacleControl;
 	float32 rotateAngle;
-	static cocos2d::Scene* scene();
+
+	ControllerLayer* m_controlLayer;
+
+	static cocos2d::Scene* createScene();
 	
 	Level1();
 
@@ -25,6 +29,7 @@ public:
 	virtual void clear();
 	virtual void update(float dt);
 
+	void addControllerLayer();
 };
 
 #endif

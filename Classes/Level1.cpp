@@ -1,18 +1,24 @@
 #include "Level1.h"
 #include "rubestuff/b2dJson.h"
+#include "ControllerLayer.h"
+
 
 using namespace std;
 using namespace cocos2d;
+using namespace ui;
 
-
-Scene* Level1::scene()
+Scene* Level1::createScene()
 {
 	Scene *scene = Scene::create();
 
 	// add layer as a child to scene
+	/*
+	//蓝色背景
 	Color4B c4b = Color4B(104, 171, 213, 255);
 	LayerColor* layer2 = LayerColor::create(c4b);
 	scene->addChild(layer2);
+	*/
+
 	Level1* layer = new Level1();
 	layer->init();// do things that require virtual functions (can't do in constructor)
 	scene->addChild(layer);
@@ -26,6 +32,8 @@ Level1::Level1()
 {
 
 }
+
+
 
 std::string Level1::getFilename()
 {
@@ -53,7 +61,12 @@ void Level1::afterLoadProcessing(b2dJson* json)
 	m_obstacleControl = json->getBodyByName("obstacleControl");
 	
 	rotateAngle = 0;
+
+	
+	addControllerLayer();
+
 }
+
 
 void Level1::clear()
 {
@@ -70,4 +83,17 @@ void Level1::update(float dt)
 	m_backgroundBody->SetTransform(m_backgroundBody->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
 	m_obstacleControl->SetTransform(m_obstacleControl->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
 	setImagePositionsFromPhysicsBodies();
+
+
+}
+
+void Level1::addControllerLayer()
+{
+	Size winSize = Director::sharedDirector()->getWinSize();
+	m_controlLayer = ControllerLayer::create();
+	//由于在初始化时的一些坐标转换，在添加精灵时需要根据转换后的layer进行一些坐标变换和大小缩放
+	m_controlLayer->setAnchorPoint(Vec2(0, 0));
+	m_controlLayer->setPosition(Vec2(-winSize.width / 2, -winSize.height / 2) / initialWorldScale());
+	m_controlLayer->setScale(m_controlLayer->getScale() / initialWorldScale());
+	addChild(m_controlLayer);
 }
