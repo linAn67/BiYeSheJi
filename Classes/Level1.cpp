@@ -33,8 +33,6 @@ Level1::Level1()
 
 }
 
-
-
 std::string Level1::getFilename()
 {
 	return "level1.json";
@@ -59,7 +57,7 @@ void Level1::afterLoadProcessing(b2dJson* json)
 
 	m_backgroundBody = json->getBodyByName("gruand");
 	m_obstacleControl = json->getBodyByName("obstacleControl");
-	
+	m_player = json->getBodyByName("player");
 
 
 	addControllerLayer();
@@ -91,9 +89,25 @@ void Level1::update(float dt)
 // 	m_obstacleControl->rotateAroundExternalPoint(0, 0, CC_DEGREES_TO_RADIANS(0.01));
 
 	float32 rotateAngle = m_controlLayer->m_rotateAngle;
-
 	m_backgroundBody->SetTransform(m_backgroundBody->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
 	m_obstacleControl->SetTransform(m_obstacleControl->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
+
+	
+
+	switch (m_controlLayer->m_playerMoveDirection)
+	{
+	case PLAYER_MOVETOLEFT:
+		m_player->SetTransform(m_player->GetPosition() - b2Vec2(0.025, 0), m_player->GetAngle());
+		break;
+	case PLAYER_MOVETORIGHT:
+		m_player->SetTransform(m_player->GetPosition() + b2Vec2(0.025, 0), m_player->GetAngle());
+		break;
+	case PLAYER_NOTMOVE:
+		break;
+	default:
+		break;
+	}
+
 	setImagePositionsFromPhysicsBodies();
 }
 

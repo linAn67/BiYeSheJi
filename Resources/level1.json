@@ -25,19 +25,19 @@
 						},
 						"radius" : 0.2924359440803528
 					},
-					"density" : 1,
+					"density" : 0.5,
 					"friction" : 0.2,
 					"name" : "fixture3"
 				}
 			],
 			"linearVelocity" : 0,
-			"massData-I" : 7.351259409915656e-005,
+			"massData-I" : 3.675629704957828e-005,
 			"massData-center" : 
 			{
 				"x" : -0.008336663246154785,
 				"y" : -0.01428711414337158
 			},
-			"massData-mass" : 0.2686651945114136,
+			"massData-mass" : 0.1343325972557068,
 			"name" : "player",
 			"position" : 
 			{
@@ -174,6 +174,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
+					"friction" : 1,
 					"name" : "fixture5",
 					"polygon" : 
 					{
@@ -224,7 +225,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture4",
 					"polygon" : 
 					{
@@ -253,7 +254,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -268,7 +269,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -283,7 +284,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -298,7 +299,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -313,7 +314,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -328,7 +329,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -343,7 +344,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -358,7 +359,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -373,7 +374,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -388,7 +389,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -403,7 +404,7 @@
 				{
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture2",
 					"polygon" : 
 					{
@@ -427,7 +428,7 @@
 					},
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture1"
 				},
 				
@@ -528,7 +529,7 @@
 					},
 					"density" : 1,
 					"filter-groupIndex" : -2,
-					"friction" : 0.2,
+					"friction" : 1,
 					"name" : "fixture0"
 				}
 			],
@@ -656,52 +657,6 @@
 			"body" : 3,
 			"center" : 
 			{
-				"x" : -1.222395539283752,
-				"y" : 0.3637866973876953
-			},
-			"corners" : 
-			{
-				"x" : 
-				[
-					-1.759372830390930,
-					-0.6854182481765747,
-					-0.6854182481765747,
-					-1.759372830390930
-				],
-				"y" : 
-				[
-					-0.5297083258628845,
-					-0.5297083258628845,
-					1.257281780242920,
-					1.257281780242920
-				]
-			},
-			"file" : "J:/毕业设计/RESOUCE/mask2.png",
-			"filter" : 1,
-			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
-			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
-			"glVertexPointer" : 
-			[
-				-1.759372830390930,
-				-0.5297083258628845,
-				-0.6854182481765747,
-				-0.5297083258628845,
-				-0.6854182481765747,
-				1.257281780242920,
-				-1.759372830390930,
-				1.257281780242920
-			],
-			"name" : "image3",
-			"opacity" : 0.5,
-			"renderOrder" : 5,
-			"scale" : 1.786990046501160
-		},
-		
-		{
-			"aspectScale" : 1,
-			"body" : 3,
-			"center" : 
-			{
 				"x" : -0.8104702830314636,
 				"y" : 3.054271221160889
 			},
@@ -741,6 +696,52 @@
 			"opacity" : 0.5,
 			"renderOrder" : 5,
 			"scale" : 1
+		},
+		
+		{
+			"aspectScale" : 1,
+			"body" : 3,
+			"center" : 
+			{
+				"x" : -1.222395539283752,
+				"y" : 0.3637866973876953
+			},
+			"corners" : 
+			{
+				"x" : 
+				[
+					-1.759372830390930,
+					-0.6854182481765747,
+					-0.6854182481765747,
+					-1.759372830390930
+				],
+				"y" : 
+				[
+					-0.5297083258628845,
+					-0.5297083258628845,
+					1.257281780242920,
+					1.257281780242920
+				]
+			},
+			"file" : "J:/毕业设计/RESOUCE/mask2.png",
+			"filter" : 1,
+			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
+			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glVertexPointer" : 
+			[
+				-1.759372830390930,
+				-0.5297083258628845,
+				-0.6854182481765747,
+				-0.5297083258628845,
+				-0.6854182481765747,
+				1.257281780242920,
+				-1.759372830390930,
+				1.257281780242920
+			],
+			"name" : "image3",
+			"opacity" : 0.5,
+			"renderOrder" : 5,
+			"scale" : 1.786990046501160
 		},
 		
 		{

@@ -7,6 +7,8 @@
 
 class b2dJson;
 
+
+
 class Level1:public RUBELayer
 {
 protected:
@@ -14,6 +16,7 @@ public:
 	cocos2d::Sprite* bgSp;
 	b2Body* m_backgroundBody;
 	b2Body* m_obstacleControl;
+	b2Body* m_player;
 
 
 	ControllerLayer* m_controlLayer;

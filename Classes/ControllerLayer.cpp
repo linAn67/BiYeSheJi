@@ -42,7 +42,11 @@ bool ControllerLayer::init()
 	clockwiseBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::clockwiseRotate, this));
 
 	m_rotationDirection = NOTROTATING;
+	m_playerMoveDirection = PLAYER_NOTMOVE;
 	m_rotateAngle = 0;
+
+
+
 	return true;
 }
 
@@ -52,8 +56,10 @@ void ControllerLayer::moveToLeft(cocos2d::Ref* sender, cocos2d::ui::Widget::Touc
 	switch (type)
 	{
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
+		m_playerMoveDirection = PLAYER_MOVETOLEFT;
 		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
+		m_playerMoveDirection = PLAYER_NOTMOVE;
 		break;
 	default:
 		break;
@@ -65,8 +71,10 @@ void ControllerLayer::moveToRight(cocos2d::Ref* sender, cocos2d::ui::Widget::Tou
 	switch (type)
 	{
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
+		m_playerMoveDirection = PLAYER_MOVETORIGHT;
 		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
+		m_playerMoveDirection = PLAYER_NOTMOVE;
 		break;
 	default:
 		break;

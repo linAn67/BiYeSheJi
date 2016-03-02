@@ -12,18 +12,25 @@ enum RotationDirection
 	NOTROTATING
 };
 
+enum PlayerMoveDirection
+{
+	PLAYER_MOVETOLEFT,
+	PLAYER_MOVETORIGHT,
+	PLAYER_NOTMOVE
+};
 
 class ControllerLayer :public cocos2d::Layer
 {
 public:
+	RotationDirection		m_rotationDirection;
+	float					m_rotateAngle;//用于翻转box2d场景
+	PlayerMoveDirection		m_playerMoveDirection;
+
 	static cocos2d::Scene* createScene();
 
 	virtual bool init();
 
 	CREATE_FUNC(ControllerLayer);
-	
-	RotationDirection	m_rotationDirection;
-	float				m_rotateAngle;//用于翻转box2d场景
 
 	virtual void update(float delta);
 
