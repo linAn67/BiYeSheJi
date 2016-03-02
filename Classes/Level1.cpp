@@ -82,7 +82,7 @@ void Level1::clear()
 
 void Level1::update(float dt)
 {
-	RUBELayer::update(dt);
+
 	m_controlLayer->update(dt);
 
 // 	m_backgroundBody->rotateAroundExternalPoint(0, 0, CC_DEGREES_TO_RADIANS(0.01));
@@ -91,7 +91,8 @@ void Level1::update(float dt)
 	float32 rotateAngle = m_controlLayer->m_rotateAngle;
 	m_backgroundBody->SetTransform(m_backgroundBody->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
 	m_obstacleControl->SetTransform(m_obstacleControl->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
-
+	//m_player->SetTransform(m_player->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
+	
 	
 
 	switch (m_controlLayer->m_playerMoveDirection)
@@ -108,7 +109,7 @@ void Level1::update(float dt)
 		break;
 	}
 
-	setImagePositionsFromPhysicsBodies();
+	RUBELayer::update(dt);
 }
 
 
