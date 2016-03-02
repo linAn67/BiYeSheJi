@@ -190,7 +190,7 @@ void BasicRUBELayer::clear()
 void BasicRUBELayer::update(float dt)
 {
     if ( m_world )
-        m_world->Step(1/60.0, 8, 3);
+        m_world->Step(1/60.0, 8, 1);
 }
 
 

@@ -1,6 +1,6 @@
 #include "ControllerLayer.h"
 
-
+const float rotateDegree = 0.4;
 
 USING_NS_CC;
 
@@ -41,7 +41,8 @@ bool ControllerLayer::init()
 	Button* clockwiseBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "ClockwiseBtn");
 	clockwiseBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::clockwiseRotate, this));
 
-	log("move");
+	m_rotationDirection = NOTROTATING;
+	m_rotateAngle = 0;
 	return true;
 }
 
@@ -78,9 +79,10 @@ void ControllerLayer::clockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Widget:
 	switch (type)
 	{
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
-		log("haha");
+		m_rotationDirection = CLOCKWISE;
 		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
+		m_rotationDirection = NOTROTATING;
 		break;
 	default:
 		break;
@@ -92,8 +94,30 @@ void ControllerLayer::antiClockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Wid
 	switch (type)
 	{
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
+		m_rotationDirection = ANTICLOCKWISE;
+		break;
+	case Widget::TouchEventType::MOVED:
+		m_rotationDirection = NOTROTATING;
 		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
+		m_rotationDirection = NOTROTATING;
+		break;
+	default:
+		break;
+	}
+}
+
+void ControllerLayer::update(float delta)
+{
+	switch (m_rotationDirection)
+	{
+	case CLOCKWISE:
+		m_rotateAngle += rotateDegree;
+		break;
+	case ANTICLOCKWISE:
+		m_rotateAngle -= rotateDegree;
+		break;
+	case NOTROTATING:
 		break;
 	default:
 		break;

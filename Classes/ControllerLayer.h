@@ -4,6 +4,15 @@
 #include "cocos2d.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
+
+enum RotationDirection
+{
+	CLOCKWISE,
+	ANTICLOCKWISE,
+	NOTROTATING
+};
+
+
 class ControllerLayer :public cocos2d::Layer
 {
 public:
@@ -12,6 +21,11 @@ public:
 	virtual bool init();
 
 	CREATE_FUNC(ControllerLayer);
+	
+	RotationDirection	m_rotationDirection;
+	float				m_rotateAngle;//用于翻转box2d场景
+
+	virtual void update(float delta);
 
 	void moveToRight(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void moveToLeft(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);

@@ -14,7 +14,7 @@ public:
 	cocos2d::Sprite* bgSp;
 	b2Body* m_backgroundBody;
 	b2Body* m_obstacleControl;
-	float32 rotateAngle;
+
 
 	ControllerLayer* m_controlLayer;
 

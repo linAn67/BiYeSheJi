@@ -1,4 +1,1 @@
-getImage(3).deselect();
-getImage(1).select();
-getImage(1).deselect();
-getImage(1).select();
+//Restarted script log at 03/02/16 16:14:02
