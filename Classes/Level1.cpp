@@ -3,6 +3,7 @@
 #include "ControllerLayer.h"
 
 
+
 using namespace std;
 using namespace cocos2d;
 using namespace ui;
@@ -35,7 +36,7 @@ Level1::Level1()
 
 std::string Level1::getFilename()
 {
-	return "level1.json";
+	return "level1-1.json";
 }
 
 cocos2d::Point Level1::initialWorldOffset()
@@ -55,10 +56,20 @@ void Level1::afterLoadProcessing(b2dJson* json)
 {
 	RUBELayer::afterLoadProcessing(json);
 
-	m_backgroundBody = json->getBodyByName("gruand");
-	m_obstacleControl = json->getBodyByName("obstacleControl");
+// 	groundBodys.pushBack(json->getBodyByName("gruand"));
+// 	groundBodys.pushBack(json->getBodyByName("obstacleControl"));
+
+//	m_backgroundBody = json->getBodyByName("gruand");
+//	m_obstacleControl = json->getBodyByName("obstacleControl");
+
+
+	m_groudBodys.pushBack(json->getBodyByName("gruand"));
+	m_groudBodys.pushBack(json->getBodyByName("obstacleControl"));
+
+
 	m_player = json->getBodyByName("player");
 
+	rotateAngle = 0;
 
 	addControllerLayer();
 
@@ -88,13 +99,43 @@ void Level1::update(float dt)
 // 	m_backgroundBody->rotateAroundExternalPoint(0, 0, CC_DEGREES_TO_RADIANS(0.01));
 // 	m_obstacleControl->rotateAroundExternalPoint(0, 0, CC_DEGREES_TO_RADIANS(0.01));
 
-	float32 rotateAngle = m_controlLayer->m_rotateAngle;
-	m_backgroundBody->SetTransform(m_backgroundBody->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
-	m_obstacleControl->SetTransform(m_obstacleControl->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
-	//m_player->SetTransform(m_player->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
+//	m_backgroundBody->SetTransform(m_backgroundBody->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
+//	m_obstacleControl->SetTransform(m_obstacleControl->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
+
+	for each (auto b in m_groudBodys)
+	{
+		b->SetTransform(b->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
+	}
+	
+
+// 	for (auto it = groundBodys.begin(); it!=groundBodys.end();++it)
+// 	{
+// 		 it->SetTransform(it->GetPosition(), CC_DEGREES_TO_RADIANS(m_controlLayer->m_rotateAngle));
+// 	}
+
+	auto draw = DrawNode::create();
+	addChild(draw, 15);
+
+	Vec2 playerPos = Vec2(m_player->GetPosition().x, m_player->GetPosition().y);
+	playerPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(-(m_controlLayer->m_rotateAngle-rotateAngle)));
+	CCLOG("%f", -(m_controlLayer->m_rotateAngle - rotateAngle));
+//	draw->drawLine(Vec2(0, 0), playerPos, ccColor4F::BLACK);
+//	draw->drawLine(Vec2(0, 0), playerPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(-(m_controlLayer->m_rotateAngle - rotateAngle))), ccColor4F::BLACK);
+
+	m_player->SetTransform(b2Vec2(playerPos.x,playerPos.y), 0);
+	//CCLOG("x:%f,y:%f", playerPos.x, playerPos.y);
+	rotateAngle = m_controlLayer->m_rotateAngle;
+	rotateAngle = fmodf(rotateAngle, 360);
 	
 	
 
+	movePlayer();
+
+	RUBELayer::update(dt);
+}
+
+void Level1::movePlayer()
+{
 	switch (m_controlLayer->m_playerMoveDirection)
 	{
 	case PLAYER_MOVETOLEFT:
@@ -108,8 +149,5 @@ void Level1::update(float dt)
 	default:
 		break;
 	}
-
-	RUBELayer::update(dt);
 }
-
 

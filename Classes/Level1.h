@@ -2,6 +2,7 @@
 #include "RUBELayer.h"
 #include "ControllerLayer.h"
 
+
 #ifndef __LEVEL1_H__
 #define __LEVEL1_H__
 
@@ -18,6 +19,10 @@ public:
 	b2Body* m_obstacleControl;
 	b2Body* m_player;
 
+//	std::vector<b2Body*> m_groudBodys;
+	Vector<b2Body*> m_groudBodys;
+
+	CC_SYNTHESIZE(float, rotateAngle, RotateAngle);
 
 	ControllerLayer* m_controlLayer;
 
@@ -32,6 +37,7 @@ public:
 	virtual void clear();
 	virtual void update(float dt);
 
+	void movePlayer();
 	void addControllerLayer();
 };
 

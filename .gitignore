@@ -285,3 +285,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 CMakeLists.txt
+*.rs
+Resources/level1.rube-backups/level1.rube-scriptLog.rs
+Resources/level1.rube-backups/level1.rube
