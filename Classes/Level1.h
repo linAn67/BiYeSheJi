@@ -14,21 +14,14 @@ class Level1:public RUBELayer
 {
 protected:
 public: 
-	cocos2d::Sprite* bgSp;
-	b2Body* m_backgroundBody;
-	b2Body* m_obstacleControl;
 	b2Body* m_player;
-
-//	std::vector<b2Body*> m_groudBodys;
-	Vector<b2Body*> m_groudBodys;
-
+	//由于cocos2dx封装的Vector仅支持继承自CCNode的类，所以这里用STL的Vector
+	std::vector<b2Body*> m_groundBodys;
 	CC_SYNTHESIZE(float, rotateAngle, RotateAngle);
-
-	ControllerLayer* m_controlLayer;
+	ControllerLayer* m_controllerLayer;
 
 	static cocos2d::Scene* createScene();
-	
-	Level1();
+
 
 	virtual std::string getFilename();
 	virtual cocos2d::Point initialWorldOffset();
@@ -38,6 +31,7 @@ public:
 	virtual void update(float dt);
 
 	void movePlayer();
+	void rotateGroundBody();
 	void addControllerLayer();
 };
 

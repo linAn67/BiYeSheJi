@@ -29,11 +29,6 @@ Scene* Level1::createScene()
 	return scene;
 }
 
-Level1::Level1()
-{
-
-}
-
 std::string Level1::getFilename()
 {
 	return "level1-1.json";
@@ -56,79 +51,54 @@ void Level1::afterLoadProcessing(b2dJson* json)
 {
 	RUBELayer::afterLoadProcessing(json);
 
-// 	groundBodys.pushBack(json->getBodyByName("gruand"));
-// 	groundBodys.pushBack(json->getBodyByName("obstacleControl"));
-
-//	m_backgroundBody = json->getBodyByName("gruand");
-//	m_obstacleControl = json->getBodyByName("obstacleControl");
-
-
-	m_groudBodys.pushBack(json->getBodyByName("gruand"));
-	m_groudBodys.pushBack(json->getBodyByName("obstacleControl"));
-
-
+	m_groundBodys.push_back(json->getBodyByName("gruand"));
+	m_groundBodys.push_back(json->getBodyByName("obstacleControl"));
 	m_player = json->getBodyByName("player");
 
 	rotateAngle = 0;
 
 	addControllerLayer();
 
+
 }
 
 void Level1::addControllerLayer()
 {
 	Size winSize = Director::sharedDirector()->getWinSize();
-	m_controlLayer = ControllerLayer::create();
+	m_controllerLayer = ControllerLayer::create();
 	//由于在初始化时的一些坐标转换，在添加精灵时需要根据转换后的layer进行一些坐标变换和大小缩放
-	m_controlLayer->setAnchorPoint(Vec2(0, 0));
-	m_controlLayer->setPosition(Vec2(-winSize.width / 2, -winSize.height / 2) / initialWorldScale());
-	m_controlLayer->setScale(m_controlLayer->getScale() / initialWorldScale());
-	addChild(m_controlLayer,10);
+	m_controllerLayer->setAnchorPoint(Vec2(0, 0));
+	m_controllerLayer->setPosition(Vec2(-winSize.width / 2, -winSize.height / 2) / initialWorldScale());
+	m_controllerLayer->setScale(m_controllerLayer->getScale() / initialWorldScale());
+	addChild(m_controllerLayer,10);
 }
 
 void Level1::clear()
 {
 	RUBELayer::clear();
+	m_groundBodys.clear();
 }
 
 void Level1::update(float dt)
 {
 
-	m_controlLayer->update(dt);
+	m_controllerLayer->update(dt);
 
-// 	m_backgroundBody->rotateAroundExternalPoint(0, 0, CC_DEGREES_TO_RADIANS(0.01));
-// 	m_obstacleControl->rotateAroundExternalPoint(0, 0, CC_DEGREES_TO_RADIANS(0.01));
-
-//	m_backgroundBody->SetTransform(m_backgroundBody->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
-//	m_obstacleControl->SetTransform(m_obstacleControl->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
-
-	for each (auto b in m_groudBodys)
-	{
-		b->SetTransform(b->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
-	}
-	
-
-// 	for (auto it = groundBodys.begin(); it!=groundBodys.end();++it)
-// 	{
-// 		 it->SetTransform(it->GetPosition(), CC_DEGREES_TO_RADIANS(m_controlLayer->m_rotateAngle));
-// 	}
-
-	auto draw = DrawNode::create();
-	addChild(draw, 15);
 
 	Vec2 playerPos = Vec2(m_player->GetPosition().x, m_player->GetPosition().y);
-	playerPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(-(m_controlLayer->m_rotateAngle-rotateAngle)));
-	CCLOG("%f", -(m_controlLayer->m_rotateAngle - rotateAngle));
+	playerPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(-(m_controllerLayer->m_rotateAngle-rotateAngle)));
+//	CCLOG("%f", -(m_controllerLayer->m_rotateAngle - rotateAngle));
 //	draw->drawLine(Vec2(0, 0), playerPos, ccColor4F::BLACK);
 //	draw->drawLine(Vec2(0, 0), playerPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(-(m_controlLayer->m_rotateAngle - rotateAngle))), ccColor4F::BLACK);
 
 	m_player->SetTransform(b2Vec2(playerPos.x,playerPos.y), 0);
 	//CCLOG("x:%f,y:%f", playerPos.x, playerPos.y);
-	rotateAngle = m_controlLayer->m_rotateAngle;
-	rotateAngle = fmodf(rotateAngle, 360);
-	
-	
 
+
+	rotateAngle = m_controllerLayer->m_rotateAngle;
+	rotateAngle = fmodf(rotateAngle, 360);
+
+	rotateGroundBody();
 	movePlayer();
 
 	RUBELayer::update(dt);
@@ -136,7 +106,7 @@ void Level1::update(float dt)
 
 void Level1::movePlayer()
 {
-	switch (m_controlLayer->m_playerMoveDirection)
+	switch (m_controllerLayer->m_playerMoveDirection)
 	{
 	case PLAYER_MOVETOLEFT:
 		m_player->SetTransform(m_player->GetPosition() - b2Vec2(0.025, 0), m_player->GetAngle());
@@ -151,3 +121,10 @@ void Level1::movePlayer()
 	}
 }
 
+void Level1::rotateGroundBody()
+{
+	for each (auto groundBody in m_groundBodys)
+	{
+		groundBody->SetTransform(groundBody->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
+	}
+}
