@@ -81,22 +81,20 @@ void Level1::clear()
 
 void Level1::update(float dt)
 {
-
 	m_controllerLayer->update(dt);
 
-
-	Vec2 playerPos = Vec2(m_player->GetPosition().x, m_player->GetPosition().y);
-	playerPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(-(m_controllerLayer->m_rotateAngle-rotateAngle)));
-//	CCLOG("%f", -(m_controllerLayer->m_rotateAngle - rotateAngle));
-//	draw->drawLine(Vec2(0, 0), playerPos, ccColor4F::BLACK);
-//	draw->drawLine(Vec2(0, 0), playerPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(-(m_controlLayer->m_rotateAngle - rotateAngle))), ccColor4F::BLACK);
-
-	m_player->SetTransform(b2Vec2(playerPos.x,playerPos.y), 0);
-	//CCLOG("x:%f,y:%f", playerPos.x, playerPos.y);
-
-
-	rotateAngle = m_controllerLayer->m_rotateAngle;
 	rotateAngle = fmodf(rotateAngle, 360);
+
+	if (rotateAngle != m_controllerLayer->m_rotateAngle){
+		Vec2 playerPos;
+		playerPos = Vec2(m_player->GetPosition().x, m_player->GetPosition().y);
+		playerPos=playerPos.rotateByAngle(Vec2(0, 0),CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle-rotateAngle));
+		
+		m_player->SetTransform(b2Vec2(playerPos.x, playerPos.y), 0);
+		rotateAngle = m_controllerLayer->m_rotateAngle;
+		rotateAngle = fmodf(rotateAngle, 360);
+	}
+
 
 	rotateGroundBody();
 	movePlayer();
@@ -109,10 +107,10 @@ void Level1::movePlayer()
 	switch (m_controllerLayer->m_playerMoveDirection)
 	{
 	case PLAYER_MOVETOLEFT:
-		m_player->SetTransform(m_player->GetPosition() - b2Vec2(0.025, 0), m_player->GetAngle());
+		m_player->SetTransform(m_player->GetPosition() - b2Vec2(0.025f, 0.0f), m_player->GetAngle());
 		break;
 	case PLAYER_MOVETORIGHT:
-		m_player->SetTransform(m_player->GetPosition() + b2Vec2(0.025, 0), m_player->GetAngle());
+		m_player->SetTransform(m_player->GetPosition() + b2Vec2(0.025f, 0.0f), m_player->GetAngle());
 		break;
 	case PLAYER_NOTMOVE:
 		break;
