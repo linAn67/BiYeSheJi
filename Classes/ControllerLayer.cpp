@@ -1,6 +1,6 @@
 #include "ControllerLayer.h"
 
-const float rotateDegree = 0.4;
+const float rotateDegree = 0.4f;
 
 USING_NS_CC;
 
@@ -45,6 +45,10 @@ bool ControllerLayer::init()
 	m_playerMoveDirection = PLAYER_NOTMOVE;
 	m_rotateAngle = 0;
 
+	auto listener = EventListenerKeyboard::create();
+	listener->onKeyPressed = CC_CALLBACK_2(ControllerLayer::onKeyPressed, this);
+	listener->onKeyReleased = CC_CALLBACK_2(ControllerLayer::onKeyReleased, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 
 	return true;
@@ -131,3 +135,45 @@ void ControllerLayer::update(float delta)
 		break;
 	}
 }
+
+void ControllerLayer::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
+{
+	if (keyCode==EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+	{
+		m_rotationDirection = ANTICLOCKWISE;
+	}
+	if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+	{
+		m_rotationDirection = CLOCKWISE;
+	}
+	if (keyCode == EventKeyboard::KeyCode::KEY_A)
+	{
+		m_playerMoveDirection = PLAYER_MOVETOLEFT;
+	}
+	if (keyCode == EventKeyboard::KeyCode::KEY_D)
+	{
+		m_playerMoveDirection = PLAYER_MOVETORIGHT;
+	}
+
+}
+
+void ControllerLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
+{
+	if (keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+	{
+		m_rotationDirection = NOTROTATING;
+	}
+	if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+	{
+		m_rotationDirection = NOTROTATING;
+	}
+	if (keyCode == EventKeyboard::KeyCode::KEY_A)
+	{
+		m_playerMoveDirection = PLAYER_NOTMOVE;
+	}
+	if (keyCode == EventKeyboard::KeyCode::KEY_D)
+	{
+		m_playerMoveDirection = PLAYER_NOTMOVE;
+	}
+}
+
