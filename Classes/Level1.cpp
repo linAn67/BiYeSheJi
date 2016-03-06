@@ -13,30 +13,26 @@ Scene* Level1::createScene()
 	Scene *scene = Scene::create();
 
 	// add layer as a child to scene
-
 	//À¶É«±³¾°
 	Color4B c4b = Color4B(104, 171, 213, 255);
 	LayerColor* layer2 = LayerColor::create(c4b);
 	scene->addChild(layer2);
-
 
 	Level1* layer = new Level1();
 	layer->init();// do things that require virtual functions (can't do in constructor)
 	scene->addChild(layer);
 	layer->release();
 
-
 	return scene;
 }
 
 std::string Level1::getFilename()
 {
-	return "level1-1.json";
+	return "level1.json";
 }
 
 cocos2d::Point Level1::initialWorldOffset()
 {
-	//place (0,0) of physics world at center of bottom edge of screen
 	Size s = Director::getInstance()->getWinSize();
 	return Vec2(s.width / 2, s.height / 2);
 }
@@ -77,6 +73,7 @@ void Level1::clear()
 {
 	RUBELayer::clear();
 	m_groundBodys.clear();
+	m_objectBodys.clear();
 }
 
 void Level1::update(float dt)
@@ -86,11 +83,11 @@ void Level1::update(float dt)
 	rotateAngle = fmodf(rotateAngle, 360);
 
 	if (rotateAngle != m_controllerLayer->m_rotateAngle){
-		Vec2 playerPos;
-		playerPos = Vec2(m_player->GetPosition().x, m_player->GetPosition().y);
-		playerPos=playerPos.rotateByAngle(Vec2(0, 0),CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle-rotateAngle));
-		
-		m_player->SetTransform(b2Vec2(playerPos.x, playerPos.y), 0);
+		rotateObjectBody(m_player);
+		for each (auto body in m_objectBodys)
+		{
+			rotateObjectBody(body);
+		}
 		rotateAngle = m_controllerLayer->m_rotateAngle;
 		rotateAngle = fmodf(rotateAngle, 360);
 	}
@@ -123,6 +120,14 @@ void Level1::rotateGroundBody()
 {
 	for each (auto groundBody in m_groundBodys)
 	{
-		groundBody->SetTransform(groundBody->GetPosition(), CC_DEGREES_TO_RADIANS(rotateAngle));
+		groundBody->SetTransform(groundBody->GetPosition(), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle));
 	}
 }
+
+void Level1::rotateObjectBody(b2Body* body)
+{
+	Vec2 bodyPos = Vec2(body->GetPosition().x, body->GetPosition().y);
+	bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
+	body->SetTransform(b2Vec2(bodyPos.x, bodyPos.y), 0);
+}
+
