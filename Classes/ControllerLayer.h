@@ -5,6 +5,8 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 
+class Level1;
+
 enum RotationDirection
 {
 	RD_CLOCKWISE,
@@ -25,6 +27,7 @@ public:
 	RotationDirection		m_rotationDirection;
 	float					m_rotateAngle;//用于翻转box2d场景
 	PlayerMoveDirection		m_playerMoveDirection;
+	Level1*					m_layer;
 
 	static cocos2d::Scene* createScene();
 
@@ -38,6 +41,7 @@ public:
 	void moveToLeft(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void clockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void antiClockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void confirmBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 	virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);

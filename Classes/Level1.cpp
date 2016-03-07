@@ -26,9 +26,15 @@ Scene* Level1::createScene()
 	return scene;
 }
 
+void Level1::win()
+{
+	CCLOG("win");
+	
+}
+
 std::string Level1::getFilename()
 {
-	return "level1.json";
+	return "level1-1.json";
 }
 
 cocos2d::Point Level1::initialWorldOffset()
@@ -45,19 +51,21 @@ float Level1::initialWorldScale()
 
 void Level1::afterLoadProcessing(b2dJson* json)
 {
-	RUBELayer::afterLoadProcessing(json);
+	BasicRUBELayer::afterLoadProcessing(json);
 	json->getBodiesByName("ground", m_groundBodys);
 	m_player = json->getBodyByName("player");
 	m_door = json->getBodyByName("door");
+	m_isPlayerCollideWithDoor = false;
 	m_groundBodys.push_back(m_door);
 	loadKeys(json);
+	//m_objectBodys.push_back(json->getBodyByName("obstacle"));
 
 	rotateAngle = 0;
 
 	addControllerLayer();
 	addContactListener();
 
-
+	test = (b2PrismaticJoint*)json->getJointByName("joint0");
 }
 
 void Level1::loadKeys(b2dJson* json)
@@ -84,8 +92,10 @@ void Level1::addContactListener()
 
 void Level1::addControllerLayer()
 {
-	Size winSize = Director::sharedDirector()->getWinSize();
+	auto director = Director::sharedDirector();
+	Size winSize = director->getWinSize();
 	m_controllerLayer = ControllerLayer::create();
+	m_controllerLayer->m_layer = this;
 	//由于在初始化时的一些坐标转换，在添加精灵时需要根据转换后的layer进行一些坐标变换和大小缩放
 	m_controllerLayer->setAnchorPoint(Vec2(0, 0));
 	m_controllerLayer->setPosition(Vec2(-winSize.width / 2, -winSize.height / 2) / initialWorldScale());
@@ -153,9 +163,13 @@ void Level1::movePlayer()
 
 void Level1::rotateGroundBody()
 {
-	for each (auto groundBody in m_groundBodys)
+	for each (auto body in m_groundBodys)
 	{
-		groundBody->SetTransform(groundBody->GetPosition(), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle));
+		Vec2 bodyPos = Vec2(body->GetPosition().x, body->GetPosition().y);
+		bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
+
+		//body->SetTransform(body->GetPosition(), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle));
+		body->SetTransform(b2Vec2(bodyPos.x,bodyPos.y), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle));
 	}
 }
 
@@ -189,6 +203,16 @@ void BasicLevelContactListener::BeginContact(b2Contact* contact)
 	{
 		layer->m_keyToProgress.insert(budB);
 	}
+
+	//isPlayerColideWithDoor
+	if (fA->GetBody() == layer->m_door && fB->GetBody() == layer->m_player)
+	{
+		layer->m_isPlayerCollideWithDoor = true;
+	}
+	if (fB->GetBody() == layer->m_door && fA->GetBody() == layer->m_player)
+	{
+		layer->m_isPlayerCollideWithDoor = true;
+	}
 }
 
 void BasicLevelContactListener::EndContact(b2Contact* contact)
@@ -196,4 +220,14 @@ void BasicLevelContactListener::EndContact(b2Contact* contact)
 	Level1* layer = (Level1*)m_layer;
 	b2Fixture* fA = contact->GetFixtureA();
 	b2Fixture* fB = contact->GetFixtureB();
+
+	//isPlayerColideWithDoor
+	if (fA->GetBody() == layer->m_door && fB->GetBody() == layer->m_player)
+	{
+		layer->m_isPlayerCollideWithDoor = false;
+	}
+	if (fB->GetBody() == layer->m_door && fA->GetBody() == layer->m_player)
+	{
+		layer->m_isPlayerCollideWithDoor = false;
+	}
 }

@@ -1,6 +1,6 @@
 #include "ControllerLayer.h"
-
-const float rotateDegree = 0.4f;
+#include "Level1.h"
+const float rotateDegree = 1.4f;
 
 USING_NS_CC;
 
@@ -43,6 +43,9 @@ bool ControllerLayer::init()
 	Button* clockwiseBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "ClockwiseBtn");
 	clockwiseBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::clockwiseRotate, this));
 
+	Button* confirmBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "ConfirmBtn");
+	confirmBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::confirmBtnCallBack, this));
+
 	m_rotationDirection = RD_NOTROTATING;
 	m_playerMoveDirection = PLAYER_NOTMOVING;
 	m_rotateAngle = 0;
@@ -64,10 +67,11 @@ void ControllerLayer::moveToLeft(cocos2d::Ref* sender, cocos2d::ui::Widget::Touc
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
 		m_playerMoveDirection = PLAYER_MOVETOLEFT;
 		break;
-	case cocos2d::ui::Widget::TouchEventType::ENDED:
-		m_playerMoveDirection = PLAYER_NOTMOVING;
+	case Widget::TouchEventType::MOVED:
+		m_playerMoveDirection = PLAYER_MOVETOLEFT;
 		break;
 	default:
+		m_playerMoveDirection = PLAYER_NOTMOVING;
 		break;
 	}
 }
@@ -79,10 +83,11 @@ void ControllerLayer::moveToRight(cocos2d::Ref* sender, cocos2d::ui::Widget::Tou
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
 		m_playerMoveDirection = PLAYER_MOVETORIGHT;
 		break;
-	case cocos2d::ui::Widget::TouchEventType::ENDED:
-		m_playerMoveDirection = PLAYER_NOTMOVING;
+	case Widget::TouchEventType::MOVED:
+		m_playerMoveDirection = PLAYER_MOVETORIGHT;
 		break;
 	default:
+		m_playerMoveDirection = PLAYER_NOTMOVING;
 		break;
 	}
 }
@@ -94,6 +99,12 @@ void ControllerLayer::clockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Widget:
 	{
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
 		m_rotationDirection = RD_CLOCKWISE;
+		break;
+	case Widget::TouchEventType::MOVED:
+		m_rotationDirection = RD_CLOCKWISE;
+		break;
+	case Widget::TouchEventType::CANCELED:
+		m_rotationDirection = RD_NOTROTATING;
 		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
 		m_rotationDirection = RD_NOTROTATING;
@@ -111,6 +122,9 @@ void ControllerLayer::antiClockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Wid
 		m_rotationDirection = RD_ANTICLOCKWISE;
 		break;
 	case Widget::TouchEventType::MOVED:
+		m_rotationDirection = RD_ANTICLOCKWISE;
+		break;
+	case Widget::TouchEventType::CANCELED:
 		m_rotationDirection = RD_NOTROTATING;
 		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
@@ -140,42 +154,60 @@ void ControllerLayer::update(float delta)
 
 void ControllerLayer::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
 {
-	if (keyCode==EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+	switch (keyCode)
 	{
+	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		m_rotationDirection = RD_ANTICLOCKWISE;
-	}
-	if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
-	{
+		break;
+	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 		m_rotationDirection = RD_CLOCKWISE;
-	}
-	if (keyCode == EventKeyboard::KeyCode::KEY_A)
-	{
+		break;
+	case EventKeyboard::KeyCode::KEY_A:
 		m_playerMoveDirection = PLAYER_MOVETOLEFT;
-	}
-	if (keyCode == EventKeyboard::KeyCode::KEY_D)
-	{
+		break;
+	case EventKeyboard::KeyCode::KEY_D:
 		m_playerMoveDirection = PLAYER_MOVETORIGHT;
+		break;
+	default:
+		break;
 	}
 
 }
 
 void ControllerLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event)
 {
-	if (keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+	switch (keyCode)
 	{
+	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		m_rotationDirection = RD_NOTROTATING;
-	}
-	if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
-	{
+		break;
+	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 		m_rotationDirection = RD_NOTROTATING;
-	}
-	if (keyCode == EventKeyboard::KeyCode::KEY_A)
-	{
+		break;
+	case EventKeyboard::KeyCode::KEY_A:
 		m_playerMoveDirection = PLAYER_NOTMOVING;
-	}
-	if (keyCode == EventKeyboard::KeyCode::KEY_D)
-	{
+		break;
+	case EventKeyboard::KeyCode::KEY_D:
 		m_playerMoveDirection = PLAYER_NOTMOVING;
+		break;
+	default:
+		break;
 	}
+}
+
+void ControllerLayer::confirmBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
+{
+	switch (type)
+	{
+	case cocos2d::ui::Widget::TouchEventType::ENDED:
+		if (m_layer->m_isPlayerCollideWithDoor&&m_layer->m_allKeys.size() == 0)
+		{
+			m_layer->win();
+		}
+		break;
+	default:
+		break;
+	}
+	
 }
 
