@@ -1,105 +1,59 @@
-//Started script log at 03/04/16 14:21:19
-
-getBody(4).select();
-getBody(1).select();
-getBody(2).select();
-getBody(3).select();
-getBody(4).deselect();
-getBody(1).deselect();
-getBody(2).deselect();
-getBody(3).deselect();
-setCursor(0.383427, -8.69347);
-setCursor(0.191713, -10.7138);
-setCursor(-0.103231, -9.90274);
-addBody(5, '{"awake":true,"type":"dynamic"}');
-getBody(5).addFixture(3, '{"density":1,"shapes":[{"radius":0,"type":"polygon"}],"friction":0.2,"vertices":{"x":[-0.5,0.5,0.5,-0.5],"y":[-0.5,-0.5,0.5,0.5]}}');
-getBody(5).setPosition(-0.103231,-9.90274);
-getBody(5).select();
-getBody(5).setType(0);
-getBody(5).deselect();
-getBody(5).select();
-getBody(4).select();
-getBody(1).select();
-addJoint(1, '{"type":"revolute","bodyA":5,"bodyB":4,"anchorA":{"x":0,"y":0},"anchorB":{"x":-0.103231,"y":-9.90274}}');
-getBody(4).deselect();
-getBody(5).deselect();
-getBody(1).deselect();
-getBody(4).select();
-getBody(4).deselect();
-getBody(1).select();
-getBody(1).deselect();
-getBody(4).select();
-getBody(4).deselect();
-getBody(1).select();
-getFixture(8).select();
-getFixture(8).deselect();
-getFixture(4).select();
-getFixture(1).select();
-getFixture(15).select();
-getFixture(13).select();
-getFixture(14).select();
-getFixture(9).select();
-getFixture(10).select();
-getFixture(2).select();
-getFixture(5).select();
-getFixture(8).select();
-getFixture(9).deselect();
-getFixture(2).deselect();
-getFixture(9).select();
-getFixture(1).setDensity(99999);
-getFixture(15).setDensity(99999);
-getFixture(13).setDensity(99999);
-getFixture(14).setDensity(99999);
-getFixture(4).setDensity(99999);
-getFixture(9).setDensity(99999);
-getFixture(10).setDensity(99999);
-getFixture(5).setDensity(99999);
-getFixture(8).setDensity(99999);
-getFixture(1).deselect();
-getFixture(15).deselect();
-getFixture(13).deselect();
-getFixture(14).deselect();
-getFixture(4).deselect();
-getFixture(9).deselect();
-getFixture(10).deselect();
-getFixture(5).deselect();
-getFixture(8).deselect();
-getFixture(1).select();
-getFixture(15).select();
-getFixture(13).select();
-getFixture(14).select();
-getFixture(4).select();
-getFixture(9).select();
-getFixture(10).select();
-getFixture(2).select();
-getFixture(5).select();
-getFixture(8).select();
-getFixture(9).deselect();
-getFixture(2).deselect();
-getFixture(1).deselect();
-getFixture(15).deselect();
-getFixture(13).deselect();
-getFixture(14).deselect();
-getFixture(4).deselect();
-getFixture(10).deselect();
-getFixture(5).deselect();
-getFixture(8).deselect();
-getFixture(14).select();
-getBody(1).deselect();
-getBody(4).select();
-getBody(4).setType(2);
-getBody(4).deselect();
-getBody(1).select();
-getBody(1).deselect();
-getBody(4).select();
-getBody(4).deselect();
-getBody(1).select();
-getBody(1).setType(2);
-getBody(1).deselect();
-getBody(2).select();
-getFixture(14).deselect();
-getFixture(2).select();
-getFixture(2).deselect();
-getJoint(1).select();
-getJoint(1).setLocalAnchorA(-0.0884832,8.16994);
-getJoint(1).setLocalAnchorA(0.0884831,9.89536);
+//Restarted script log at 03/07/16 17:31:09
+getImage(1).deselect();
+getImage(7).select();
+getImage(7).deselect();getImage(1).select();
+getImage(1).deselect();
+getImage(7).select();
+{
+	fixture _rube_redoFixture = getFixture(11);
+	_rube_redoFixture.setVertex(0,-2.59247,0.964288);
+	_rube_redoFixture.setVertex(1,-1.90281,0.964288);
+	_rube_redoFixture.setVertex(2,-1.90281,2.15784);
+	_rube_redoFixture.setVertex(3,-2.59247,2.15784);
+}
+getVertex(11,2).select();
+getVertex(11,3).select();
+getVertex(11,2).setPos(-1.90281, 1.24722);
+getVertex(11,3).setPos(-2.59247, 1.24722);
+getVertex(11,2).deselect();
+getVertex(11,3).deselect();
+getBody(8).select();
+getBody(8).deselect();
+getBody(8).select();
+getBody(8).deselect();
+{
+	fixture _rube_redoFixture = getFixture(11);
+	_rube_redoFixture.setVertex(0,-2.43994,0.964288);
+	_rube_redoFixture.setVertex(1,-1.93604,0.964288);
+	_rube_redoFixture.setVertex(2,-1.93604,1.24722);
+	_rube_redoFixture.setVertex(3,-2.43994,1.24722);
+}
+{
+	fixture _rube_undoFixture = getFixture(11);
+	_rube_undoFixture.setVertex(0,-2.59247,0.964288);
+	_rube_undoFixture.setVertex(1,-1.90281,0.964288);
+	_rube_undoFixture.setVertex(2,-1.90281,1.24722);
+	_rube_undoFixture.setVertex(3,-2.59247,1.24722);
+}
+{
+	fixture _rube_redoFixture = getFixture(11);
+	_rube_redoFixture.setVertex(0,-2.33666,0.964288);
+	_rube_redoFixture.setVertex(1,-1.95854,0.964288);
+	_rube_redoFixture.setVertex(2,-1.95854,1.24722);
+	_rube_redoFixture.setVertex(3,-2.33666,1.24722);
+}
+{
+	fixture _rube_redoFixture = getFixture(11);
+	_rube_redoFixture.setVertex(0,-2.43784,0.971515);
+	_rube_redoFixture.setVertex(1,-2.05972,0.971515);
+	_rube_redoFixture.setVertex(2,-2.05972,1.25445);
+	_rube_redoFixture.setVertex(3,-2.43784,1.25445);
+}
+{
+	fixture _rube_redoFixture = getFixture(11);
+	_rube_redoFixture.setVertex(0,-2.35081,0.971515);
+	_rube_redoFixture.setVertex(1,-2.14675,0.971515);
+	_rube_redoFixture.setVertex(2,-2.14675,1.25445);
+	_rube_redoFixture.setVertex(3,-2.35081,1.25445);
+}
+getFixture(11).deselect();

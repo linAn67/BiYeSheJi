@@ -33,7 +33,9 @@ bool ControllerLayer::init()
 
 	Button* leftMoveBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "LeftMoveBtn");
 	leftMoveBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::moveToLeft, this));
+	leftMoveBtn->setOpacity(200);
 	Button* rightMoveBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "RightMoveBtn");
+	rightMoveBtn->setOpacity(200);
 	rightMoveBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::moveToRight, this));
 
 	Button* antiClockwiseBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "AntiClockwiseBtn");
@@ -41,8 +43,8 @@ bool ControllerLayer::init()
 	Button* clockwiseBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "ClockwiseBtn");
 	clockwiseBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::clockwiseRotate, this));
 
-	m_rotationDirection = NOTROTATING;
-	m_playerMoveDirection = PLAYER_NOTMOVE;
+	m_rotationDirection = RD_NOTROTATING;
+	m_playerMoveDirection = PLAYER_NOTMOVING;
 	m_rotateAngle = 0;
 
 	auto listener = EventListenerKeyboard::create();
@@ -63,7 +65,7 @@ void ControllerLayer::moveToLeft(cocos2d::Ref* sender, cocos2d::ui::Widget::Touc
 		m_playerMoveDirection = PLAYER_MOVETOLEFT;
 		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
-		m_playerMoveDirection = PLAYER_NOTMOVE;
+		m_playerMoveDirection = PLAYER_NOTMOVING;
 		break;
 	default:
 		break;
@@ -78,7 +80,7 @@ void ControllerLayer::moveToRight(cocos2d::Ref* sender, cocos2d::ui::Widget::Tou
 		m_playerMoveDirection = PLAYER_MOVETORIGHT;
 		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
-		m_playerMoveDirection = PLAYER_NOTMOVE;
+		m_playerMoveDirection = PLAYER_NOTMOVING;
 		break;
 	default:
 		break;
@@ -91,10 +93,10 @@ void ControllerLayer::clockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Widget:
 	switch (type)
 	{
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
-		m_rotationDirection = CLOCKWISE;
+		m_rotationDirection = RD_CLOCKWISE;
 		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
-		m_rotationDirection = NOTROTATING;
+		m_rotationDirection = RD_NOTROTATING;
 		break;
 	default:
 		break;
@@ -106,13 +108,13 @@ void ControllerLayer::antiClockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Wid
 	switch (type)
 	{
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
-		m_rotationDirection = ANTICLOCKWISE;
+		m_rotationDirection = RD_ANTICLOCKWISE;
 		break;
 	case Widget::TouchEventType::MOVED:
-		m_rotationDirection = NOTROTATING;
+		m_rotationDirection = RD_NOTROTATING;
 		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
-		m_rotationDirection = NOTROTATING;
+		m_rotationDirection = RD_NOTROTATING;
 		break;
 	default:
 		break;
@@ -123,13 +125,13 @@ void ControllerLayer::update(float delta)
 {
 	switch (m_rotationDirection)
 	{
-	case CLOCKWISE:
+	case RD_CLOCKWISE:
 		m_rotateAngle += rotateDegree;
 		break;
-	case ANTICLOCKWISE:
+	case RD_ANTICLOCKWISE:
 		m_rotateAngle -= rotateDegree;
 		break;
-	case NOTROTATING:
+	case RD_NOTROTATING:
 		break;
 	default:
 		break;
@@ -140,11 +142,11 @@ void ControllerLayer::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, coco
 {
 	if (keyCode==EventKeyboard::KeyCode::KEY_LEFT_ARROW)
 	{
-		m_rotationDirection = ANTICLOCKWISE;
+		m_rotationDirection = RD_ANTICLOCKWISE;
 	}
 	if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 	{
-		m_rotationDirection = CLOCKWISE;
+		m_rotationDirection = RD_CLOCKWISE;
 	}
 	if (keyCode == EventKeyboard::KeyCode::KEY_A)
 	{
@@ -161,19 +163,19 @@ void ControllerLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, coc
 {
 	if (keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW)
 	{
-		m_rotationDirection = NOTROTATING;
+		m_rotationDirection = RD_NOTROTATING;
 	}
 	if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 	{
-		m_rotationDirection = NOTROTATING;
+		m_rotationDirection = RD_NOTROTATING;
 	}
 	if (keyCode == EventKeyboard::KeyCode::KEY_A)
 	{
-		m_playerMoveDirection = PLAYER_NOTMOVE;
+		m_playerMoveDirection = PLAYER_NOTMOVING;
 	}
 	if (keyCode == EventKeyboard::KeyCode::KEY_D)
 	{
-		m_playerMoveDirection = PLAYER_NOTMOVE;
+		m_playerMoveDirection = PLAYER_NOTMOVING;
 	}
 }
 

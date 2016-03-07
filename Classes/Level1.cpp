@@ -46,16 +46,40 @@ float Level1::initialWorldScale()
 void Level1::afterLoadProcessing(b2dJson* json)
 {
 	RUBELayer::afterLoadProcessing(json);
-
-	m_groundBodys.push_back(json->getBodyByName("gruand"));
-	m_groundBodys.push_back(json->getBodyByName("obstacleControl"));
+	json->getBodiesByName("ground", m_groundBodys);
 	m_player = json->getBodyByName("player");
+	m_door = json->getBodyByName("door");
+	m_groundBodys.push_back(m_door);
+	loadKeys(json);
 
 	rotateAngle = 0;
 
 	addControllerLayer();
+	addContactListener();
 
 
+}
+
+void Level1::loadKeys(b2dJson* json)
+{
+	std::vector<b2Body*> keyBodys;
+	json->getBodiesByName("key", keyBodys);
+	for each (auto body in keyBodys)
+	{
+		BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+		m_allKeys.insert(bud);
+		body->SetUserData(bud);
+
+		bud->bodyType = BodyType_KEY;
+		bud->body = body;
+	}
+}
+
+void Level1::addContactListener()
+{
+	m_contactListener = new BasicLevelContactListener();
+	m_world->SetContactListener(m_contactListener);
+	m_contactListener->m_layer = this;
 }
 
 void Level1::addControllerLayer()
@@ -80,23 +104,34 @@ void Level1::update(float dt)
 {
 	m_controllerLayer->update(dt);
 
+	//旋转非场景的物件
 	rotateAngle = fmodf(rotateAngle, 360);
-
 	if (rotateAngle != m_controllerLayer->m_rotateAngle){
 		rotateObjectBody(m_player);
 		for each (auto body in m_objectBodys)
 		{
 			rotateObjectBody(body);
 		}
+		for each (auto bud in m_allKeys)
+		{
+			rotateObjectBody(bud->body);
+		}
 		rotateAngle = m_controllerLayer->m_rotateAngle;
 		rotateAngle = fmodf(rotateAngle, 360);
 	}
-
-
 	rotateGroundBody();
 	movePlayer();
-
 	RUBELayer::update(dt);
+
+	//遍历待处理的钥匙进行清除
+	for each (auto bud in m_keyToProgress)
+	{
+		removeBodyFromWorld(bud->body);
+		m_allKeys.erase(bud);
+		delete bud;
+	}
+	//遍历完后要clear list
+	m_keyToProgress.clear();
 }
 
 void Level1::movePlayer()
@@ -109,7 +144,7 @@ void Level1::movePlayer()
 	case PLAYER_MOVETORIGHT:
 		m_player->SetTransform(m_player->GetPosition() + b2Vec2(0.025f, 0.0f), m_player->GetAngle());
 		break;
-	case PLAYER_NOTMOVE:
+	case PLAYER_NOTMOVING:
 		break;
 	default:
 		break;
@@ -128,6 +163,37 @@ void Level1::rotateObjectBody(b2Body* body)
 {
 	Vec2 bodyPos = Vec2(body->GetPosition().x, body->GetPosition().y);
 	bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
-	body->SetTransform(b2Vec2(bodyPos.x, bodyPos.y), 0);
+	body->SetTransform(b2Vec2(bodyPos.x, bodyPos.y), body->GetAngle());
 }
 
+//////////////////////////////////////////////////////////////////////////
+//
+//							ContactListener
+//
+//////////////////////////////////////////////////////////////////////////
+
+void BasicLevelContactListener::BeginContact(b2Contact* contact)
+{
+	Level1* layer = (Level1*)m_layer;
+	b2Fixture* fA = contact->GetFixtureA();
+	b2Fixture* fB = contact->GetFixtureB();
+
+	BasicLevelBodyUserData* budA = (BasicLevelBodyUserData*)fA->GetBody()->GetUserData();
+	BasicLevelBodyUserData* budB = (BasicLevelBodyUserData*)fB->GetBody()->GetUserData();
+	
+	if (budA && budA->bodyType == BodyType_KEY && fB->GetBody() == layer->m_player)
+	{
+		layer->m_keyToProgress.insert(budA);
+	}
+	if (budB && budB->bodyType == BodyType_KEY && fA->GetBody() == layer->m_player)
+	{
+		layer->m_keyToProgress.insert(budB);
+	}
+}
+
+void BasicLevelContactListener::EndContact(b2Contact* contact)
+{
+	Level1* layer = (Level1*)m_layer;
+	b2Fixture* fA = contact->GetFixtureA();
+	b2Fixture* fB = contact->GetFixtureB();
+}

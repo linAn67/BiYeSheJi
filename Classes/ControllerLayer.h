@@ -7,16 +7,16 @@
 
 enum RotationDirection
 {
-	CLOCKWISE,
-	ANTICLOCKWISE,
-	NOTROTATING
+	RD_CLOCKWISE,
+	RD_ANTICLOCKWISE,
+	RD_NOTROTATING
 };
 
 enum PlayerMoveDirection
 {
 	PLAYER_MOVETOLEFT,
 	PLAYER_MOVETORIGHT,
-	PLAYER_NOTMOVE
+	PLAYER_NOTMOVING
 };
 
 class ControllerLayer :public cocos2d::Layer

@@ -8,14 +8,36 @@
 
 class b2dJson;
 
+enum BodyType
+{
+	BodyType_KEY,
+	BodyType_FATALBALL
+};
 
+struct BasicLevelBodyUserData
+{
+	BodyType bodyType;
+	b2Body* body;
+};
+
+class BasicLevelContactListener :public b2ContactListener
+{
+public:
+	virtual void BeginContact(b2Contact* contact);      // called by Box2D during the Step function when two fixtures begin touching
+	virtual void EndContact(b2Contact* contact);        // called by Box2D during the Step function when two fixtures finish touching
+
+	class Level1* m_layer;
+};
 
 class Level1:public RUBELayer
 {
 protected:
 public: 
+	BasicLevelContactListener* m_contactListener;
 	//存储主角的刚体用于移动
 	b2Body* m_player;
+	//通关的门
+	b2Body* m_door;
 	//由于cocos2dx封装的Vector仅支持继承自CCNode的类，所以这里用STL的Vector
 	//存储场景刚体用于旋转操作
 	std::vector<b2Body*> m_groundBodys;
@@ -23,6 +45,10 @@ public:
 	std::vector<b2Body*> m_objectBodys;
 	//存储当前场景的旋转角度
 	CC_SYNTHESIZE(float, rotateAngle, RotateAngle);
+	std::set<BasicLevelBodyUserData*> m_allKeys;
+	std::set<BasicLevelBodyUserData*> m_keyToProgress;
+
+
 	ControllerLayer* m_controllerLayer;
 
 
@@ -30,6 +56,8 @@ public:
 	virtual cocos2d::Point initialWorldOffset();
 	virtual float initialWorldScale();
 	virtual void afterLoadProcessing(b2dJson* json);
+
+
 	virtual void clear();
 	virtual void update(float dt);
 
@@ -39,6 +67,8 @@ public:
 	//旋转非场景的刚体
 	void rotateObjectBody(b2Body* body);
 
+	void loadKeys(b2dJson* json);
+	void addContactListener();
 	void addControllerLayer();
 	static cocos2d::Scene* createScene();
 };
