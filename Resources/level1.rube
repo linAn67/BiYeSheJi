@@ -804,6 +804,40 @@
         "scale" : 1.2
       }
     ],
+    "metajoint" : 
+    [
+      
+      {
+        "anchorA" : 
+        {
+          "x" : -1.559559941291809,
+          "y" : 0.07790140062570572
+        },
+        "anchorB" : 
+        {
+          "x" : -0.8291379809379578,
+          "y" : 0.6637459993362427
+        },
+        "bodyA" : 1,
+        "bodyB" : 3,
+        "collideConnected" : false,
+        "enableLimit" : false,
+        "enableMotor" : false,
+        "id" : 1,
+        "localAxisA" : 
+        {
+          "x" : 0,
+          "y" : 1
+        },
+        "lowerLimit" : 0,
+        "maxMotorForce" : 0,
+        "motorSpeed" : 0,
+        "name" : "joint0",
+        "referenceAngle" : 0,
+        "type" : "prismatic",
+        "upperLimit" : 0
+      }
+    ],
     "positionIterations" : 3,
     "stepsPerSecond" : 60.0,
     "subStepping" : false,

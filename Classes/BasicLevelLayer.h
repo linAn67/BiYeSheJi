@@ -1,10 +1,10 @@
+#ifndef __LEVEL1_H__
+#define __LEVEL1_H__
+
 #include "cocos2d.h"
 #include "RUBELayer.h"
 #include "ControllerLayer.h"
-
-
-#ifndef __LEVEL1_H__
-#define __LEVEL1_H__
+#include "rubestuff/b2dJson.h"
 
 class b2dJson;
 
@@ -26,10 +26,10 @@ public:
 	virtual void BeginContact(b2Contact* contact);      // called by Box2D during the Step function when two fixtures begin touching
 	virtual void EndContact(b2Contact* contact);        // called by Box2D during the Step function when two fixtures finish touching
 
-	class Level1* m_layer;
+	class BasicLevelLayer* m_layer;
 };
 
-class Level1:public RUBELayer
+class BasicLevelLayer:public RUBELayer
 {
 protected:
 public: 
@@ -75,7 +75,6 @@ public:
 	void win();
 	void lose();
 
-	b2Body* testBody;
 };
 
 #endif

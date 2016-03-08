@@ -1,8 +1,9 @@
 #include "AppDelegate.h"
 #include "StartScene.h"
-#include "Level1.h"
+#include "BasicLevelLayer.h"
 #include "ControllerLayer.h"
 #include "HelloWorldScene.h"
+#include "Level3.h"
 
 USING_NS_CC;
 
@@ -78,7 +79,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = Level1::createScene();
+    auto scene = Level3::createScene();
 	//auto scene = Level1::scene();
 
     // run

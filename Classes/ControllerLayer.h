@@ -5,7 +5,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 
-class Level1;
+class BasicLevelLayer;
 
 enum RotationDirection
 {
@@ -27,7 +27,7 @@ public:
 	RotationDirection		m_rotationDirection;
 	float					m_rotateAngle;//用于翻转box2d场景
 	PlayerMoveDirection		m_playerMoveDirection;
-	Level1*					m_layer;
+	BasicLevelLayer*					m_layer;
 
 	static cocos2d::Scene* createScene();
 

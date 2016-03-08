@@ -1,6 +1,6 @@
-#include "Level1.h"
-#include "rubestuff/b2dJson.h"
-#include "ControllerLayer.h"
+#include "BasicLevelLayer.h"
+
+
 
 
 
@@ -8,7 +8,7 @@ using namespace std;
 using namespace cocos2d;
 using namespace ui;
 
-Scene* Level1::createScene()
+Scene* BasicLevelLayer::createScene()
 {
 	Scene *scene = Scene::create();
 
@@ -16,9 +16,9 @@ Scene* Level1::createScene()
 	//À¶É«±³¾°
 	Color4B c4b = Color4B(104, 171, 213, 255);
 	LayerColor* layer2 = LayerColor::create(c4b);
-	scene->addChild(layer2);
+	scene->addChild(layer2,-2);
 
-	Level1* layer = new Level1();
+	BasicLevelLayer* layer = new BasicLevelLayer();
 	layer->init();// do things that require virtual functions (can't do in constructor)
 	scene->addChild(layer);
 	layer->release();
@@ -26,30 +26,30 @@ Scene* Level1::createScene()
 	return scene;
 }
 
-void Level1::win()
+void BasicLevelLayer::win()
 {
 	CCLOG("win");
 	
 }
 
-std::string Level1::getFilename()
+std::string BasicLevelLayer::getFilename()
 {
 	return "level1.json";
 }
 
-cocos2d::Point Level1::initialWorldOffset()
+cocos2d::Point BasicLevelLayer::initialWorldOffset()
 {
 	Size s = Director::getInstance()->getWinSize();
 	return Vec2(s.width / 2, s.height / 2);
 }
 
-float Level1::initialWorldScale()
+float BasicLevelLayer::initialWorldScale()
 {
 	Size s = Director::getInstance()->getWinSize();
 	return s.height / 8; //screen will be 8 physics units high
 }
 
-void Level1::afterLoadProcessing(b2dJson* json)
+void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 {
 	RUBELayer::afterLoadProcessing(json);
 	json->getBodiesByName("ground", m_groundBodys);
@@ -58,9 +58,9 @@ void Level1::afterLoadProcessing(b2dJson* json)
 	m_isPlayerCollideWithDoor = false;
 	m_groundBodys.push_back(m_door);
 	loadKeys(json);
-	m_groundBodys.push_back(json->getBodyByName("obstacle"));
-	testBody = json->getBodyByName("obstacle");
-
+	auto sp = Sprite::create("res/BasicBackGround.png");
+	addChild(sp, -5);
+	sp->setScale(0.0125);
 	rotateAngle = 0;
 
 	addControllerLayer();
@@ -68,7 +68,7 @@ void Level1::afterLoadProcessing(b2dJson* json)
 
 }
 
-void Level1::loadKeys(b2dJson* json)
+void BasicLevelLayer::loadKeys(b2dJson* json)
 {
 	std::vector<b2Body*> keyBodys;
 	json->getBodiesByName("key", keyBodys);
@@ -83,14 +83,14 @@ void Level1::loadKeys(b2dJson* json)
 	}
 }
 
-void Level1::addContactListener()
+void BasicLevelLayer::addContactListener()
 {
 	m_contactListener = new BasicLevelContactListener();
 	m_world->SetContactListener(m_contactListener);
 	m_contactListener->m_layer = this;
 }
 
-void Level1::addControllerLayer()
+void BasicLevelLayer::addControllerLayer()
 {
 	auto director = Director::sharedDirector();
 	Size winSize = director->getWinSize();
@@ -103,14 +103,14 @@ void Level1::addControllerLayer()
 	addChild(m_controllerLayer,10);
 }
 
-void Level1::clear()
+void BasicLevelLayer::clear()
 {
 	RUBELayer::clear();
 	m_groundBodys.clear();
 	m_objectBodys.clear();
 }
 
-void Level1::update(float dt)
+void BasicLevelLayer::update(float dt)
 {
 	m_controllerLayer->update(dt);
 
@@ -144,7 +144,7 @@ void Level1::update(float dt)
 	m_keyToProgress.clear();
 }
 
-void Level1::movePlayer()
+void BasicLevelLayer::movePlayer()
 {
 	switch (m_controllerLayer->m_playerMoveDirection)
 	{
@@ -161,7 +161,7 @@ void Level1::movePlayer()
 	}
 }
 
-void Level1::rotateGroundBody()
+void BasicLevelLayer::rotateGroundBody()
 {
 	for each (auto body in m_groundBodys)
 	{
@@ -173,7 +173,7 @@ void Level1::rotateGroundBody()
 	}
 }
 
-void Level1::rotateObjectBody(b2Body* body)
+void BasicLevelLayer::rotateObjectBody(b2Body* body)
 {
 	Vec2 bodyPos = Vec2(body->GetPosition().x, body->GetPosition().y);
 	bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
@@ -188,7 +188,7 @@ void Level1::rotateObjectBody(b2Body* body)
 
 void BasicLevelContactListener::BeginContact(b2Contact* contact)
 {
-	Level1* layer = (Level1*)m_layer;
+	BasicLevelLayer* layer = (BasicLevelLayer*)m_layer;
 	b2Fixture* fA = contact->GetFixtureA();
 	b2Fixture* fB = contact->GetFixtureB();
 
@@ -217,7 +217,7 @@ void BasicLevelContactListener::BeginContact(b2Contact* contact)
 
 void BasicLevelContactListener::EndContact(b2Contact* contact)
 {
-	Level1* layer = (Level1*)m_layer;
+	BasicLevelLayer* layer = (BasicLevelLayer*)m_layer;
 	b2Fixture* fA = contact->GetFixtureA();
 	b2Fixture* fB = contact->GetFixtureB();
 

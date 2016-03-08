@@ -2,7 +2,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 #include "HelloWorldScene.h"
-#include "Level1.h"
+#include "BasicLevelLayer.h"
 
 USING_NS_CC;
 
@@ -44,7 +44,7 @@ bool StartScene::init()
 void StartScene::touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
 	auto director = Director::getInstance();
-	auto scene = Level1::scene();
+	auto scene = BasicLevelLayer::scene();
 	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
 	switch (type)
 	{
