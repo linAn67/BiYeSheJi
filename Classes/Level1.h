@@ -75,7 +75,7 @@ public:
 	void win();
 	void lose();
 
-	b2PrismaticJoint* test;
+	b2Body* testBody;
 };
 
 #endif

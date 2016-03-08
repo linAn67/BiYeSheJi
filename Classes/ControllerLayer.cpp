@@ -1,6 +1,6 @@
 #include "ControllerLayer.h"
 #include "Level1.h"
-const float rotateDegree = 1.4f;
+const float rotateDegree = 0.5f;
 
 USING_NS_CC;
 

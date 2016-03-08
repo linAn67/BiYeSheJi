@@ -34,7 +34,7 @@ void Level1::win()
 
 std::string Level1::getFilename()
 {
-	return "level1-1.json";
+	return "level1.json";
 }
 
 cocos2d::Point Level1::initialWorldOffset()
@@ -51,21 +51,21 @@ float Level1::initialWorldScale()
 
 void Level1::afterLoadProcessing(b2dJson* json)
 {
-	BasicRUBELayer::afterLoadProcessing(json);
+	RUBELayer::afterLoadProcessing(json);
 	json->getBodiesByName("ground", m_groundBodys);
 	m_player = json->getBodyByName("player");
 	m_door = json->getBodyByName("door");
 	m_isPlayerCollideWithDoor = false;
 	m_groundBodys.push_back(m_door);
 	loadKeys(json);
-	//m_objectBodys.push_back(json->getBodyByName("obstacle"));
+	m_groundBodys.push_back(json->getBodyByName("obstacle"));
+	testBody = json->getBodyByName("obstacle");
 
 	rotateAngle = 0;
 
 	addControllerLayer();
 	addContactListener();
 
-	test = (b2PrismaticJoint*)json->getJointByName("joint0");
 }
 
 void Level1::loadKeys(b2dJson* json)
