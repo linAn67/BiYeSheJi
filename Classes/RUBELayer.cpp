@@ -60,7 +60,6 @@ float RUBELayer::initialWorldScale()
     return s.height / 35; //screen will be 35 physics units high
 }
 
-
 // This is called after the Box2D world has been loaded, and while the b2dJson information
 // is still available to do extra loading. Here is where we load the images.
 void RUBELayer::afterLoadProcessing(b2dJson* json)
@@ -77,8 +76,13 @@ void RUBELayer::afterLoadProcessing(b2dJson* json)
         
         // try to load the sprite image, and ignore if it fails
         Sprite* sprite = Sprite::create(img->file.c_str());
-        if ( ! sprite )
-            continue;
+		if (!sprite)
+		{
+			continue;
+		}
+			
+			
+            
         
         // add the sprite to this layer and set the render order
         addChild(sprite);

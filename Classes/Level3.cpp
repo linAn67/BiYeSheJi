@@ -17,12 +17,12 @@ Scene* Level3::createScene()
 
 std::string Level3::getFilename()
 {
-	return "level2.json";
+	return "level2-2.json";
 }
 
 void Level3::afterLoadProcessing(b2dJson* json)
 {
 	BasicLevelLayer::afterLoadProcessing(json);
-	m_objectBodys.push_back(json->getBodyByName("ball"));
+	//m_objectBodys.push_back(json->getBodyByName("ball"));
 }
 

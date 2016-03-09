@@ -8,7 +8,8 @@ class Level2:public BasicLevelLayer
 public:
 	virtual std::string getFilename();
 	virtual void afterLoadProcessing(b2dJson* json);
-
+	static cocos2d::Scene* createScene();
+	virtual void win();
 };
 
 #endif

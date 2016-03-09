@@ -58,6 +58,7 @@ public:
 	virtual void afterLoadProcessing(b2dJson* json);
 
 
+	
 	virtual void clear();
 	virtual void update(float dt);
 
@@ -68,12 +69,13 @@ public:
 	void rotateObjectBody(b2Body* body);
 	//¶ÁÔ¿³×µÄ¸ÕÌå
 	void loadKeys(b2dJson* json);
+	void loadBalls(b2dJson* json);
 	void addContactListener();
 	void addControllerLayer();
 	static cocos2d::Scene* createScene();
 
-	void win();
-	void lose();
+	virtual void win();
+	virtual void lose();
 
 };
 

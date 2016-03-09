@@ -270,7 +270,7 @@
 					13.80249977111816
 				]
 			},
-			"file" : "J:/毕业设计/RESOUCE/level2BG.png",
+			"file" : ".../level2/level2BG.png",
 			"filter" : 1,
 			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
 			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
@@ -316,7 +316,7 @@
 					2.798349380493164
 				]
 			},
-			"file" : "J:/毕业设计/RESOUCE/Door.png",
+			"file" : ".../level2/Door.png",
 			"filter" : 1,
 			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
 			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
@@ -361,7 +361,7 @@
 					0.2977402508258820
 				]
 			},
-			"file" : "J:/毕业设计/RESOUCE/StartBtn.png",
+			"file" : ".../level2/StartBtn.png",
 			"filter" : 1,
 			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
 			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],

@@ -251,7 +251,7 @@
         "aspectScale" : 1,
         "body" : 1,
         "center" : 0,
-        "file" : "J:/毕业设计/RESOUCE/level2BG.png",
+        "file" : "level2/level2BG.png",
         "filter" : 1,
         "flip" : false,
         "id" : 1,
@@ -269,13 +269,30 @@
           "x" : -0.5549824833869934,
           "y" : 3.223007678985596
         },
-        "file" : "J:/毕业设计/RESOUCE/Door.png",
+        "file" : "level2/Door.png",
         "filter" : 1,
         "flip" : false,
         "id" : 2,
         "name" : "image1",
         "opacity" : 0.5,
         "scale" : 1.2
+      },
+      
+      {
+        "aspectScale" : 1,
+        "body" : 2,
+        "center" : 
+        {
+          "x" : -0.001556634902954102,
+          "y" : -0.01002407073974609
+        },
+        "file" : "level2/Ball.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 6,
+        "name" : "image2",
+        "opacity" : 0.5,
+        "scale" : 0.98
       }
     ],
     "metaobject" : 

@@ -32,6 +32,11 @@ void BasicLevelLayer::win()
 	
 }
 
+void BasicLevelLayer::lose()
+{
+	CCLOG("lose");
+}
+
 std::string BasicLevelLayer::getFilename()
 {
 	return "level1.json";
@@ -58,6 +63,10 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 	m_isPlayerCollideWithDoor = false;
 	m_groundBodys.push_back(m_door);
 	loadKeys(json);
+	if (json->getBodyByName("ball"))
+	{
+		loadBalls(json);
+	}
 	auto sp = Sprite::create("res/BasicBackGround.png");
 	addChild(sp, -5);
 	sp->setScale(0.0125);
@@ -66,6 +75,21 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 	addControllerLayer();
 	addContactListener();
 
+}
+
+void BasicLevelLayer::loadBalls(b2dJson* json)
+{
+	std::vector<b2Body*> ballBodys;
+	json->getBodiesByName("ball", ballBodys);
+	for each (auto body in ballBodys)
+	{
+		BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+		m_objectBodys.push_back(body);
+		body->SetUserData(bud);
+
+		bud->bodyType = BodyType_FATALBALL;
+		bud->body = body;
+	}
 }
 
 void BasicLevelLayer::loadKeys(b2dJson* json)
@@ -212,6 +236,16 @@ void BasicLevelContactListener::BeginContact(b2Contact* contact)
 	if (fB->GetBody() == layer->m_door && fA->GetBody() == layer->m_player)
 	{
 		layer->m_isPlayerCollideWithDoor = true;
+	}
+
+	//ifColideWithBall,lose
+	if (budA && budA->bodyType == BodyType_FATALBALL && fB->GetBody() == layer->m_player)
+	{
+		layer->lose();
+	}
+	if (budB && budB->bodyType == BodyType_FATALBALL && fA->GetBody() == layer->m_player)
+	{
+		layer->lose();
 	}
 }
 
