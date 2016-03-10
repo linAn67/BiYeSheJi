@@ -33,7 +33,7 @@ bool StartScene::init()
 		return false;
 	}
 
-	auto rootNode = CSLoader::createNode("StartScene.csb");
+	auto rootNode = CSLoader::createNode("startscene/StartScene.csb");
 	addChild(rootNode);
 
 	Button* startBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode,"StartBtn");

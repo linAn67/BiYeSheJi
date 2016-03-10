@@ -28,7 +28,7 @@ bool ControllerLayer::init()
 	{
 		return false;
 	}
-	auto rootNode = CSLoader::createNode("res/LayerController.csb");
+	auto rootNode = CSLoader::createNode("control/LayerController.csb");
 	addChild(rootNode);
 
 	Button* leftMoveBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "LeftMoveBtn");
