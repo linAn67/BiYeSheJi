@@ -75,7 +75,7 @@
           {
             "density" : 1,
             "filter-categoryBits" : 16,
-            "friction" : 0.2,
+            "friction" : 1,
             "id" : 1,
             "name" : "fixture0",
             "shapes" : 
@@ -91,11 +91,49 @@
               "x" : [ 0.0 ],
               "y" : [ 0.0 ]
             }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 2,
+            "name" : "playerfoot",
+            "sensor" : true,
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.08927403390407562,
+                0.08897597342729569,
+                0.08897597342729569,
+                -0.08927403390407562
+              ],
+              "y" : 
+              [
+                -0.3854847550392151,
+                -0.3854847550392151,
+                -0.2072347104549408,
+                -0.2072347104549408
+              ]
+            }
           }
         ],
         "id" : 1,
         "linearVelocity" : 0,
-        "massData-mass" : 0.2827433645725250,
+        "massData-I" : 0.0002819120127242059,
+        "massData-center" : 
+        {
+          "x" : -1.505535601609154e-005,
+          "y" : -0.02993884682655335
+        },
+        "massData-mass" : 0.3145164251327515,
         "name" : "player",
         "position" : 0,
         "sleepingAllowed" : false,
@@ -113,7 +151,7 @@
           "x" : 0.01117317844182253,
           "y" : -0.01675975322723389
         },
-        "file" : "J:/毕业设计/RESOUCE/StartBtn.png",
+        "file" : "level2/StartBtn.png",
         "filter" : 1,
         "flip" : false,
         "id" : 1,

@@ -15,14 +15,21 @@ Scene* Level3::createScene()
 	return scene;
 }
 
+void Level3::win()
+{
+	auto director = Director::getInstance();
+	auto scene = Level3::createScene();
+	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
+	director->replaceScene(scene);
+}
+
 std::string Level3::getFilename()
 {
-	return "level2-2.json";
+	return "level3.json";
 }
 
 void Level3::afterLoadProcessing(b2dJson* json)
 {
 	BasicLevelLayer::afterLoadProcessing(json);
-	//m_objectBodys.push_back(json->getBodyByName("ball"));
 }
 

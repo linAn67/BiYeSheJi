@@ -59,17 +59,22 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 	RUBELayer::afterLoadProcessing(json);
 	json->getBodiesByName("ground", m_groundBodys);
 	m_player = json->getBodyByName("player");
+	m_playerFootSensor = json->getFixtureByName("playerfoot");
 	m_door = json->getBodyByName("door");
 	m_isPlayerCollideWithDoor = false;
 	m_groundBodys.push_back(m_door);
-	loadKeys(json);
-	if (json->getBodyByName("ball"))
+	if (json->getBodyByName("obstacle"))
 	{
-		loadBalls(json);
+		m_groundBodys.push_back(json->getBodyByName("obstacle"));
 	}
+
+
+	loadChains(json);
+	loadKeys(json);
+	loadBalls(json);
 	auto sp = Sprite::create("res/BasicBackGround.png");
 	addChild(sp, -5);
-	sp->setScale(0.0125);
+	sp->setScale(0.0125f);
 	rotateAngle = 0;
 
 	addControllerLayer();
@@ -79,31 +84,62 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 
 void BasicLevelLayer::loadBalls(b2dJson* json)
 {
-	std::vector<b2Body*> ballBodys;
-	json->getBodiesByName("ball", ballBodys);
-	for each (auto body in ballBodys)
+	if (json->getBodyByName("ball"))
 	{
-		BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
-		m_objectBodys.push_back(body);
-		body->SetUserData(bud);
+		std::vector<b2Body*> ballBodys;
+		json->getBodiesByName("ball", ballBodys);
+		for each (auto body in ballBodys)
+		{
+			BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+			m_objectBodys.push_back(body);
+			body->SetUserData(bud);
 
-		bud->bodyType = BodyType_FATALBALL;
-		bud->body = body;
+			bud->bodyType = BodyType_FATALBALL;
+			bud->body = body;
+		}
+	}
+	else
+	{
+		CCLOG("no ball to load");
+	}
+}
+
+void BasicLevelLayer::loadChains(b2dJson* json)
+{
+	if (json->getBodyByName("chain"))
+	{
+		std::vector<b2Body*> chainBodys;
+		json->getBodiesByName("chain", chainBodys);
+		for each (auto body in chainBodys)
+		{
+			m_objectBodys.push_back(body);
+		}
+	}
+	else
+	{
+		CCLOG("no chain to load");
 	}
 }
 
 void BasicLevelLayer::loadKeys(b2dJson* json)
 {
-	std::vector<b2Body*> keyBodys;
-	json->getBodiesByName("key", keyBodys);
-	for each (auto body in keyBodys)
+	if (json->getBodyByName("key"))
 	{
-		BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
-		m_allKeys.insert(bud);
-		body->SetUserData(bud);
+		std::vector<b2Body*> keyBodys;
+		json->getBodiesByName("key", keyBodys);
+		for each (auto body in keyBodys)
+		{
+			BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+			m_allKeys.insert(bud);
+			body->SetUserData(bud);
 
-		bud->bodyType = BodyType_KEY;
-		bud->body = body;
+			bud->bodyType = BodyType_KEY;
+			bud->body = body;
+		}
+	}
+	else
+	{
+		CCLOG("no key to load");
 	}
 }
 
@@ -132,6 +168,8 @@ void BasicLevelLayer::clear()
 	RUBELayer::clear();
 	m_groundBodys.clear();
 	m_objectBodys.clear();
+	m_allKeys.clear();
+	m_keyToProgress.clear();
 }
 
 void BasicLevelLayer::update(float dt)
@@ -166,6 +204,7 @@ void BasicLevelLayer::update(float dt)
 	}
 	//遍历完后要clear list
 	m_keyToProgress.clear();
+	//CCLOG("%f", rotateAngle);
 }
 
 void BasicLevelLayer::movePlayer()
@@ -229,11 +268,11 @@ void BasicLevelContactListener::BeginContact(b2Contact* contact)
 	}
 
 	//isPlayerColideWithDoor
-	if (fA->GetBody() == layer->m_door && fB->GetBody() == layer->m_player)
+	if (fA->GetBody() == layer->m_door && fB == layer->m_playerFootSensor)
 	{
 		layer->m_isPlayerCollideWithDoor = true;
 	}
-	if (fB->GetBody() == layer->m_door && fA->GetBody() == layer->m_player)
+	if (fB->GetBody() == layer->m_door && fA == layer->m_playerFootSensor)
 	{
 		layer->m_isPlayerCollideWithDoor = true;
 	}
@@ -256,11 +295,11 @@ void BasicLevelContactListener::EndContact(b2Contact* contact)
 	b2Fixture* fB = contact->GetFixtureB();
 
 	//isPlayerColideWithDoor
-	if (fA->GetBody() == layer->m_door && fB->GetBody() == layer->m_player)
+	if (fA->GetBody() == layer->m_door && fB == layer->m_playerFootSensor)
 	{
 		layer->m_isPlayerCollideWithDoor = false;
 	}
-	if (fB->GetBody() == layer->m_door && fA->GetBody() == layer->m_player)
+	if (fB->GetBody() == layer->m_door && fA == layer->m_playerFootSensor)
 	{
 		layer->m_isPlayerCollideWithDoor = false;
 	}

@@ -1,18 +1,18 @@
+#include "Level1.h"
 #include "Level2.h"
-#include "Level3.h"
 USING_NS_CC;
-std::string Level2::getFilename()
+std::string Level1::getFilename()
 {
-	return "level2.json";
+	return "level1.json";
 }
 
-void Level2::afterLoadProcessing(b2dJson* json)
+void Level1::afterLoadProcessing(b2dJson* json)
 {
 	BasicLevelLayer::afterLoadProcessing(json);
 	
 }
 
-cocos2d::Scene* Level2::createScene()
+cocos2d::Scene* Level1::createScene()
 {
 	Scene *scene = Scene::create();
 
@@ -22,7 +22,7 @@ cocos2d::Scene* Level2::createScene()
 	LayerColor* layer2 = LayerColor::create(c4b);
 	scene->addChild(layer2, -2);
 
-	Level2* layer = new Level2();
+	Level1* layer = new Level1();
 	layer->init();// do things that require virtual functions (can't do in constructor)
 	scene->addChild(layer);
 	layer->release();
@@ -30,11 +30,11 @@ cocos2d::Scene* Level2::createScene()
 	return scene;
 }
 
-void Level2::win()
+void Level1::win()
 {
 
 	auto director = Director::getInstance();
-	auto scene = Level3::createScene();
+	auto scene = Level2::createScene();
 	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
 	director->replaceScene(scene);
 }
