@@ -11,7 +11,8 @@ class b2dJson;
 enum BodyType
 {
 	BodyType_KEY,
-	BodyType_FATALBALL
+	BodyType_FATALBALL,
+	BodyType_Door
 };
 
 struct BodyData 
@@ -20,7 +21,7 @@ struct BodyData
 	b2Vec2 position;
 	float32 angle;
 	b2Vec2 linearVelocity;
-
+	float32 angularVelocity;
 };
 
 struct LevelStateData
@@ -66,7 +67,7 @@ public:
 	//存放待删除的钥匙的bud
 	std::set<BasicLevelBodyUserData*> m_keyToProgress;
 	//每一帧存放整个场景所有刚体的位置以及旋转角度
-	std::set<LevelStateData*> m_levelStateDatas;
+	std::list<LevelStateData*> m_levelStateDatas;
 
 	ControllerLayer* m_controllerLayer;
 

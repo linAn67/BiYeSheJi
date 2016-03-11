@@ -63,6 +63,12 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 	m_door = json->getBodyByName("door");
 	m_isPlayerCollideWithDoor = false;
 	m_groundBodys.push_back(m_door);
+	//////////////////////////////////////////////////////////////////////////
+	BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+	bud->body = m_door;
+	bud->bodyType = BodyType::BodyType_Door;
+	m_door->SetUserData(bud);
+	//////////////////////////////////////////////////////////////////////////
 	if (json->getBodyByName("obstacle"))
 	{
 		m_groundBodys.push_back(json->getBodyByName("obstacle"));
@@ -172,12 +178,20 @@ void BasicLevelLayer::saveLevelStateDatas()
 		bDate->body = body;
 		bDate->position = body->GetPosition();
 		bDate->angle = body->GetAngle();
+		bDate->angularVelocity = body->GetAngularVelocity();
 		bDate->linearVelocity = body->GetLinearVelocity();
 		lsDatas->allBodyDatas.push_back(bDate);
+		BasicLevelBodyUserData* data = (BasicLevelBodyUserData*)body->GetUserData();
 	}
 	lsDatas->levelRotateAngle = rotateAngle;
+	if (!m_levelStateDatas.empty())
+	{
+		
+	}
 	m_levelStateDatas.push_back(lsDatas);
 }
+
+
 
 void BasicLevelLayer::loadAndSetLevelStateDatas()
 {
@@ -187,14 +201,11 @@ void BasicLevelLayer::loadAndSetLevelStateDatas()
 		for each (auto bodyData in lsDatas->allBodyDatas)
 		{
 			b2Body* b = bodyData->body;
-			if (b)
+			if (1)
 			{
 				b->SetTransform(bodyData->position, bodyData->angle);
 				b->SetLinearVelocity(bodyData->linearVelocity);
-			}
-			else
-			{
-				CCLOG("the body is NULL");
+				b->SetAngularVelocity(bodyData->angularVelocity);
 			}
 		}
 		rotateAngle = lsDatas->levelRotateAngle;
@@ -214,6 +225,8 @@ void BasicLevelLayer::clear()
 	}
 	m_allKeys.clear();
 	m_keyToProgress.clear();
+	
+	m_levelStateDatas.clear();
 }
 
 void BasicLevelLayer::update(float dt)
