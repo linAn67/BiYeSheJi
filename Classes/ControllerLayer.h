@@ -27,7 +27,8 @@ public:
 	RotationDirection		m_rotationDirection;
 	float					m_rotateAngle;//用于翻转box2d场景
 	PlayerMoveDirection		m_playerMoveDirection;
-	BasicLevelLayer*					m_layer;
+	bool					m_returnToPreviousLevelState;
+	BasicLevelLayer*		m_layer;
 
 	static cocos2d::Scene* createScene();
 

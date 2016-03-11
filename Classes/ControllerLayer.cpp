@@ -48,6 +48,7 @@ bool ControllerLayer::init()
 
 	m_rotationDirection = RD_NOTROTATING;
 	m_playerMoveDirection = PLAYER_NOTMOVING;
+	m_returnToPreviousLevelState = false;
 	m_rotateAngle = 0;
 
 	auto listener = EventListenerKeyboard::create();
@@ -168,6 +169,9 @@ void ControllerLayer::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, coco
 	case EventKeyboard::KeyCode::KEY_D:
 		m_playerMoveDirection = PLAYER_MOVETORIGHT;
 		break;
+	case EventKeyboard::KeyCode::KEY_E:
+		m_returnToPreviousLevelState = true;
+		break;
 	default:
 		break;
 	}
@@ -189,6 +193,9 @@ void ControllerLayer::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, coc
 		break;
 	case EventKeyboard::KeyCode::KEY_D:
 		m_playerMoveDirection = PLAYER_NOTMOVING;
+		break;
+	case EventKeyboard::KeyCode::KEY_E:
+		m_returnToPreviousLevelState = false;
 		break;
 	default:
 		break;

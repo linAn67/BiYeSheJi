@@ -58,8 +58,8 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 {
 	RUBELayer::afterLoadProcessing(json);
 	json->getBodiesByName("ground", m_groundBodys);
-	m_player = json->getBodyByName("player");
-	m_playerFootSensor = json->getFixtureByName("playerfoot");
+	m_playerBody = json->getBodyByName("player");
+	m_playerFootSensorFixture = json->getFixtureByName("playerfoot");
 	m_door = json->getBodyByName("door");
 	m_isPlayerCollideWithDoor = false;
 	m_groundBodys.push_back(m_door);
@@ -163,11 +163,55 @@ void BasicLevelLayer::addControllerLayer()
 	addChild(m_controllerLayer,10);
 }
 
+void BasicLevelLayer::saveLevelStateDatas()
+{
+	LevelStateData* lsDatas = new LevelStateData;
+	for (b2Body* body = m_world->GetBodyList(); body; body = body->GetNext())
+	{
+		BodyData* bDate = new BodyData;
+		bDate->body = body;
+		bDate->position = body->GetPosition();
+		bDate->angle = body->GetAngle();
+		bDate->linearVelocity = body->GetLinearVelocity();
+		lsDatas->allBodyDatas.push_back(bDate);
+	}
+	lsDatas->levelRotateAngle = rotateAngle;
+	m_levelStateDatas.push_back(lsDatas);
+}
+
+void BasicLevelLayer::loadAndSetLevelStateDatas()
+{
+	if (!m_levelStateDatas.empty())
+	{
+		LevelStateData* lsDatas = m_levelStateDatas.back();
+		for each (auto bodyData in lsDatas->allBodyDatas)
+		{
+			b2Body* b = bodyData->body;
+			if (b)
+			{
+				b->SetTransform(bodyData->position, bodyData->angle);
+				b->SetLinearVelocity(bodyData->linearVelocity);
+			}
+			else
+			{
+				CCLOG("the body is NULL");
+			}
+		}
+		rotateAngle = lsDatas->levelRotateAngle;
+		m_controllerLayer->m_rotateAngle = rotateAngle;
+		m_levelStateDatas.pop_back();
+	}
+}
+
 void BasicLevelLayer::clear()
 {
 	RUBELayer::clear();
 	m_groundBodys.clear();
 	m_objectBodys.clear();
+	for (std::set<BasicLevelBodyUserData*>::iterator it = m_allKeys.begin(); it != m_allKeys.end(); ++it)
+	{
+		delete *it;
+	}
 	m_allKeys.clear();
 	m_keyToProgress.clear();
 }
@@ -176,23 +220,24 @@ void BasicLevelLayer::update(float dt)
 {
 	m_controllerLayer->update(dt);
 
-	//旋转非场景的物件
-	rotateAngle = fmodf(rotateAngle, 360);
-	if (rotateAngle != m_controllerLayer->m_rotateAngle){
-		rotateObjectBody(m_player);
-		for each (auto body in m_objectBodys)
-		{
-			rotateObjectBody(body);
-		}
-		for each (auto bud in m_allKeys)
-		{
-			rotateObjectBody(bud->body);
-		}
-		rotateAngle = m_controllerLayer->m_rotateAngle;
-		rotateAngle = fmodf(rotateAngle, 360);
+	if (m_controllerLayer->m_returnToPreviousLevelState)
+	{
+		loadAndSetLevelStateDatas();
 	}
-	rotateGroundBody();
-	movePlayer();
+	else
+	{
+		//旋转非场景的物件
+		rotateAngle = fmodf(rotateAngle, 360);
+		if (rotateAngle != m_controllerLayer->m_rotateAngle){
+			rotateAllObjectBodys();
+			rotateAllGroundBodys();
+			rotateAngle = m_controllerLayer->m_rotateAngle;
+			rotateAngle = fmodf(rotateAngle, 360);
+		}
+		movePlayer();
+		saveLevelStateDatas();
+	}
+	
 	RUBELayer::update(dt);
 
 	//遍历待处理的钥匙进行清除
@@ -212,10 +257,10 @@ void BasicLevelLayer::movePlayer()
 	switch (m_controllerLayer->m_playerMoveDirection)
 	{
 	case PLAYER_MOVETOLEFT:
-		m_player->SetTransform(m_player->GetPosition() - b2Vec2(0.025f, 0.0f), m_player->GetAngle());
+		m_playerBody->SetTransform(m_playerBody->GetPosition() - b2Vec2(0.025f, 0.0f), m_playerBody->GetAngle());
 		break;
 	case PLAYER_MOVETORIGHT:
-		m_player->SetTransform(m_player->GetPosition() + b2Vec2(0.025f, 0.0f), m_player->GetAngle());
+		m_playerBody->SetTransform(m_playerBody->GetPosition() + b2Vec2(0.025f, 0.0f), m_playerBody->GetAngle());
 		break;
 	case PLAYER_NOTMOVING:
 		break;
@@ -224,7 +269,20 @@ void BasicLevelLayer::movePlayer()
 	}
 }
 
-void BasicLevelLayer::rotateGroundBody()
+void BasicLevelLayer::rotateAllObjectBodys()
+{
+	rotateObjectBody(m_playerBody);
+	for each (auto body in m_objectBodys)
+	{
+		rotateObjectBody(body);
+	}
+	for each (auto bud in m_allKeys)
+	{
+		rotateObjectBody(bud->body);
+	}
+}
+
+void BasicLevelLayer::rotateAllGroundBodys()
 {
 	for each (auto body in m_groundBodys)
 	{
@@ -258,31 +316,31 @@ void BasicLevelContactListener::BeginContact(b2Contact* contact)
 	BasicLevelBodyUserData* budA = (BasicLevelBodyUserData*)fA->GetBody()->GetUserData();
 	BasicLevelBodyUserData* budB = (BasicLevelBodyUserData*)fB->GetBody()->GetUserData();
 	
-	if (budA && budA->bodyType == BodyType_KEY && fB->GetBody() == layer->m_player)
+	if (budA && budA->bodyType == BodyType_KEY && fB->GetBody() == layer->m_playerBody)
 	{
 		layer->m_keyToProgress.insert(budA);
 	}
-	if (budB && budB->bodyType == BodyType_KEY && fA->GetBody() == layer->m_player)
+	if (budB && budB->bodyType == BodyType_KEY && fA->GetBody() == layer->m_playerBody)
 	{
 		layer->m_keyToProgress.insert(budB);
 	}
 
 	//isPlayerColideWithDoor
-	if (fA->GetBody() == layer->m_door && fB == layer->m_playerFootSensor)
+	if (fA->GetBody() == layer->m_door && fB == layer->m_playerFootSensorFixture)
 	{
 		layer->m_isPlayerCollideWithDoor = true;
 	}
-	if (fB->GetBody() == layer->m_door && fA == layer->m_playerFootSensor)
+	if (fB->GetBody() == layer->m_door && fA == layer->m_playerFootSensorFixture)
 	{
 		layer->m_isPlayerCollideWithDoor = true;
 	}
 
 	//ifColideWithBall,lose
-	if (budA && budA->bodyType == BodyType_FATALBALL && fB->GetBody() == layer->m_player)
+	if (budA && budA->bodyType == BodyType_FATALBALL && fB->GetBody() == layer->m_playerBody)
 	{
 		layer->lose();
 	}
-	if (budB && budB->bodyType == BodyType_FATALBALL && fA->GetBody() == layer->m_player)
+	if (budB && budB->bodyType == BodyType_FATALBALL && fA->GetBody() == layer->m_playerBody)
 	{
 		layer->lose();
 	}
@@ -295,11 +353,11 @@ void BasicLevelContactListener::EndContact(b2Contact* contact)
 	b2Fixture* fB = contact->GetFixtureB();
 
 	//isPlayerColideWithDoor
-	if (fA->GetBody() == layer->m_door && fB == layer->m_playerFootSensor)
+	if (fA->GetBody() == layer->m_door && fB == layer->m_playerFootSensorFixture)
 	{
 		layer->m_isPlayerCollideWithDoor = false;
 	}
-	if (fB->GetBody() == layer->m_door && fA == layer->m_playerFootSensor)
+	if (fB->GetBody() == layer->m_door && fA == layer->m_playerFootSensorFixture)
 	{
 		layer->m_isPlayerCollideWithDoor = false;
 	}

@@ -14,6 +14,21 @@ enum BodyType
 	BodyType_FATALBALL
 };
 
+struct BodyData 
+{
+	b2Body* body;
+	b2Vec2 position;
+	float32 angle;
+	b2Vec2 linearVelocity;
+
+};
+
+struct LevelStateData
+{
+	std::vector<BodyData*> allBodyDatas;
+	float levelRotateAngle;
+};
+
 struct BasicLevelBodyUserData
 {
 	BodyType bodyType;
@@ -35,8 +50,8 @@ protected:
 public: 
 	BasicLevelContactListener* m_contactListener;
 	
-	b2Body* m_player;						//存储主角的刚体用于移动
-	b2Fixture* m_playerFootSensor;			//碰撞检测当前踩的地方是什么
+	b2Body* m_playerBody;						//存储主角的刚体用于移动
+	b2Fixture* m_playerFootSensorFixture;			//碰撞检测当前踩的地方是什么
 	b2Body* m_door;							//通关的门
 	bool m_isPlayerCollideWithDoor;
 											//由于cocos2dx封装的Vector仅支持继承自CCNode的类，所以这里用STL的Vector
@@ -50,7 +65,8 @@ public:
 	std::set<BasicLevelBodyUserData*> m_allKeys;
 	//存放待删除的钥匙的bud
 	std::set<BasicLevelBodyUserData*> m_keyToProgress;
-
+	//每一帧存放整个场景所有刚体的位置以及旋转角度
+	std::set<LevelStateData*> m_levelStateDatas;
 
 	ControllerLayer* m_controllerLayer;
 
@@ -66,10 +82,12 @@ public:
 	virtual void update(float dt);
 
 	void movePlayer();
+	void rotateAllObjectBodys();
 	//旋转场景刚体,静态刚体,刚体位置在0,0
-	void rotateGroundBody();
+	void rotateAllGroundBodys();
 	//旋转非场景的刚体,动态刚体
 	void rotateObjectBody(b2Body* body);
+
 	//读取钥匙的刚体,设置其userdata，并将userdata存入m_allKeys
 	void loadKeys(b2dJson* json);
 	//读取球的刚体，设置其userdata，并其存入m_objectBodys
@@ -80,6 +98,11 @@ public:
 	void addContactListener();
 	//操作按钮层
 	void addControllerLayer();
+	//储存关卡当前所有刚体的位置及角度
+	void saveLevelStateDatas();
+	//读取并设置关卡当前所有刚体的位置及角度
+	void loadAndSetLevelStateDatas();
+
 	static cocos2d::Scene* createScene();
 
 	//当玩家通过关卡时，进行切换场景
