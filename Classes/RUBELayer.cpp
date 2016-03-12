@@ -156,6 +156,7 @@ void RUBELayer::setImagePositionsFromPhysicsBodies()
             pos.x = localPos.x;
             pos.y = localPos.y;
             angle += -imgInfo->body->GetAngle();
+			imgInfo->sprite->setOpacity(imgInfo->opacity);
         }
         imgInfo->sprite->setRotation( CC_RADIANS_TO_DEGREES(angle) );
         imgInfo->sprite->setPosition( pos );
