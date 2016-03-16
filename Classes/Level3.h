@@ -11,6 +11,7 @@ public:
 	static cocos2d::Scene* createScene();
 
 	virtual void win();
+	virtual void clear();
 };
 
 #endif

@@ -269,7 +269,7 @@
           "x" : -0.5549824833869934,
           "y" : 3.223007678985596
         },
-        "file" : "level2/Door.png",
+        "file" : "basic-object/Door.png",
         "filter" : 1,
         "flip" : false,
         "id" : 2,
@@ -286,7 +286,7 @@
           "x" : -0.001556634902954102,
           "y" : -0.01002407073974609
         },
-        "file" : "level2/Ball.png",
+        "file" : "basic-object/Ball.png",
         "filter" : 1,
         "flip" : false,
         "id" : 6,

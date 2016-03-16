@@ -5,6 +5,10 @@
 #include "RUBELayer.h"
 #include "ControllerLayer.h"
 #include "rubestuff/b2dJson.h"
+#include "Level/LevelStateData.h"
+#include "Helper/SaveLevelState.h"
+//检查内存泄漏用
+/*#include <vld.h>*/
 
 class b2dJson;
 
@@ -15,20 +19,7 @@ enum BodyType
 	BodyType_Door
 };
 
-struct BodyData 
-{
-	b2Body* body;
-	b2Vec2 position;
-	float32 angle;
-	b2Vec2 linearVelocity;
-	float32 angularVelocity;
-};
 
-struct LevelStateData
-{
-	std::vector<BodyData*> allBodyDatas;
-	float levelRotateAngle;
-};
 
 struct BasicLevelBodyUserData
 {
@@ -56,8 +47,6 @@ public:
 	b2Body* m_door;							//通关的门
 	bool m_isPlayerCollideWithDoor;
 											//由于cocos2dx封装的Vector仅支持继承自CCNode的类，所以这里用STL的Vector
-	std::vector<b2Body*> m_groundBodys;		//存储场景刚体用于旋转操作
-											
 	std::vector<b2Body*> m_objectBodys;		//存储非场景刚体用于旋转操作
 	//存储当前场景的旋转角度
 	CC_SYNTHESIZE(float, rotateAngle, RotateAngle);
@@ -66,8 +55,7 @@ public:
 	std::set<BasicLevelBodyUserData*> m_allKeys;
 	//存放待删除的钥匙的bud
 	std::set<BasicLevelBodyUserData*> m_keyToProgress;
-	//每一帧存放整个场景所有刚体的位置以及旋转角度
-	std::list<LevelStateData*> m_levelStateDatas;
+
 
 	ControllerLayer* m_controllerLayer;
 
@@ -87,7 +75,7 @@ public:
 	//旋转场景刚体,静态刚体,刚体位置在0,0
 	void rotateAllGroundBodys();
 	//旋转非场景的刚体,动态刚体
-	void rotateObjectBody(b2Body* body);
+	void rotateBodyPosition(b2Body* body);
 
 	//读取钥匙的刚体,设置其userdata，并将userdata存入m_allKeys
 	void loadKeys(b2dJson* json);
@@ -99,10 +87,6 @@ public:
 	void addContactListener();
 	//操作按钮层
 	void addControllerLayer();
-	//储存关卡当前所有刚体的位置及角度
-	void saveLevelStateDatas();
-	//读取并设置关卡当前所有刚体的位置及角度
-	void loadAndSetLevelStateDatas();
 
 	static cocos2d::Scene* createScene();
 
@@ -110,7 +94,7 @@ public:
 	virtual void win();
 	//当玩家失败时，弹出失败界面，玩家可选择重玩或离开当前关卡
 	virtual void lose();
-
+	void rotateBodyAndChangeAngle(b2Body* body);
 };
 
 #endif

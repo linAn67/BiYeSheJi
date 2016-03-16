@@ -23,6 +23,11 @@ void Level3::win()
 	director->replaceScene(scene);
 }
 
+void Level3::clear()
+{
+	BasicLevelLayer::clear();
+}
+
 std::string Level3::getFilename()
 {
 	return "level3.json";

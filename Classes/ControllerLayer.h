@@ -30,6 +30,8 @@ public:
 	bool					m_returnToPreviousLevelState;
 	BasicLevelLayer*		m_layer;
 
+
+
 	static cocos2d::Scene* createScene();
 
 	virtual bool init();

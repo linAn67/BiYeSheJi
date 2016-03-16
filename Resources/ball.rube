@@ -106,7 +106,7 @@
         "aspectScale" : 1,
         "body" : 1,
         "center" : 0,
-        "file" : "J:/毕业设计/RESOUCE/Ball.png",
+        "file" : "basic-object/Ball.png",
         "filter" : 1,
         "flip" : false,
         "id" : 1,

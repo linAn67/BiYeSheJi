@@ -57,12 +57,12 @@ float BasicLevelLayer::initialWorldScale()
 void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 {
 	RUBELayer::afterLoadProcessing(json);
-	json->getBodiesByName("ground", m_groundBodys);
+	json->getBodiesByName("ground", m_objectBodys);
 	m_playerBody = json->getBodyByName("player");
 	m_playerFootSensorFixture = json->getFixtureByName("playerfoot");
 	m_door = json->getBodyByName("door");
 	m_isPlayerCollideWithDoor = false;
-	m_groundBodys.push_back(m_door);
+	m_objectBodys.push_back(m_door);
 	//////////////////////////////////////////////////////////////////////////
 	BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
 	bud->body = m_door;
@@ -71,7 +71,7 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 	//////////////////////////////////////////////////////////////////////////
 	if (json->getBodyByName("obstacle"))
 	{
-		m_groundBodys.push_back(json->getBodyByName("obstacle"));
+		m_objectBodys.push_back(json->getBodyByName("obstacle"));
 	}
 
 
@@ -124,6 +124,7 @@ void BasicLevelLayer::loadChains(b2dJson* json)
 	else
 	{
 		CCLOG("no chain to load");
+		
 	}
 }
 
@@ -169,55 +170,10 @@ void BasicLevelLayer::addControllerLayer()
 	addChild(m_controllerLayer,10);
 }
 
-void BasicLevelLayer::saveLevelStateDatas()
-{
-	LevelStateData* lsDatas = new LevelStateData;
-	for (b2Body* body = m_world->GetBodyList(); body; body = body->GetNext())
-	{
-		BodyData* bDate = new BodyData;
-		bDate->body = body;
-		bDate->position = body->GetPosition();
-		bDate->angle = body->GetAngle();
-		bDate->angularVelocity = body->GetAngularVelocity();
-		bDate->linearVelocity = body->GetLinearVelocity();
-		lsDatas->allBodyDatas.push_back(bDate);
-		BasicLevelBodyUserData* data = (BasicLevelBodyUserData*)body->GetUserData();
-	}
-	lsDatas->levelRotateAngle = rotateAngle;
-	if (!m_levelStateDatas.empty())
-	{
-		
-	}
-	m_levelStateDatas.push_back(lsDatas);
-}
-
-
-
-void BasicLevelLayer::loadAndSetLevelStateDatas()
-{
-	if (!m_levelStateDatas.empty())
-	{
-		LevelStateData* lsDatas = m_levelStateDatas.back();
-		for each (auto bodyData in lsDatas->allBodyDatas)
-		{
-			b2Body* b = bodyData->body;
-			if (1)
-			{
-				b->SetTransform(bodyData->position, bodyData->angle);
-				b->SetLinearVelocity(bodyData->linearVelocity);
-				b->SetAngularVelocity(bodyData->angularVelocity);
-			}
-		}
-		rotateAngle = lsDatas->levelRotateAngle;
-		m_controllerLayer->m_rotateAngle = rotateAngle;
-		m_levelStateDatas.pop_back();
-	}
-}
-
 void BasicLevelLayer::clear()
 {
 	RUBELayer::clear();
-	m_groundBodys.clear();
+	m_objectBodys.clear();
 	m_objectBodys.clear();
 	for (std::set<BasicLevelBodyUserData*>::iterator it = m_allKeys.begin(); it != m_allKeys.end(); ++it)
 	{
@@ -225,44 +181,41 @@ void BasicLevelLayer::clear()
 	}
 	m_allKeys.clear();
 	m_keyToProgress.clear();
-	
-	m_levelStateDatas.clear();
+
+
 }
 
 void BasicLevelLayer::update(float dt)
 {
 	m_controllerLayer->update(dt);
-
+	RUBELayer::update(dt);
 	if (m_controllerLayer->m_returnToPreviousLevelState)
 	{
-		loadAndSetLevelStateDatas();
+		//loadAndSetLevelStateDatas();
 	}
 	else
 	{
-		//旋转非场景的物件
 		rotateAngle = fmodf(rotateAngle, 360);
 		if (rotateAngle != m_controllerLayer->m_rotateAngle){
 			rotateAllObjectBodys();
-			rotateAllGroundBodys();
 			rotateAngle = m_controllerLayer->m_rotateAngle;
 			rotateAngle = fmodf(rotateAngle, 360);
 		}
 		movePlayer();
-		saveLevelStateDatas();
 	}
 	
-	RUBELayer::update(dt);
+	
 
 	//遍历待处理的钥匙进行清除
 	for each (auto bud in m_keyToProgress)
 	{
-		removeBodyFromWorld(bud->body);
+		//removeBodyFromWorld(bud->body);
+		bud->body->SetActive(false);
 		m_allKeys.erase(bud);
 		delete bud;
 	}
 	//遍历完后要clear list
 	m_keyToProgress.clear();
-	//CCLOG("%f", rotateAngle);
 }
 
 void BasicLevelLayer::movePlayer()
@@ -284,30 +237,28 @@ void BasicLevelLayer::movePlayer()
 
 void BasicLevelLayer::rotateAllObjectBodys()
 {
-	rotateObjectBody(m_playerBody);
+	rotateBodyPosition(m_playerBody);
 	for each (auto body in m_objectBodys)
 	{
-		rotateObjectBody(body);
+		rotateBodyAndChangeAngle(body);
 	}
 	for each (auto bud in m_allKeys)
 	{
-		rotateObjectBody(bud->body);
+		rotateBodyAndChangeAngle(bud->body);
 	}
 }
 
-void BasicLevelLayer::rotateAllGroundBodys()
+void BasicLevelLayer::rotateBodyAndChangeAngle(b2Body* body)
 {
-	for each (auto body in m_groundBodys)
-	{
-		Vec2 bodyPos = Vec2(body->GetPosition().x, body->GetPosition().y);
-		bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
-
-		//body->SetTransform(body->GetPosition(), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle));
-		body->SetTransform(b2Vec2(bodyPos.x,bodyPos.y), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle));
-	}
+	Vec2 bodyPos = Vec2(body->GetPosition().x, body->GetPosition().y);
+	bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
+	float32 angle = CC_RADIANS_TO_DEGREES(body->GetAngle());
+	angle +=m_controllerLayer->m_rotateAngle - rotateAngle;
+	//body->SetTransform(body->GetPosition(), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle));
+	body->SetTransform(b2Vec2(bodyPos.x, bodyPos.y), CC_DEGREES_TO_RADIANS(angle));
 }
 
-void BasicLevelLayer::rotateObjectBody(b2Body* body)
+void BasicLevelLayer::rotateBodyPosition(b2Body* body)
 {
 	Vec2 bodyPos = Vec2(body->GetPosition().x, body->GetPosition().y);
 	bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));

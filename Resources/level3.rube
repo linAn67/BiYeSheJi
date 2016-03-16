@@ -287,13 +287,12 @@
         "linearVelocity" : 0,
         "name" : "ground",
         "position" : 0,
-        "sleepingAllowed" : false,
         "type" : "static"
       },
       
       {
         "angle" : 0,
-        "angularDamping" : 5,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -365,7 +364,7 @@
       
       {
         "angle" : 0,
-        "angularDamping" : 5,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -405,8 +404,8 @@
         "name" : "ball",
         "position" : 
         {
-          "x" : 0.2114074528217316,
-          "y" : -1.493531227111816
+          "x" : 0.2131636142730713,
+          "y" : -1.217815876007080
         },
         "type" : "dynamic"
       },
@@ -443,12 +442,12 @@
         "linearVelocity" : 0,
         "name" : "door",
         "position" : 0,
-        "sleepingAllowed" : false,
         "type" : "static"
       },
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -489,6 +488,7 @@
           }
         ],
         "id" : 61,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -508,6 +508,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -548,6 +549,7 @@
           }
         ],
         "id" : 64,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926455090346281e-005,
         "massData-center" : 
@@ -567,6 +569,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -607,6 +610,7 @@
           }
         ],
         "id" : 65,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -626,6 +630,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -666,6 +671,7 @@
           }
         ],
         "id" : 66,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -685,6 +691,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -725,6 +732,7 @@
           }
         ],
         "id" : 67,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -744,6 +752,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -784,6 +793,7 @@
           }
         ],
         "id" : 68,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -803,6 +813,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -843,6 +854,7 @@
           }
         ],
         "id" : 69,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -862,6 +874,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -902,6 +915,7 @@
           }
         ],
         "id" : 70,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -921,6 +935,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -961,6 +976,7 @@
           }
         ],
         "id" : 71,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -980,6 +996,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1020,6 +1037,7 @@
           }
         ],
         "id" : 72,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1039,6 +1057,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1079,6 +1098,7 @@
           }
         ],
         "id" : 73,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1098,6 +1118,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1138,6 +1159,7 @@
           }
         ],
         "id" : 74,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1157,6 +1179,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1197,6 +1220,7 @@
           }
         ],
         "id" : 75,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1216,6 +1240,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1256,6 +1281,7 @@
           }
         ],
         "id" : 76,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1275,6 +1301,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1315,6 +1342,7 @@
           }
         ],
         "id" : 77,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1334,6 +1362,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1374,6 +1403,7 @@
           }
         ],
         "id" : 78,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1393,6 +1423,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1433,6 +1464,7 @@
           }
         ],
         "id" : 79,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1452,6 +1484,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1492,6 +1525,7 @@
           }
         ],
         "id" : 80,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1511,6 +1545,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1551,6 +1586,7 @@
           }
         ],
         "id" : 81,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1570,6 +1606,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1610,6 +1647,7 @@
           }
         ],
         "id" : 87,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1629,6 +1667,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1669,6 +1708,7 @@
           }
         ],
         "id" : 88,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1688,6 +1728,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1728,6 +1769,7 @@
           }
         ],
         "id" : 89,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1747,6 +1789,7 @@
       
       {
         "angle" : 0,
+        "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,
         "fixture" : 
@@ -1787,6 +1830,7 @@
           }
         ],
         "id" : 90,
+        "linearDamping" : 1,
         "linearVelocity" : 0,
         "massData-I" : 2.926456181739923e-005,
         "massData-center" : 
@@ -1830,7 +1874,7 @@
           "x" : 0.004179358482360840,
           "y" : 0.004179477691650391
         },
-        "file" : "level3/Key.png",
+        "file" : "basic-object/Key.png",
         "filter" : 1,
         "flip" : false,
         "id" : 3,
@@ -1844,7 +1888,7 @@
         "aspectScale" : 1,
         "body" : 6,
         "center" : 0,
-        "file" : "level3/Ball.png",
+        "file" : "basic-object/Ball.png",
         "filter" : 1,
         "flip" : false,
         "id" : 4,
@@ -1862,7 +1906,7 @@
           "x" : 3.237175703048706,
           "y" : 0.4952164292335510
         },
-        "file" : "level3/Door.png",
+        "file" : "basic-object/Door.png",
         "filter" : 1,
         "flip" : false,
         "id" : 5,
@@ -2785,11 +2829,7 @@
           "x" : 4.172325134277344e-007,
           "y" : -0.02093136310577393
         },
-        "anchorB" : 
-        {
-          "x" : -4.470348358154297e-007,
-          "y" : 0.3085312843322754
-        },
+        "anchorB" : 0,
         "bodyA" : 81,
         "bodyB" : 6,
         "collideConnected" : true,
@@ -2811,16 +2851,12 @@
           "x" : 0.2114070057868958,
           "y" : 0.7023676633834839
         },
-        "anchorB" : 
-        {
-          "x" : 0,
-          "y" : 0.3235310018062592
-        },
+        "anchorB" : 0,
         "bodyA" : 1,
         "bodyB" : 6,
         "collideConnected" : true,
         "id" : 69,
-        "maxLength" : 2,
+        "maxLength" : 1.9,
         "name" : "joint1",
         "type" : "rope"
       },

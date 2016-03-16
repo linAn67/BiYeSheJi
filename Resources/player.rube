@@ -151,7 +151,7 @@
           "x" : 0.01117317844182253,
           "y" : -0.01675975322723389
         },
-        "file" : "level2/StartBtn.png",
+        "file" : "basic-object/StartBtn.png",
         "filter" : 1,
         "flip" : false,
         "id" : 1,

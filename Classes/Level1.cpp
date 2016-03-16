@@ -9,7 +9,6 @@ std::string Level1::getFilename()
 void Level1::afterLoadProcessing(b2dJson* json)
 {
 	BasicLevelLayer::afterLoadProcessing(json);
-	
 }
 
 cocos2d::Scene* Level1::createScene()

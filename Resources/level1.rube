@@ -642,7 +642,7 @@
         "aspectScale" : 1,
         "body" : 1,
         "center" : 0,
-        "file" : "J:/毕业设计/RESOUCE/BG1.png",
+        "file" : "level1/background.png",
         "filter" : 1,
         "flip" : false,
         "id" : 1,
@@ -659,7 +659,7 @@
           "x" : -0.8104702830314636,
           "y" : 3.054271221160889
         },
-        "file" : "J:/毕业设计/RESOUCE/mask1.png",
+        "file" : "level1/mask1.png",
         "filter" : 1,
         "flip" : false,
         "id" : 2,
@@ -677,7 +677,7 @@
           "x" : -0.02486699819564819,
           "y" : 0.04141634702682495
         },
-        "file" : "J:/毕业设计/RESOUCE/Level1BG.png",
+        "file" : "level1/obstacle.png",
         "filter" : 1,
         "flip" : false,
         "id" : 3,
@@ -695,7 +695,7 @@
           "x" : -1.222395539283752,
           "y" : 0.3637866973876953
         },
-        "file" : "J:/毕业设计/RESOUCE/mask2.png",
+        "file" : "level1/mask2.png",
         "filter" : 1,
         "flip" : false,
         "id" : 4,
@@ -709,7 +709,7 @@
         "aspectScale" : 1,
         "body" : 6,
         "center" : 0,
-        "file" : "J:/毕业设计/RESOUCE/Key.png",
+        "file" : "basic-object/Key.png",
         "filter" : 1,
         "flip" : false,
         "id" : 6,
@@ -727,7 +727,7 @@
           "x" : -2.250434160232544,
           "y" : 1.847041606903076
         },
-        "file" : "J:/毕业设计/RESOUCE/Door.png",
+        "file" : "basic-object/Door.png",
         "filter" : 1,
         "flip" : false,
         "id" : 7,
