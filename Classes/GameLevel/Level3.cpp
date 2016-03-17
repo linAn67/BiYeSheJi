@@ -1,4 +1,4 @@
-#include "Level3.h"
+#include "GameLevel/Level3.h"
 USING_NS_CC;
 
 
@@ -18,7 +18,7 @@ Scene* Level3::createScene()
 void Level3::win()
 {
 	auto director = Director::getInstance();
-	auto scene = Level3::createScene();
+	auto scene = GameScene::createScene(3);
 	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
 	director->replaceScene(scene);
 }

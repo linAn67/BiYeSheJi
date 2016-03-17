@@ -1,10 +1,5 @@
 #include "AppDelegate.h"
-#include "StartScene.h"
-#include "BasicLevelLayer.h"
-#include "ControllerLayer.h"
-#include "Level1.h"
-#include "Level2.h"
-#include "Level3.h"
+#include "GameUI/StartScene.h"
 
 
 USING_NS_CC;

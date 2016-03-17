@@ -1,5 +1,4 @@
-#include "Level1.h"
-#include "Level2.h"
+#include "GameLevel/Level1.h"
 USING_NS_CC;
 std::string Level1::getFilename()
 {
@@ -33,7 +32,7 @@ void Level1::win()
 {
 
 	auto director = Director::getInstance();
-	auto scene = Level2::createScene();
+	auto scene = GameScene::createScene(GameManager::getInstance()->curLevel+1);
 	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
 	director->replaceScene(scene);
 }

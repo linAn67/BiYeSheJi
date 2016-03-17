@@ -1,5 +1,5 @@
-#include "Level2.h"
-#include "Level3.h"
+#include "GameLevel/Level2.h"
+
 USING_NS_CC;
 std::string Level2::getFilename()
 {
@@ -28,13 +28,4 @@ cocos2d::Scene* Level2::createScene()
 	layer->release();
 
 	return scene;
-}
-
-void Level2::win()
-{
-
-	auto director = Director::getInstance();
-	auto scene = Level3::createScene();
-	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
-	director->replaceScene(scene);
 }

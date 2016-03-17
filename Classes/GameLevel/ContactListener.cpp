@@ -1,5 +1,5 @@
-#include "ContactListener.h"
-#include "BasicLevelLayer.h"
+#include "GameLevel/ContactListener.h"
+#include "GameLevel/BasicLevelLayer.h"
 
 void ContactListener::BeginContact(b2Contact* contact)
 {

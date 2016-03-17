@@ -1,8 +1,8 @@
 #ifndef __SaveLevelState_H__
 #define __SaveLevelState_H__
-#include "LevelStateData.h"
+#include "GameLevel/LevelStateData.h"
 #include <list>
-#include "BasicLevelLayer.h"
+#include "GameLevel/BasicLevelLayer.h"
 class SaveLevelState
 {
 private:

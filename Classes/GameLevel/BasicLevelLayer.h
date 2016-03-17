@@ -3,11 +3,13 @@
 
 #include "cocos2d.h"
 #include "RUBELayer.h"
-#include "ControllerLayer.h"
-#include "UI/PausemenuLayer.h"
+#include "GameUI/ControllerLayer.h"
+#include "GameUI/PausemenuLayer.h"
 #include "rubestuff/b2dJson.h"
 #include "Helper/SaveLevelState.h"
-#include "ContactListener.h"
+#include "GameLevel/ContactListener.h"
+#include "GameData/GameManager.h"
+#include "GameScene/GameScene.h"
 //¼ì²éÄÚ´æÐ¹Â©ÓÃ
 /*#include <vld.h>*/
 
@@ -86,7 +88,6 @@ public:
 	virtual void lose();
 
 	void doPause();
-	void replay();
 	void rotateBodyAndChangeAngle(b2Body* body);
 };
 

@@ -1,4 +1,4 @@
-#include "BasicLevelLayer.h"
+#include "GameLevel/BasicLevelLayer.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -24,8 +24,10 @@ Scene* BasicLevelLayer::createScene()
 
 void BasicLevelLayer::win()
 {
-	CCLOG("win");
-	
+	auto director = Director::getInstance();
+	auto scene = GameScene::createScene(GameManager::getInstance()->curLevel + 1);
+	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
+	director->replaceScene(scene);
 }
 
 void BasicLevelLayer::lose()
@@ -261,7 +263,7 @@ void BasicLevelLayer::doPause()
 	//Node::pause();
 	auto director = Director::getInstance();
 
-	//创建CCRenderTexture，纹理画布大小为窗口大小(480,320)
+	//创建CCRenderTexture，纹理画布大小为窗口大小(1136, 640)
 	RenderTexture *renderTexture = RenderTexture::create(1136, 640);
 
 	//遍历Game类的所有子节点信息，画入renderTexture中。
@@ -271,11 +273,5 @@ void BasicLevelLayer::doPause()
 	renderTexture->end();
 
 	//将游戏界面暂停，压入场景堆栈。并切换到GamePause界面
-	director->pushScene(PausemenuLayer::createScene(renderTexture,this));
-}
-
-void BasicLevelLayer::replay()
-{
-	auto director = Director::getInstance();
-	director->replaceScene(createScene());
+	director->pushScene(PausemenuLayer::createScene(renderTexture));
 }

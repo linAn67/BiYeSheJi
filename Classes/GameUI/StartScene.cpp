@@ -1,11 +1,9 @@
-#include "StartScene.h"
+#include "GameUI/StartScene.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
-#include "BasicLevelLayer.h"
+#include "GameLevel/Level1.h"
 #include "SimpleAudioEngine.h"
-#include "Level1.h"
-#include "Level2.h"
-#include "Level3.h"
+#include "GameScene/GameScene.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -50,7 +48,7 @@ bool StartScene::init()
 void StartScene::touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
 	auto director = Director::getInstance();
-	auto scene = Level1::createScene();
+	auto scene = GameScene::createScene(1);
 	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
 	switch (type)
 	{

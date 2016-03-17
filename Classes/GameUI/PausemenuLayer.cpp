@@ -1,6 +1,7 @@
-#include "PausemenuLayer.h"
-#include "BasicLevelLayer.h"
-
+#include "GameUI/PausemenuLayer.h"
+#include "GameLevel/BasicLevelLayer.h"
+#include "GameScene/GameScene.h"
+#include "GameData/GameManager.h"
 USING_NS_CC;
 using namespace ui;
 
@@ -46,12 +47,12 @@ cocos2d::Scene* PausemenuLayer::createScene(CCRenderTexture* sqr)
 	return scene;
 }*/
 
-cocos2d::Scene* PausemenuLayer::createScene(cocos2d::RenderTexture* sqr, BasicLevelLayer* gameLevelLayer)
+cocos2d::Scene* PausemenuLayer::createScene(cocos2d::RenderTexture* sqr)
 {
 	CCScene *scene = CCScene::create();
 	PausemenuLayer* mylayer = PausemenuLayer::create();
 	scene->addChild(mylayer, 10);
-	mylayer->m_gameLevelLayer = gameLevelLayer;
+	
 	//增加部分：使用Game界面中截图的sqr纹理图片创建Sprite
 	//并将Sprite添加到GamePause场景层中
 	CCSprite *spr = CCSprite::createWithTexture(sqr->getSprite()->getTexture());
@@ -66,7 +67,10 @@ cocos2d::Scene* PausemenuLayer::createScene(cocos2d::RenderTexture* sqr, BasicLe
 
 void PausemenuLayer::replayBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
-	m_gameLevelLayer->replay();
+	auto director = Director::getInstance();
+	auto curLevel = GameManager::getInstance()->curLevel;
+	auto scene = GameScene::createScene(curLevel);
+	director->replaceScene(scene);
 }
 
 void PausemenuLayer::continueBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
