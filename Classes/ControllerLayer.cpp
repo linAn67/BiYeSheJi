@@ -32,19 +32,22 @@ bool ControllerLayer::init()
 	addChild(rootNode);
 
 	Button* leftMoveBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "LeftMoveBtn");
-	leftMoveBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::moveToLeft, this));
+	leftMoveBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::moveToLeftBtnCallBack, this));
 	leftMoveBtn->setOpacity(200);
 	Button* rightMoveBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "RightMoveBtn");
 	rightMoveBtn->setOpacity(200);
-	rightMoveBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::moveToRight, this));
+	rightMoveBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::moveToRightBtnCallBack, this));
 
 	Button* antiClockwiseBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "AntiClockwiseBtn");
-	antiClockwiseBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::antiClockwiseRotate, this));
+	antiClockwiseBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::antiClockwiseBtnCallBack, this));
 	Button* clockwiseBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "ClockwiseBtn");
-	clockwiseBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::clockwiseRotate, this));
+	clockwiseBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::clockwiseBtnCallBack, this));
 
 	Button* confirmBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "ConfirmBtn");
 	confirmBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::confirmBtnCallBack, this));
+
+	Button* pauseBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode, "PauseBtn");
+	pauseBtn->addTouchEventListener(CC_CALLBACK_2(ControllerLayer::pauseBtnCallBack, this));
 
 	m_rotationDirection = RD_NOTROTATING;
 	m_playerMoveDirection = PLAYER_NOTMOVING;
@@ -61,7 +64,7 @@ bool ControllerLayer::init()
 }
 
 
-void ControllerLayer::moveToLeft(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
+void ControllerLayer::moveToLeftBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
 	switch (type)
 	{
@@ -77,7 +80,7 @@ void ControllerLayer::moveToLeft(cocos2d::Ref* sender, cocos2d::ui::Widget::Touc
 	}
 }
 
-void ControllerLayer::moveToRight(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
+void ControllerLayer::moveToRightBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
 	switch (type)
 	{
@@ -94,7 +97,7 @@ void ControllerLayer::moveToRight(cocos2d::Ref* sender, cocos2d::ui::Widget::Tou
 }
 
 
-void ControllerLayer::clockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
+void ControllerLayer::clockwiseBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
 	switch (type)
 	{
@@ -115,7 +118,7 @@ void ControllerLayer::clockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Widget:
 	}
 }
 
-void ControllerLayer::antiClockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
+void ControllerLayer::antiClockwiseBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
 	switch (type)
 	{
@@ -216,5 +219,18 @@ void ControllerLayer::confirmBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widg
 		break;
 	}
 	
+}
+
+void ControllerLayer::pauseBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
+{
+	
+	switch (type)
+	{
+	case cocos2d::ui::Widget::TouchEventType::ENDED:
+		m_layer->doPause();
+		break;
+	default:
+		break;
+	}
 }
 

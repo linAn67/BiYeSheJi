@@ -1,9 +1,5 @@
 #include "BasicLevelLayer.h"
 
-
-
-
-
 using namespace std;
 using namespace cocos2d;
 using namespace ui;
@@ -73,7 +69,6 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 	{
 		m_objectBodys.push_back(json->getBodyByName("obstacle"));
 	}
-
 
 	loadChains(json);
 	loadKeys(json);
@@ -152,14 +147,14 @@ void BasicLevelLayer::loadKeys(b2dJson* json)
 
 void BasicLevelLayer::addContactListener()
 {
-	m_contactListener = new BasicLevelContactListener();
+	m_contactListener = new ContactListener();
 	m_world->SetContactListener(m_contactListener);
 	m_contactListener->m_layer = this;
 }
 
 void BasicLevelLayer::addControllerLayer()
 {
-	auto director = Director::sharedDirector();
+	auto director = Director::getInstance();
 	Size winSize = director->getWinSize();
 	m_controllerLayer = ControllerLayer::create();
 	m_controllerLayer->m_layer = this;
@@ -181,8 +176,6 @@ void BasicLevelLayer::clear()
 	}
 	m_allKeys.clear();
 	m_keyToProgress.clear();
-
-
 }
 
 void BasicLevelLayer::update(float dt)
@@ -209,8 +202,7 @@ void BasicLevelLayer::update(float dt)
 	//遍历待处理的钥匙进行清除
 	for each (auto bud in m_keyToProgress)
 	{
-		//removeBodyFromWorld(bud->body);
-		bud->body->SetActive(false);
+		removeBodyFromWorld(bud->body);
 		m_allKeys.erase(bud);
 		delete bud;
 	}
@@ -254,7 +246,6 @@ void BasicLevelLayer::rotateBodyAndChangeAngle(b2Body* body)
 	bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
 	float32 angle = CC_RADIANS_TO_DEGREES(body->GetAngle());
 	angle +=m_controllerLayer->m_rotateAngle - rotateAngle;
-	//body->SetTransform(body->GetPosition(), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle));
 	body->SetTransform(b2Vec2(bodyPos.x, bodyPos.y), CC_DEGREES_TO_RADIANS(angle));
 }
 
@@ -265,64 +256,26 @@ void BasicLevelLayer::rotateBodyPosition(b2Body* body)
 	body->SetTransform(b2Vec2(bodyPos.x, bodyPos.y), body->GetAngle());
 }
 
-//////////////////////////////////////////////////////////////////////////
-//
-//							ContactListener
-//
-//////////////////////////////////////////////////////////////////////////
-
-void BasicLevelContactListener::BeginContact(b2Contact* contact)
+void BasicLevelLayer::doPause()
 {
-	BasicLevelLayer* layer = (BasicLevelLayer*)m_layer;
-	b2Fixture* fA = contact->GetFixtureA();
-	b2Fixture* fB = contact->GetFixtureB();
+	//Node::pause();
+	auto director = Director::getInstance();
 
-	BasicLevelBodyUserData* budA = (BasicLevelBodyUserData*)fA->GetBody()->GetUserData();
-	BasicLevelBodyUserData* budB = (BasicLevelBodyUserData*)fB->GetBody()->GetUserData();
-	
-	if (budA && budA->bodyType == BodyType_KEY && fB->GetBody() == layer->m_playerBody)
-	{
-		layer->m_keyToProgress.insert(budA);
-	}
-	if (budB && budB->bodyType == BodyType_KEY && fA->GetBody() == layer->m_playerBody)
-	{
-		layer->m_keyToProgress.insert(budB);
-	}
+	//创建CCRenderTexture，纹理画布大小为窗口大小(480,320)
+	RenderTexture *renderTexture = RenderTexture::create(1136, 640);
 
-	//isPlayerColideWithDoor
-	if (fA->GetBody() == layer->m_door && fB == layer->m_playerFootSensorFixture)
-	{
-		layer->m_isPlayerCollideWithDoor = true;
-	}
-	if (fB->GetBody() == layer->m_door && fA == layer->m_playerFootSensorFixture)
-	{
-		layer->m_isPlayerCollideWithDoor = true;
-	}
+	//遍历Game类的所有子节点信息，画入renderTexture中。
+	//这里类似截图。
+	renderTexture->begin();
+	this->getParent()->visit();
+	renderTexture->end();
 
-	//ifColideWithBall,lose
-	if (budA && budA->bodyType == BodyType_FATALBALL && fB->GetBody() == layer->m_playerBody)
-	{
-		layer->lose();
-	}
-	if (budB && budB->bodyType == BodyType_FATALBALL && fA->GetBody() == layer->m_playerBody)
-	{
-		layer->lose();
-	}
+	//将游戏界面暂停，压入场景堆栈。并切换到GamePause界面
+	director->pushScene(PausemenuLayer::createScene(renderTexture,this));
 }
 
-void BasicLevelContactListener::EndContact(b2Contact* contact)
+void BasicLevelLayer::replay()
 {
-	BasicLevelLayer* layer = (BasicLevelLayer*)m_layer;
-	b2Fixture* fA = contact->GetFixtureA();
-	b2Fixture* fB = contact->GetFixtureB();
-
-	//isPlayerColideWithDoor
-	if (fA->GetBody() == layer->m_door && fB == layer->m_playerFootSensorFixture)
-	{
-		layer->m_isPlayerCollideWithDoor = false;
-	}
-	if (fB->GetBody() == layer->m_door && fA == layer->m_playerFootSensorFixture)
-	{
-		layer->m_isPlayerCollideWithDoor = false;
-	}
+	auto director = Director::getInstance();
+	director->replaceScene(createScene());
 }

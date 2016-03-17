@@ -4,9 +4,10 @@
 #include "cocos2d.h"
 #include "RUBELayer.h"
 #include "ControllerLayer.h"
+#include "UI/PausemenuLayer.h"
 #include "rubestuff/b2dJson.h"
-#include "Level/LevelStateData.h"
 #include "Helper/SaveLevelState.h"
+#include "ContactListener.h"
 //检查内存泄漏用
 /*#include <vld.h>*/
 
@@ -19,35 +20,24 @@ enum BodyType
 	BodyType_Door
 };
 
-
-
 struct BasicLevelBodyUserData
 {
 	BodyType bodyType;
 	b2Body* body;
 };
 
-class BasicLevelContactListener :public b2ContactListener
-{
-public:
-	virtual void BeginContact(b2Contact* contact);      // called by Box2D during the Step function when two fixtures begin touching
-	virtual void EndContact(b2Contact* contact);        // called by Box2D during the Step function when two fixtures finish touching
-
-	class BasicLevelLayer* m_layer;
-};
-
 class BasicLevelLayer:public RUBELayer
 {
 protected:
 public: 
-	BasicLevelContactListener* m_contactListener;
+	
 	
 	b2Body* m_playerBody;						//存储主角的刚体用于移动
-	b2Fixture* m_playerFootSensorFixture;			//碰撞检测当前踩的地方是什么
-	b2Body* m_door;							//通关的门
+	b2Fixture* m_playerFootSensorFixture;		//碰撞检测当前踩的地方是什么
+	b2Body* m_door;								//通关的门
 	bool m_isPlayerCollideWithDoor;
-											//由于cocos2dx封装的Vector仅支持继承自CCNode的类，所以这里用STL的Vector
-	std::vector<b2Body*> m_objectBodys;		//存储非场景刚体用于旋转操作
+												//由于cocos2dx封装的Vector仅支持继承自CCNode的类，所以这里用STL的Vector
+	std::vector<b2Body*> m_objectBodys;			//存储非场景刚体用于旋转操作
 	//存储当前场景的旋转角度
 	CC_SYNTHESIZE(float, rotateAngle, RotateAngle);
 
@@ -58,7 +48,7 @@ public:
 
 
 	ControllerLayer* m_controllerLayer;
-
+	ContactListener* m_contactListener;
 
 	virtual std::string getFilename();
 	virtual cocos2d::Point initialWorldOffset();
@@ -94,6 +84,9 @@ public:
 	virtual void win();
 	//当玩家失败时，弹出失败界面，玩家可选择重玩或离开当前关卡
 	virtual void lose();
+
+	void doPause();
+	void replay();
 	void rotateBodyAndChangeAngle(b2Body* body);
 };
 

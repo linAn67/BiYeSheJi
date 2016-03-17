@@ -1,6 +1,6 @@
 #ifndef __SaveLevelState_H__
 #define __SaveLevelState_H__
-#include "Level/LevelStateData.h"
+#include "LevelStateData.h"
 #include <list>
 #include "BasicLevelLayer.h"
 class SaveLevelState

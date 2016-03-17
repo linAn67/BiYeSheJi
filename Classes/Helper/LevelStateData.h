@@ -14,6 +14,9 @@ struct BodyData
 	bool active;
 };
 
+
+
+
 struct LevelStateData
 {
 	std::vector<BodyData*> allBodyDatas;

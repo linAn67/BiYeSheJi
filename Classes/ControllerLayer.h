@@ -5,8 +5,6 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 
-class BasicLevelLayer;
-
 enum RotationDirection
 {
 	RD_CLOCKWISE,
@@ -28,10 +26,7 @@ public:
 	float					m_rotateAngle;//用于翻转box2d场景
 	PlayerMoveDirection		m_playerMoveDirection;
 	bool					m_returnToPreviousLevelState;
-	BasicLevelLayer*		m_layer;
-
-
-
+	class BasicLevelLayer*		m_layer;
 	static cocos2d::Scene* createScene();
 
 	virtual bool init();
@@ -39,16 +34,18 @@ public:
 	CREATE_FUNC(ControllerLayer);
 
 	virtual void update(float delta);
+protected:
+private:
+	
 
-	void moveToRight(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
-	void moveToLeft(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
-	void clockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
-	void antiClockwiseRotate(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void moveToRightBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void moveToLeftBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void clockwiseBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void antiClockwiseBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void confirmBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+	void pauseBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 	virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 	virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
-protected:
-private:
 };
 #endif 
