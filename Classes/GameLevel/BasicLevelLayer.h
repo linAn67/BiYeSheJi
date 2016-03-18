@@ -4,7 +4,6 @@
 #include "cocos2d.h"
 #include "RUBELayer.h"
 #include "GameUI/ControllerLayer.h"
-#include "GameUI/PausemenuLayer.h"
 #include "rubestuff/b2dJson.h"
 #include "Helper/SaveLevelState.h"
 #include "GameLevel/ContactListener.h"
@@ -33,15 +32,18 @@ class BasicLevelLayer:public RUBELayer
 protected:
 public: 
 	
-	
 	b2Body* m_playerBody;						//存储主角的刚体用于移动
 	b2Fixture* m_playerFootSensorFixture;		//碰撞检测当前踩的地方是什么
 	b2Body* m_door;								//通关的门
 	bool m_isPlayerCollideWithDoor;
+	int m_numFootContacts;
 												//由于cocos2dx封装的Vector仅支持继承自CCNode的类，所以这里用STL的Vector
 	std::vector<b2Body*> m_objectBodys;			//存储非场景刚体用于旋转操作
 	//存储当前场景的旋转角度
 	CC_SYNTHESIZE(float, rotateAngle, RotateAngle);
+
+	//防止玩家多次重复点击通关按钮导致出错
+	bool m_isLocked;
 
 	//存放所有钥匙的bud
 	std::set<BasicLevelBodyUserData*> m_allKeys;
@@ -68,7 +70,7 @@ public:
 	void rotateAllGroundBodys();
 	//旋转非场景的刚体,动态刚体
 	void rotateBodyPosition(b2Body* body);
-
+	b2Vec2 rotateBodyVelocity(b2Vec2 velocity);
 	//读取钥匙的刚体,设置其userdata，并将userdata存入m_allKeys
 	void loadKeys(b2dJson* json);
 	//读取球的刚体，设置其userdata，并其存入m_objectBodys

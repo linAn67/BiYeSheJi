@@ -2,7 +2,7 @@
 USING_NS_CC;
 std::string Level1::getFilename()
 {
-	return "level1.json";
+	return "level4.json";
 }
 
 void Level1::afterLoadProcessing(b2dJson* json)
@@ -26,13 +26,4 @@ cocos2d::Scene* Level1::createScene()
 	layer->release();
 
 	return scene;
-}
-
-void Level1::win()
-{
-
-	auto director = Director::getInstance();
-	auto scene = GameScene::createScene(GameManager::getInstance()->curLevel+1);
-	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
-	director->replaceScene(scene);
 }

@@ -38,6 +38,12 @@ void ContactListener::BeginContact(b2Contact* contact)
 	{
 		layer->lose();
 	}
+
+	//判断玩家是否在空中
+	if (fA == layer->m_playerFootSensorFixture || fB == layer->m_playerFootSensorFixture)
+	{
+		layer->m_numFootContacts++;
+	}
 }
 
 void ContactListener::EndContact(b2Contact* contact)
@@ -54,5 +60,9 @@ void ContactListener::EndContact(b2Contact* contact)
 	if (fB->GetBody() == layer->m_door && fA == layer->m_playerFootSensorFixture)
 	{
 		layer->m_isPlayerCollideWithDoor = false;
+	}
+	if (fA == layer->m_playerFootSensorFixture || fB == layer->m_playerFootSensorFixture)
+	{
+		layer->m_numFootContacts--;
 	}
 }

@@ -15,14 +15,6 @@ Scene* Level3::createScene()
 	return scene;
 }
 
-void Level3::win()
-{
-	auto director = Director::getInstance();
-	auto scene = GameScene::createScene(3);
-	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
-	director->replaceScene(scene);
-}
-
 void Level3::clear()
 {
 	BasicLevelLayer::clear();

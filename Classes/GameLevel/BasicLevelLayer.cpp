@@ -1,4 +1,6 @@
 #include "GameLevel/BasicLevelLayer.h"
+#include "GameUI/LoseLayer.h"
+#include "GameUI/PausemenuLayer.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -24,15 +26,32 @@ Scene* BasicLevelLayer::createScene()
 
 void BasicLevelLayer::win()
 {
-	auto director = Director::getInstance();
-	auto scene = GameScene::createScene(GameManager::getInstance()->curLevel + 1);
-	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
-	director->replaceScene(scene);
+	if (!m_isLocked)
+	{
+		auto director = Director::getInstance();
+		auto scene = GameScene::createScene(GameManager::getInstance()->curLevel + 1);
+		scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
+		director->replaceScene(scene);
+		m_isLocked = true;
+	}
 }
 
 void BasicLevelLayer::lose()
 {
-	CCLOG("lose");
+	//Node::pause();
+	auto director = Director::getInstance();
+
+	//创建CCRenderTexture，纹理画布大小为窗口大小(1136, 640)
+	RenderTexture *renderTexture = RenderTexture::create(1136, 640);
+
+	//遍历Game类的所有子节点信息，画入renderTexture中。
+	//这里类似截图。
+	renderTexture->begin();
+	this->getParent()->visit();
+	renderTexture->end();
+
+	//将游戏界面暂停，压入场景堆栈。并切换到GamePause界面
+	director->pushScene(LoseLayer::createScene(renderTexture));
 }
 
 std::string BasicLevelLayer::getFilename()
@@ -60,7 +79,9 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 	m_playerFootSensorFixture = json->getFixtureByName("playerfoot");
 	m_door = json->getBodyByName("door");
 	m_isPlayerCollideWithDoor = false;
+	m_numFootContacts = 0;
 	m_objectBodys.push_back(m_door);
+	m_isLocked = false;
 	//////////////////////////////////////////////////////////////////////////
 	BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
 	bud->body = m_door;
@@ -164,7 +185,7 @@ void BasicLevelLayer::addControllerLayer()
 	m_controllerLayer->setAnchorPoint(Vec2(0, 0));
 	m_controllerLayer->setPosition(Vec2(-winSize.width / 2, -winSize.height / 2) / initialWorldScale());
 	m_controllerLayer->setScale(m_controllerLayer->getScale() / initialWorldScale());
-	addChild(m_controllerLayer,10);
+	addChild(m_controllerLayer,99);
 }
 
 void BasicLevelLayer::clear()
@@ -214,18 +235,22 @@ void BasicLevelLayer::update(float dt)
 
 void BasicLevelLayer::movePlayer()
 {
-	switch (m_controllerLayer->m_playerMoveDirection)
+	//在地上才能动
+	if (m_numFootContacts>0)
 	{
-	case PLAYER_MOVETOLEFT:
-		m_playerBody->SetTransform(m_playerBody->GetPosition() - b2Vec2(0.025f, 0.0f), m_playerBody->GetAngle());
-		break;
-	case PLAYER_MOVETORIGHT:
-		m_playerBody->SetTransform(m_playerBody->GetPosition() + b2Vec2(0.025f, 0.0f), m_playerBody->GetAngle());
-		break;
-	case PLAYER_NOTMOVING:
-		break;
-	default:
-		break;
+		switch (m_controllerLayer->m_playerMoveDirection)
+		{
+		case PLAYER_MOVETOLEFT:
+			m_playerBody->SetTransform(m_playerBody->GetPosition() - b2Vec2(0.025f, 0.0f), m_playerBody->GetAngle());
+			break;
+		case PLAYER_MOVETORIGHT:
+			m_playerBody->SetTransform(m_playerBody->GetPosition() + b2Vec2(0.025f, 0.0f), m_playerBody->GetAngle());
+			break;
+		case PLAYER_NOTMOVING:
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -256,6 +281,17 @@ void BasicLevelLayer::rotateBodyPosition(b2Body* body)
 	Vec2 bodyPos = Vec2(body->GetPosition().x, body->GetPosition().y);
 	bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
 	body->SetTransform(b2Vec2(bodyPos.x, bodyPos.y), body->GetAngle());
+	if (!(body->GetLinearVelocity()==b2Vec2(0,0)))
+	{
+		body->SetLinearVelocity(rotateBodyVelocity(body->GetLinearVelocity()));
+	}
+}
+
+b2Vec2 BasicLevelLayer::rotateBodyVelocity(b2Vec2 velocity)
+{
+	Vec2 v = Vec2(velocity.x, velocity.y);
+	v = v.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
+	return b2Vec2(v.x, v.y);
 }
 
 void BasicLevelLayer::doPause()
@@ -275,3 +311,5 @@ void BasicLevelLayer::doPause()
 	//将游戏界面暂停，压入场景堆栈。并切换到GamePause界面
 	director->pushScene(PausemenuLayer::createScene(renderTexture));
 }
+
+

@@ -1,15 +1,16 @@
-#ifndef __LEVEL3_H__
-#define __LEVEL3_H__
+#ifndef __LEVEL4_H__
+#define __LEVEL4_H__
 
 #include "BasicLevelLayer.h"
 
-class Level3:public BasicLevelLayer
+class Level4:public BasicLevelLayer
 {
 public:
 	virtual std::string getFilename();
 	virtual void afterLoadProcessing(b2dJson* json);
 	static cocos2d::Scene* createScene();
 
+	virtual void win();
 	virtual void clear();
 };
 

@@ -9,7 +9,7 @@ public:
 	static GameManager* getInstance();
 
 	int curLevel;
-
+	
 private:
 	static GameManager * instance;
 };
