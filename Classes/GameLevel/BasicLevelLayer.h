@@ -18,7 +18,11 @@ enum BodyType
 {
 	BodyType_KEY,
 	BodyType_FATALBALL,
-	BodyType_Door
+	BodyType_Door,
+	BodyType_Whirlpool,
+	BodyType_Ground,
+	BodyType_Edge,
+	BodyType_Player=99
 };
 
 struct BasicLevelBodyUserData
@@ -59,28 +63,13 @@ public:
 	virtual float initialWorldScale();
 	virtual void afterLoadProcessing(b2dJson* json);
 
-
-	
 	virtual void clear();
 	virtual void update(float dt);
 
 	void movePlayer();
-	void rotateAllObjectBodys();
-	//旋转场景刚体,静态刚体,刚体位置在0,0
-	void rotateAllGroundBodys();
-	//旋转非场景的刚体,动态刚体
+
 	void rotateBodyPosition(b2Body* body);
 	b2Vec2 rotateBodyVelocity(b2Vec2 velocity);
-	//读取钥匙的刚体,设置其userdata，并将userdata存入m_allKeys
-	void loadKeys(b2dJson* json);
-	//读取球的刚体，设置其userdata，并其存入m_objectBodys
-	void loadBalls(b2dJson* json);
-	//连接刚体的链子
-	void loadChains(b2dJson* json);
-	//box2d的碰撞检测
-	void addContactListener();
-	//操作按钮层
-	void addControllerLayer();
 
 	static cocos2d::Scene* createScene();
 
@@ -91,6 +80,29 @@ public:
 
 	void doPause();
 	void rotateBodyAndChangeAngle(b2Body* body);
+
+	//box2d的碰撞检测
+	virtual void addContactListener();
+
+private:
+	//读取地面，设置其userdata，并其存入m_objectBodys
+	void loadGround(b2dJson* json);
+	void loadPlayer(b2dJson* json);
+	//读取钥匙的刚体,设置其userdata，并将userdata存入m_allKeys
+	void loadKeys(b2dJson* json);
+	//读取球的刚体，设置其userdata，并其存入m_objectBodys
+	void loadBalls(b2dJson* json);
+	//连接刚体的链子
+	void loadChains(b2dJson* json);
+	//读取边界
+	void loadEdge(b2dJson* json);
+	//操作按钮层
+	void addControllerLayer();
+
+	void rotateAllObjectBodys();
+	//旋转场景刚体,静态刚体,刚体位置在0,0
+	void rotateAllGroundBodys();
+	//旋转非场景的刚体,动态刚体
 };
 
 #endif

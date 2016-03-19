@@ -1,9 +1,9 @@
-#include "GameLevel/ContactListener.h"
-#include "GameLevel/BasicLevelLayer.h"
+#include "GameLevel/ContactListenerWhirlpool.h"
+#include "GameLevel/level5.h"
 
-void ContactListener::BeginContact(b2Contact* contact)
+void ContactListenerWhirlpool::BeginContact(b2Contact* contact)
 {
-	BasicLevelLayer* layer = (BasicLevelLayer*)m_layer;
+	Level5* layer = m_layer;
 	b2Fixture* fA = contact->GetFixtureA();
 	b2Fixture* fB = contact->GetFixtureB();
 
@@ -40,6 +40,16 @@ void ContactListener::BeginContact(b2Contact* contact)
 		layer->lose();
 	}
 
+	//判断玩家是否接触到边界
+	if (budA && budA->bodyType == BodyType_Edge && budB && budB->bodyType == BodyType_Player)
+	{
+		layer->lose();
+	}
+	if (budB && budB->bodyType == BodyType_Edge && budA && budA->bodyType == BodyType_Player)
+	{
+		layer->lose();
+	}
+
 	//判断玩家是否离开地面
 	if (fA == layer->m_playerFootSensorFixture && budB && budB->bodyType == BodyType_Ground)
 	{
@@ -50,20 +60,20 @@ void ContactListener::BeginContact(b2Contact* contact)
 		layer->m_numFootContacts++;
 	}
 
-	//判断玩家是否接触到边界
-	if (budA && budA->bodyType == BodyType_Edge && budB && budB->bodyType == BodyType_Player)
+	//判断是否进入漩涡
+	if (budA && budA->bodyType == BodyType_Whirlpool && budB)
 	{
-		layer->lose();
+		m_layer->addBodyUserDataToSet(budB);
 	}
-	if (budB && budB->bodyType == BodyType_Edge && budA && budA->bodyType == BodyType_Player)
+	if (budB && budB->bodyType == BodyType_Whirlpool && budA)
 	{
-		layer->lose();
+		m_layer->addBodyUserDataToSet(budA);
 	}
 }
 
-void ContactListener::EndContact(b2Contact* contact)
+void ContactListenerWhirlpool::EndContact(b2Contact* contact)
 {
-	BasicLevelLayer* layer = (BasicLevelLayer*)m_layer;
+	Level5* layer = (Level5*)m_layer;
 	b2Fixture* fA = contact->GetFixtureA();
 	b2Fixture* fB = contact->GetFixtureB();
 
@@ -88,5 +98,15 @@ void ContactListener::EndContact(b2Contact* contact)
 	if (fB == layer->m_playerFootSensorFixture && budA && budA->bodyType == BodyType_Ground)
 	{
 		layer->m_numFootContacts--;
+	}
+
+	//判断是否离开漩涡
+	if (budA && budA->bodyType == BodyType_Whirlpool && budB)
+	{
+		m_layer->m_objsInWhirlpool.erase(budB);
+	}
+	if (budB && budB->bodyType == BodyType_Whirlpool && budA)
+	{
+		m_layer->m_objsInWhirlpool.erase(budA);
 	}
 }

@@ -15,18 +15,6 @@ Scene* Level4::createScene()
 	return scene;
 }
 
-void Level4::win()
-{
-	if (!m_isLocked)
-	{
-		auto director = Director::getInstance();
-		auto scene = GameScene::createScene(3);
-		scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
-		director->replaceScene(scene);
-		m_isLocked = true;
-	}
-}
-
 void Level4::clear()
 {
 	BasicLevelLayer::clear();

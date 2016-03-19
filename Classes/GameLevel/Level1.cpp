@@ -2,7 +2,7 @@
 USING_NS_CC;
 std::string Level1::getFilename()
 {
-	return "level4.json";
+	return "level1.json";
 }
 
 void Level1::afterLoadProcessing(b2dJson* json)

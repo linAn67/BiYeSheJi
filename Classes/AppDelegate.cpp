@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
 #include "GameUI/StartScene.h"
-
+#include "GameScene/GameScene.h"
 
 USING_NS_CC;
 
@@ -76,8 +76,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = StartScene::createScene();
-	//auto scene = Level1::scene();
+    auto scene = GameScene::createScene(6);
+	//auto scene = StartScene::createScene();
 
     // run
     director->runWithScene(scene);

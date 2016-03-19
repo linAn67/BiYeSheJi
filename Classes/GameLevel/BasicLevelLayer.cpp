@@ -74,10 +74,12 @@ float BasicLevelLayer::initialWorldScale()
 void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 {
 	RUBELayer::afterLoadProcessing(json);
-	json->getBodiesByName("ground", m_objectBodys);
-	m_playerBody = json->getBodyByName("player");
-	m_playerFootSensorFixture = json->getFixtureByName("playerfoot");
+	loadGround(json);
+	loadEdge(json);
+	loadPlayer(json);
+	
 	m_door = json->getBodyByName("door");
+	CCAssert(nullptr!=m_door, "m_door not initial");
 	m_isPlayerCollideWithDoor = false;
 	m_numFootContacts = 0;
 	m_objectBodys.push_back(m_door);
@@ -104,6 +106,34 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 	addControllerLayer();
 	addContactListener();
 
+}
+
+void BasicLevelLayer::loadGround(b2dJson* json)
+{
+	if (json->getBodyByName("ground"))
+	{
+		std::vector<b2Body*> groundBodys;
+		json->getBodiesByName("ground", groundBodys);
+		for each (auto body in groundBodys)
+		{
+			BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+			m_objectBodys.push_back(body);
+			body->SetUserData(bud);
+
+			bud->bodyType = BodyType_Ground;
+			bud->body = body;
+		}
+	}
+}
+
+void BasicLevelLayer::loadPlayer(b2dJson* json)
+{
+	m_playerBody = json->getBodyByName("player");
+	m_playerFootSensorFixture = json->getFixtureByName("playerfoot");
+	BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+	bud->body = m_playerBody;
+	bud->bodyType = BodyType::BodyType_Player;
+	m_playerBody->SetUserData(bud);
 }
 
 void BasicLevelLayer::loadBalls(b2dJson* json)
@@ -168,6 +198,24 @@ void BasicLevelLayer::loadKeys(b2dJson* json)
 	}
 }
 
+void BasicLevelLayer::loadEdge(b2dJson* json)
+{
+	if (json->getBodyByName("edge"))
+	{
+		std::vector<b2Body*> edgeBodys;
+		json->getBodiesByName("edge", edgeBodys);
+		for each (auto body in edgeBodys)
+		{
+			BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+			m_objectBodys.push_back(body);
+			body->SetUserData(bud);
+			bud->bodyType = BodyType_Edge;
+			bud->body = body;
+		}
+	}
+}
+
+
 void BasicLevelLayer::addContactListener()
 {
 	m_contactListener = new ContactListener();
@@ -227,7 +275,6 @@ void BasicLevelLayer::update(float dt)
 	{
 		removeBodyFromWorld(bud->body);
 		m_allKeys.erase(bud);
-		delete bud;
 	}
 	//遍历完后要clear list
 	m_keyToProgress.clear();
@@ -311,5 +358,10 @@ void BasicLevelLayer::doPause()
 	//将游戏界面暂停，压入场景堆栈。并切换到GamePause界面
 	director->pushScene(PausemenuLayer::createScene(renderTexture));
 }
+
+
+
+
+
 
 
