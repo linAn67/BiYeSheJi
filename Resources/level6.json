@@ -35,6 +35,39 @@
 		},
 		
 		{
+			"angle" : 0,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 0,
+							"y" : 5.960464477539063e-008
+						},
+						"radius" : 1.034846305847168
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture1",
+					"sensor" : true
+				}
+			],
+			"linearVelocity" : 0,
+			"name" : "whirlpool",
+			"position" : 
+			{
+				"x" : 1.348028182983398,
+				"y" : -0.2235644310712814
+			},
+			"type" : 0
+		},
+		
+		{
 			"allowSleep" : false,
 			"angle" : -1.590566992759705,
 			"angularDamping" : 3,
@@ -290,39 +323,6 @@
 			[
 				
 				{
-					"circle" : 
-					{
-						"center" : 
-						{
-							"x" : 0,
-							"y" : 5.960464477539063e-008
-						},
-						"radius" : 1.034846305847168
-					},
-					"density" : 1,
-					"friction" : 0.2,
-					"name" : "fixture1",
-					"sensor" : true
-				}
-			],
-			"linearVelocity" : 0,
-			"name" : "whirlpool",
-			"position" : 
-			{
-				"x" : 1.348028182983398,
-				"y" : -0.2235644310712814
-			},
-			"type" : 0
-		},
-		
-		{
-			"angle" : 0,
-			"angularVelocity" : 0,
-			"awake" : true,
-			"fixture" : 
-			[
-				
-				{
 					"chain" : 
 					{
 						"hasNextVertex" : true,
@@ -438,15 +438,29 @@
 			[
 				
 				{
-					"circle" : 
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
 					{
-						"center" : 0,
-						"radius" : 0.3
-					},
-					"density" : 27.67477416992188,
-					"filter-categoryBits" : 16,
-					"friction" : 1,
-					"name" : "fixture0"
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.2223453968763351,
+								0.2223453968763351,
+								-0.2223453968763351,
+								-0.2223453968763351
+							],
+							"y" : 
+							[
+								-0.1090236902236939,
+								0.3017116487026215,
+								0.3017116487026215,
+								-0.1090236902236939
+							]
+						}
+					}
 				},
 				
 				{
@@ -474,16 +488,31 @@
 						}
 					},
 					"sensor" : true
+				},
+				
+				{
+					"circle" : 
+					{
+						"center" : 
+						{
+							"x" : 0,
+							"y" : -0.1050253957509995
+						},
+						"radius" : 0.2256202101707459
+					},
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture1"
 				}
 			],
 			"linearVelocity" : 0,
-			"massData-I" : 0.04155408591032028,
+			"massData-I" : 0.1646368950605393,
 			"massData-center" : 
 			{
-				"x" : -3.240882506361231e-005,
-				"y" : -0.06446245312690735
+				"x" : -0.0001287232735194266,
+				"y" : -0.2557175457477570
 			},
-			"massData-mass" : 10,
+			"massData-mass" : 2.517711639404297,
 			"name" : "player",
 			"path" : "object0",
 			"position" : 
@@ -624,7 +653,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 1,
+			"body" : 2,
 			"center" : 0,
 			"corners" : 
 			{
@@ -670,10 +699,10 @@
 			{
 				"x" : 
 				[
-					-0.3033268153667450,
-					0.3256731927394867,
-					0.3256731927394867,
-					-0.3033268153667450
+					-0.2065576016902924,
+					0.2289039492607117,
+					0.2289039492607117,
+					-0.2065576016902924
 				],
 				"y" : 
 				[
@@ -683,19 +712,20 @@
 					0.2977402508258820
 				]
 			},
-			"file" : "basic-object/StartBtn.png",
+			"file" : "basic-object/Player.png",
 			"filter" : 1,
+			"flip" : true,
 			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
-			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glTexCoordPointer" : [ 1, 0.0, 0.0, 0.0, 0.0, 1, 1, 1 ],
 			"glVertexPointer" : 
 			[
-				-0.3033268153667450,
+				-0.2065576016902924,
 				-0.3312597572803497,
-				0.3256731927394867,
+				0.2289039492607117,
 				-0.3312597572803497,
-				0.3256731927394867,
+				0.2289039492607117,
 				0.2977402508258820,
-				-0.3033268153667450,
+				-0.2065576016902924,
 				0.2977402508258820
 			],
 			"name" : "image0",
@@ -811,7 +841,7 @@
 				"y" : -0.01081067230552435
 			},
 			"bodyA" : 4,
-			"bodyB" : 1,
+			"bodyB" : 2,
 			"enableLimit" : false,
 			"enableMotor" : false,
 			"jointSpeed" : 0,

@@ -73,23 +73,33 @@
         [
           
           {
-            "density" : 27.67477416992188,
-            "filter-categoryBits" : 16,
-            "friction" : 1,
+            "density" : 1,
+            "friction" : 0.2,
             "id" : 1,
             "name" : "fixture0",
             "shapes" : 
             [
               
               {
-                "radius" : 0.3,
-                "type" : "circle"
+                "type" : "polygon"
               }
             ],
             "vertices" : 
             {
-              "x" : [ 0.0 ],
-              "y" : [ 0.0 ]
+              "x" : 
+              [
+                -0.2223453968763351,
+                0.2223453968763351,
+                0.2223453968763351,
+                -0.2223453968763351
+              ],
+              "y" : 
+              [
+                -0.1090236902236939,
+                -0.1090236902236939,
+                0.3017116487026215,
+                0.3017116487026215
+              ]
             }
           },
           
@@ -123,17 +133,37 @@
                 -0.2072349935770035
               ]
             }
+          },
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 4,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.2256202101707459,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ -0.1050253957509995 ]
+            }
           }
         ],
         "id" : 1,
         "linearVelocity" : 0,
-        "massData-I" : 0.04155409336090088,
+        "massData-I" : 0.1646368950605393,
         "massData-center" : 
         {
-          "x" : -3.240882506361231e-005,
-          "y" : -0.06446246057748795
+          "x" : -0.0001287232735194266,
+          "y" : -0.2557175457477570
         },
-        "massData-mass" : 10,
+        "massData-mass" : 2.517711639404297,
         "name" : "player",
         "position" : 0,
         "sleepingAllowed" : false,
@@ -151,9 +181,9 @@
           "x" : 0.01117317844182253,
           "y" : -0.01675975322723389
         },
-        "file" : "basic-object/StartBtn.png",
+        "file" : "basic-object/Player.png",
         "filter" : 1,
-        "flip" : false,
+        "flip" : true,
         "id" : 1,
         "name" : "image0",
         "opacity" : 0.5,

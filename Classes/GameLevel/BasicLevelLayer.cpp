@@ -128,12 +128,16 @@ void BasicLevelLayer::loadGround(b2dJson* json)
 
 void BasicLevelLayer::loadPlayer(b2dJson* json)
 {
-	m_playerBody = json->getBodyByName("player");
-	m_playerFootSensorFixture = json->getFixtureByName("playerfoot");
+	
+	b2Body* body = json->getBodyByName("player");
+	b2Fixture* foot= json->getFixtureByName("playerfoot");
 	BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
-	bud->body = m_playerBody;
+	bud->body = body;
 	bud->bodyType = BodyType::BodyType_Player;
-	m_playerBody->SetUserData(bud);
+	body->SetUserData(bud);
+	Sprite* sp = getAnySpriteOnBody(body);
+	m_player = Player::create(body, foot, sp);
+	addChild(m_player);
 }
 
 void BasicLevelLayer::loadBalls(b2dJson* json)
@@ -268,7 +272,7 @@ void BasicLevelLayer::update(float dt)
 		movePlayer();
 	}
 	
-	
+	m_player->update(dt);
 
 	//遍历待处理的钥匙进行清除
 	for each (auto bud in m_keyToProgress)
@@ -285,25 +289,13 @@ void BasicLevelLayer::movePlayer()
 	//在地上才能动
 	if (m_numFootContacts>0)
 	{
-		switch (m_controllerLayer->m_playerMoveDirection)
-		{
-		case PLAYER_MOVETOLEFT:
-			m_playerBody->SetTransform(m_playerBody->GetPosition() - b2Vec2(0.025f, 0.0f), m_playerBody->GetAngle());
-			break;
-		case PLAYER_MOVETORIGHT:
-			m_playerBody->SetTransform(m_playerBody->GetPosition() + b2Vec2(0.025f, 0.0f), m_playerBody->GetAngle());
-			break;
-		case PLAYER_NOTMOVING:
-			break;
-		default:
-			break;
-		}
+		m_player->move(m_controllerLayer->m_playerMoveDirection);
 	}
 }
 
 void BasicLevelLayer::rotateAllObjectBodys()
 {
-	rotateBodyPosition(m_playerBody);
+	rotateBodyPosition(m_player->m_body);
 	for each (auto body in m_objectBodys)
 	{
 		rotateBodyAndChangeAngle(body);
@@ -358,10 +350,3 @@ void BasicLevelLayer::doPause()
 	//将游戏界面暂停，压入场景堆栈。并切换到GamePause界面
 	director->pushScene(PausemenuLayer::createScene(renderTexture));
 }
-
-
-
-
-
-
-

@@ -7,14 +7,7 @@
 
 class BaseSprite : public cocos2d::Sprite
 {
-private:
-
 public:
-	BaseSprite() {}
-	virtual ~BaseSprite() {}
-	virtual bool init(b2Body* body);
-	static BaseSprite* create(b2Body* body);
-
 	Sprite* m_sprite;
 	b2Body* m_body;
 	virtual void update(float delta);

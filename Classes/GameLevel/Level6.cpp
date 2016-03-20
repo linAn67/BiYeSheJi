@@ -1,7 +1,10 @@
 #include "GameLevel/Level6.h"
 
 USING_NS_CC;
-#define TIMEINTERVAL 4.0f
+//开启状态持续时间
+#define TIME1 5.0f
+//关闭状态持续时间
+#define TIME2 1.0f
 
 Scene* Level6::createScene()
 {
@@ -32,9 +35,20 @@ void Level6::update(float dt)
 {
 	Level5::update(dt);
 	time += dt;
-	if (time>TIMEINTERVAL)
+	if (m_whirlpool->m_isOn)
 	{
-		time -= TIMEINTERVAL;
-		m_whirlpool->m_isOn = !m_whirlpool->m_isOn;
+		if (time>TIME1)
+		{
+			time -= TIME1;
+			m_whirlpool->m_isOn = false;
+		}
+	}
+	else
+	{
+		if (time > TIME2)
+		{
+			time -= TIME2;
+			m_whirlpool->m_isOn = true;
+		}
 	}
 }

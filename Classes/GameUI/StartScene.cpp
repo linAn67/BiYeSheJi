@@ -48,7 +48,7 @@ bool StartScene::init()
 void StartScene::touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
 	auto director = Director::getInstance();
-	auto scene = GameScene::createScene(5);
+	auto scene = GameScene::createScene(1);
 	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
 	switch (type)
 	{

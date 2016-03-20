@@ -56,7 +56,7 @@ void WhirlpoolSprite::setSpritePositionFromPhysicsBody()
 	if (m_body)
 	{
 		b2Vec2 bvec = m_body->GetPosition();
-		
+
 
 		pos = Vec2(bvec.x, bvec.y);
 	}

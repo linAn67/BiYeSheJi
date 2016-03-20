@@ -116,40 +116,6 @@
 		{
 			"allowSleep" : false,
 			"angle" : 0,
-			"angularDamping" : 5,
-			"angularVelocity" : 0,
-			"awake" : true,
-			"fixture" : 
-			[
-				
-				{
-					"circle" : 
-					{
-						"center" : 0,
-						"radius" : 0.5
-					},
-					"density" : 50.92958068847656,
-					"friction" : 0.5,
-					"name" : "fixture0"
-				}
-			],
-			"linearDamping" : 1,
-			"linearVelocity" : 0,
-			"massData-I" : 5,
-			"massData-mass" : 40.0,
-			"name" : "ball",
-			"path" : "object1",
-			"position" : 
-			{
-				"x" : -2.325904607772827,
-				"y" : 2.274056196212769
-			},
-			"type" : 2
-		},
-		
-		{
-			"allowSleep" : false,
-			"angle" : 0,
 			"angularVelocity" : 0,
 			"awake" : true,
 			"bullet" : true,
@@ -158,7 +124,33 @@
 			[
 				
 				{
-					"density" : 190.7690277099609,
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture0",
+					"polygon" : 
+					{
+						"vertices" : 
+						{
+							"x" : 
+							[
+								0.2223453968763351,
+								0.2223453968763351,
+								-0.2223453968763351,
+								-0.2223453968763351
+							],
+							"y" : 
+							[
+								-0.1090236902236939,
+								0.3017116487026215,
+								0.3017116487026215,
+								-0.1090236902236939
+							]
+						}
+					}
+				},
+				
+				{
+					"density" : 27.67477416992188,
 					"friction" : 0.2,
 					"name" : "playerfoot",
 					"polygon" : 
@@ -187,29 +179,66 @@
 				{
 					"circle" : 
 					{
-						"center" : 0,
-						"radius" : 0.3
+						"center" : 
+						{
+							"x" : 0,
+							"y" : -0.1050253957509995
+						},
+						"radius" : 0.2256202101707459
 					},
-					"density" : 190.7690277099609,
-					"filter-categoryBits" : 16,
-					"friction" : 1,
-					"name" : "fixture0"
+					"density" : 1,
+					"friction" : 0.2,
+					"name" : "fixture1"
 				}
 			],
 			"linearVelocity" : 0,
-			"massData-I" : 0.2864424884319305,
+			"massData-I" : 0.1646368950605393,
 			"massData-center" : 
 			{
-				"x" : -3.240882142563351e-005,
-				"y" : -0.06446244567632675
+				"x" : -0.0001287232735194266,
+				"y" : -0.2557175457477570
 			},
-			"massData-mass" : 68.93245697021484,
+			"massData-mass" : 2.517711639404297,
 			"name" : "player",
 			"path" : "object0",
 			"position" : 
 			{
 				"x" : -2.385717391967773,
 				"y" : -2.056393861770630
+			},
+			"type" : 2
+		},
+		
+		{
+			"allowSleep" : false,
+			"angle" : 0,
+			"angularDamping" : 5,
+			"angularVelocity" : 0,
+			"awake" : true,
+			"fixture" : 
+			[
+				
+				{
+					"circle" : 
+					{
+						"center" : 0,
+						"radius" : 0.5
+					},
+					"density" : 50.92958068847656,
+					"friction" : 0.5,
+					"name" : "fixture0"
+				}
+			],
+			"linearDamping" : 1,
+			"linearVelocity" : 0,
+			"massData-I" : 5,
+			"massData-mass" : 40.0,
+			"name" : "ball",
+			"path" : "object1",
+			"position" : 
+			{
+				"x" : -2.325904607772827,
+				"y" : 2.274056196212769
 			},
 			"type" : 2
 		}
@@ -345,7 +374,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 2,
+			"body" : 3,
 			"center" : 0,
 			"corners" : 
 			{
@@ -364,7 +393,7 @@
 		
 		{
 			"aspectScale" : 1,
-			"body" : 3,
+			"body" : 2,
 			"center" : 
 			{
 				"x" : 0.01117317844182253,
@@ -374,10 +403,10 @@
 			{
 				"x" : 
 				[
-					-0.3033268153667450,
-					0.3256731927394867,
-					0.3256731927394867,
-					-0.3033268153667450
+					-0.2065576016902924,
+					0.2289039492607117,
+					0.2289039492607117,
+					-0.2065576016902924
 				],
 				"y" : 
 				[
@@ -387,19 +416,20 @@
 					0.2977402508258820
 				]
 			},
-			"file" : "basic-object/StartBtn.png",
+			"file" : "basic-object/Player.png",
 			"filter" : 1,
+			"flip" : true,
 			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
-			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
+			"glTexCoordPointer" : [ 1, 0.0, 0.0, 0.0, 0.0, 1, 1, 1 ],
 			"glVertexPointer" : 
 			[
-				-0.3033268153667450,
+				-0.2065576016902924,
 				-0.3312597572803497,
-				0.3256731927394867,
+				0.2289039492607117,
 				-0.3312597572803497,
-				0.3256731927394867,
+				0.2289039492607117,
 				0.2977402508258820,
-				-0.3033268153667450,
+				-0.2065576016902924,
 				0.2977402508258820
 			],
 			"name" : "image0",

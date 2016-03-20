@@ -364,6 +364,55 @@
       
       {
         "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 3,
+            "name" : "fixture6",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "loop"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                0.2472848892211914,
+                0.8002796173095703,
+                11.59482383728027,
+                10.61032390594482
+              ],
+              "y" : 
+              [
+                -11.95655632019043,
+                -2.028007507324219,
+                -2.089597702026367,
+                -12.22030448913574
+              ]
+            }
+          }
+        ],
+        "id" : 3,
+        "linearVelocity" : 0,
+        "name" : "edge",
+        "position" : 
+        {
+          "x" : -5.880916118621826,
+          "y" : 7.163692474365234
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
         "angularDamping" : 50.0,
         "angularVelocity" : 0,
         "awake" : true,

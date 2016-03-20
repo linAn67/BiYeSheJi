@@ -9,6 +9,7 @@
 #include "GameLevel/ContactListener.h"
 #include "GameData/GameManager.h"
 #include "GameScene/GameScene.h"
+#include "Sprite/Player.h"
 //检查内存泄漏用
 /*#include <vld.h>*/
 
@@ -35,9 +36,9 @@ class BasicLevelLayer:public RUBELayer
 {
 protected:
 public: 
-	
-	b2Body* m_playerBody;						//存储主角的刚体用于移动
-	b2Fixture* m_playerFootSensorFixture;		//碰撞检测当前踩的地方是什么
+	Player* m_player;
+	//b2Body* m_playerBody;						//存储主角的刚体用于移动
+	//b2Fixture* m_playerFootSensorFixture;		//碰撞检测当前踩的地方是什么
 	b2Body* m_door;								//通关的门
 	bool m_isPlayerCollideWithDoor;
 	int m_numFootContacts;
