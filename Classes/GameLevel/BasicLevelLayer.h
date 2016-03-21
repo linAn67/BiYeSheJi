@@ -2,6 +2,7 @@
 #define __BAISICLEVEL_H__
 
 #include "cocos2d.h"
+#include "GameLevel/BasicLoadLayer.h"
 #include "RUBELayer.h"
 #include "GameUI/ControllerLayer.h"
 #include "rubestuff/b2dJson.h"
@@ -32,7 +33,7 @@ struct BasicLevelBodyUserData
 	b2Body* body;
 };
 
-class BasicLevelLayer:public RUBELayer
+class BasicLevelLayer:public BasicLoadLayer
 {
 protected:
 public: 
