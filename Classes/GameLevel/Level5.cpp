@@ -127,9 +127,10 @@ void Level5::whirlpoolEffect()
 void Level5::removeBodyUserDataInWhirlpool(BasicLevelBodyUserData* bud)
 {
 	bud->body->SetLinearDamping(0);
-	m_objsInWhirlpool.find(bud);
-	m_objsInWhirlpool.erase(bud);
+	if (m_objsInWhirlpool.count(bud) == 1)
+	{
+		m_objsInWhirlpool.erase(bud);
+	}
 }
-
 
 

@@ -35,7 +35,8 @@ void Level7::update(float dt)
 	{
 		for each (auto bud in m_objsInWhirlpool)
 		{
-			removeBodyUserDataInWhirlpool(bud);
+			bud->body->SetLinearDamping(0);
 		}
+		m_objsInWhirlpool.clear();
 	}
 }
