@@ -1,13 +1,13 @@
-#include "GameLevel/Level7.h"
+#include "GameLevel/Level8.h"
 
 USING_NS_CC;
 
-Scene* Level7::createScene()
+Scene* Level8::createScene()
 {
 	Scene *scene = Scene::create();
 
 	// add layer as a child to scene
-	Level7* layer = new Level7();
+	Level8* layer = new Level8();
 	layer->init();// do things that require virtual functions (can't do in constructor)
 	scene->addChild(layer);
 	layer->release();
@@ -15,19 +15,19 @@ Scene* Level7::createScene()
 	return scene;
 }
 
-std::string Level7::getFilename()
+std::string Level8::getFilename()
 {
-	return "level7.json";
+	return "level8.json";
 }
 
-void Level7::afterLoadProcessing(b2dJson* json)
+void Level8::afterLoadProcessing(b2dJson* json)
 {
 	Level5::afterLoadProcessing(json);
-	m_whirlpool->m_sprite->setScale(1.1);
+	m_whirlpool->m_sprite->setScale(1.5);
 
 }
 
-void Level7::update(float dt)
+void Level8::update(float dt)
 {
 	Level5::update(dt);
 	m_whirlpool->m_isOn = !m_button->m_isOn;
@@ -38,4 +38,10 @@ void Level7::update(float dt)
 			removeBodyUserDataInWhirlpool(bud);
 		}
 	}
+}
+
+float Level8::initialWorldScale()
+{
+	Size s = Director::getInstance()->getWinSize();
+	return s.height / 10; //screen will be 8 physics units high
 }

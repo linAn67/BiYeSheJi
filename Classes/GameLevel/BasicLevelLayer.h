@@ -33,7 +33,7 @@ struct BasicLevelBodyUserData
 	b2Body* body;
 };
 
-class BasicLevelLayer:public RUBELayer
+class BasicLevelLayer:public BasicLoadLayer
 {
 protected:
 public: 

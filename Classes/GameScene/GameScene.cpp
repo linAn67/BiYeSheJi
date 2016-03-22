@@ -8,6 +8,7 @@
 #include "GameLevel/Level5.h"
 #include "GameLevel/Level6.h"
 #include "GameLevel/Level7.h"
+#include "GameLevel/Level8.h"
 
 USING_NS_CC;
 
@@ -38,6 +39,9 @@ cocos2d::Scene* GameScene::createScene(int Level)
 		break;
 	case(7) :
 		scene = Level7::createScene();
+		break;
+	case(8) :
+		scene = Level8::createScene();
 		break;
 	default:
 		CCLOG("error");

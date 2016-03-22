@@ -50,6 +50,16 @@ void ContactListenerWhirlpool::BeginContact(b2Contact* contact)
 		layer->lose();
 	}
 
+	//判断球是否接触到边界，失去球便无法通关
+	if (budA && budA->bodyType == BodyType_FATALBALL && budB && budB->bodyType == BodyType_Edge)
+	{
+		layer->lose();
+	}
+	if (budB && budB->bodyType == BodyType_FATALBALL && budA && budA->bodyType == BodyType_Edge)
+	{
+		layer->lose();
+	}
+
 	//判断玩家是否离开地面
 	if (fA == layer->m_player->m_footSensor && budB && budB->bodyType == BodyType_Ground)
 	{
@@ -82,6 +92,8 @@ void ContactListenerWhirlpool::BeginContact(b2Contact* contact)
 			m_layer->m_button->m_isOn = true;
 		}
 	}
+
+
 }
 
 void ContactListenerWhirlpool::EndContact(b2Contact* contact)

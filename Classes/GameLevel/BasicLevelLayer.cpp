@@ -73,7 +73,7 @@ float BasicLevelLayer::initialWorldScale()
 
 void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 {
-	RUBELayer::afterLoadProcessing(json);
+	BasicLoadLayer::afterLoadProcessing(json);
 	loadGround(json);
 	loadEdge(json);
 	loadPlayer(json);
@@ -89,7 +89,7 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 	loadBalls(json);
 	auto sp = Sprite::create("res/BasicBackGround.png");
 	addChild(sp, -5);
-	sp->setScale(0.0125f);
+	sp->setScale(1.0f / initialWorldScale());
 	rotateAngle = 0;
 
 	addControllerLayer();
@@ -247,7 +247,7 @@ void BasicLevelLayer::addControllerLayer()
 
 void BasicLevelLayer::clear()
 {
-	RUBELayer::clear();
+	BasicLoadLayer::clear();
 	m_objectBodys.clear();
 	m_objectBodys.clear();
 	for (std::set<BasicLevelBodyUserData*>::iterator it = m_allKeys.begin(); it != m_allKeys.end(); ++it)
@@ -261,7 +261,7 @@ void BasicLevelLayer::clear()
 void BasicLevelLayer::update(float dt)
 {
 	m_controllerLayer->update(dt);
-	RUBELayer::update(dt);
+	BasicLoadLayer::update(dt);
 	if (m_controllerLayer->m_returnToPreviousLevelState)
 	{
 		//loadAndSetLevelStateDatas();
