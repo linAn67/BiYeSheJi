@@ -1,7 +1,9 @@
 #ifndef __WhirlpoolSprite_H__
 #define __WhirlpoolSprite_H__
 
-#include "Sprite/BaseSprite.h"
+#include "cocos2d.h"
+#include "Box2D/Box2D.h"
+
 class WhirlpoolSprite :public cocos2d::Sprite
 {
 public:
@@ -11,7 +13,7 @@ public:
 	virtual void update(float delta);
 	void setSpritePositionFromPhysicsBody();
 public:
-	Sprite* m_sprite;
+	cocos2d::Sprite* m_sprite;
 	b2Body* m_body;
 	float m_whirlpoolGravity;
 };

@@ -3,12 +3,16 @@
 
 #include "BasicLevelLayer.h"
 #include "Sprite/WhirlpoolSprite.h"
+#include "Sprite/ButtonSprite.h"
 #include "GameLevel/ContactListenerWhirlpool.h"
 
 class Level5:public BasicLevelLayer
 {
 public:
 	WhirlpoolSprite* m_whirlpool;
+	ButtonSprite* m_button;
+
+
 	virtual std::string getFilename();
 	virtual void afterLoadProcessing(b2dJson* json);
 	static cocos2d::Scene* createScene();
@@ -17,10 +21,15 @@ public:
 	//存放被吸入漩涡的刚体
 	ContactListenerWhirlpool* m_contactListener;
 	virtual void addContactListener();
-	void addBodyUserDataToSet(BasicLevelBodyUserData* bud);
+
+
+	void addBodyUserDataInWhirlpool(BasicLevelBodyUserData* bud);
+	//重置刚体进入漩涡时被设定的属性
+	void removeBodyUserDataInWhirlpool(BasicLevelBodyUserData* bud);
 	std::set<BasicLevelBodyUserData*> m_objsInWhirlpool;
 private:
 	void loadWhirlpool(b2dJson* json);
+	void loadButton(b2dJson* json);
 	void whirlpoolEffect();
 };
 

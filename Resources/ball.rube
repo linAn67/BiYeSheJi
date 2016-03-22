@@ -115,6 +115,7 @@
         "id" : 1,
         "name" : "image0",
         "opacity" : 0.5,
+        "renderOrder" : 2,
         "scale" : 1
       }
     ],

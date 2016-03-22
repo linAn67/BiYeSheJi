@@ -63,11 +63,24 @@ void ContactListenerWhirlpool::BeginContact(b2Contact* contact)
 	//判断是否进入漩涡
 	if (budA && budA->bodyType == BodyType_Whirlpool && budB)
 	{
-		m_layer->addBodyUserDataToSet(budB);
+		m_layer->addBodyUserDataInWhirlpool(budB);
 	}
 	if (budB && budB->bodyType == BodyType_Whirlpool && budA)
 	{
-		m_layer->addBodyUserDataToSet(budA);
+		m_layer->addBodyUserDataInWhirlpool(budA);
+	}
+
+	//判断按钮是否被按下，若是则将其设置为开启状态
+	if (m_layer->m_button!=nullptr)
+	{
+		if (fA==m_layer->m_button->getBtnSensor()&&fB==m_layer->m_button->getbtnBaseSensor())
+		{
+			m_layer->m_button->m_isOn = true;
+		}
+		if (fB == m_layer->m_button->getBtnSensor() && fA == m_layer->m_button->getbtnBaseSensor())
+		{
+			m_layer->m_button->m_isOn = true;
+		}
 	}
 }
 
@@ -103,10 +116,23 @@ void ContactListenerWhirlpool::EndContact(b2Contact* contact)
 	//判断是否离开漩涡
 	if (budA && budA->bodyType == BodyType_Whirlpool && budB)
 	{
-		m_layer->m_objsInWhirlpool.erase(budB);
+		m_layer->removeBodyUserDataInWhirlpool(budB);
 	}
 	if (budB && budB->bodyType == BodyType_Whirlpool && budA)
 	{
-		m_layer->m_objsInWhirlpool.erase(budA);
+		m_layer->removeBodyUserDataInWhirlpool(budA);
+	}
+
+	//判断按钮是否弹起,若是则将其设置为关闭状态
+	if (m_layer->m_button != nullptr)
+	{
+		if (fA == m_layer->m_button->getBtnSensor() && fB == m_layer->m_button->getbtnBaseSensor())
+		{
+			m_layer->m_button->m_isOn = false;
+		}
+		if (fB == m_layer->m_button->getBtnSensor() && fA == m_layer->m_button->getbtnBaseSensor())
+		{
+			m_layer->m_button->m_isOn = false;
+		}
 	}
 }

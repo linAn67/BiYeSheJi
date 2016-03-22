@@ -1,5 +1,4 @@
 #include "Sprite/WhirlpoolSprite.h"
-#include "Box2D/Box2D.h"
 
 USING_NS_CC;
 
@@ -10,12 +9,17 @@ bool WhirlpoolSprite::init(b2Body* body, bool isOn)
 		return false;
 	}
 	
+	if (!body)
+	{
+		return false;
+	}
 	m_body = body;
 	m_isOn = isOn;
 	m_sprite = Sprite::create("basic-object/whirlpool.png");
 	m_sprite->setOpacity(125);
 	addChild(m_sprite);
 	m_whirlpoolGravity = 15;
+	return true;
 }
 
 WhirlpoolSprite* WhirlpoolSprite::create(b2Body* body, bool isOn)

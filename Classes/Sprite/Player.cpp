@@ -9,6 +9,12 @@ bool Player::init(b2Body* body, b2Fixture* footSensor, cocos2d::Sprite* sprite)
 	{
 		return false;
 	}
+
+	if (!m_body)
+	{
+		return false;
+	}
+
 	m_body = body;
 	m_sprite = sprite;
 	m_footSensor = footSensor;

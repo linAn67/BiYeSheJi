@@ -73,22 +73,11 @@ float BasicLevelLayer::initialWorldScale()
 
 void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 {
-	BasicLoadLayer::afterLoadProcessing(json);
+	RUBELayer::afterLoadProcessing(json);
 	loadGround(json);
 	loadEdge(json);
 	loadPlayer(json);
-	
-	m_door = json->getBodyByName("door");
-	CCAssert(nullptr!=m_door, "m_door not initial");
-	m_isPlayerCollideWithDoor = false;
-	m_numFootContacts = 0;
-	m_objectBodys.push_back(m_door);
-	m_isLocked = false;
-	//////////////////////////////////////////////////////////////////////////
-	BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
-	bud->body = m_door;
-	bud->bodyType = BodyType::BodyType_Door;
-	m_door->SetUserData(bud);
+	loadDoor(json);
 	//////////////////////////////////////////////////////////////////////////
 	if (json->getBodyByName("obstacle"))
 	{
@@ -219,6 +208,22 @@ void BasicLevelLayer::loadEdge(b2dJson* json)
 	}
 }
 
+void BasicLevelLayer::loadDoor(b2dJson* json)
+{
+	m_door = json->getBodyByName("door");
+	//因为有几次都忘了在编辑器里加入门的刚体，所以加一句断言
+	CCAssert(nullptr != m_door, "m_door not initial");
+	m_isPlayerCollideWithDoor = false;
+	m_numFootContacts = 0;
+	m_objectBodys.push_back(m_door);
+	m_isLocked = false;
+	//////////////////////////////////////////////////////////////////////////
+	BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+	bud->body = m_door;
+	bud->bodyType = BodyType::BodyType_Door;
+	m_door->SetUserData(bud);
+}
+
 
 void BasicLevelLayer::addContactListener()
 {
@@ -242,7 +247,7 @@ void BasicLevelLayer::addControllerLayer()
 
 void BasicLevelLayer::clear()
 {
-	BasicLoadLayer::clear();
+	RUBELayer::clear();
 	m_objectBodys.clear();
 	m_objectBodys.clear();
 	for (std::set<BasicLevelBodyUserData*>::iterator it = m_allKeys.begin(); it != m_allKeys.end(); ++it)
@@ -256,7 +261,7 @@ void BasicLevelLayer::clear()
 void BasicLevelLayer::update(float dt)
 {
 	m_controllerLayer->update(dt);
-	BasicLoadLayer::update(dt);
+	RUBELayer::update(dt);
 	if (m_controllerLayer->m_returnToPreviousLevelState)
 	{
 		//loadAndSetLevelStateDatas();
@@ -272,9 +277,12 @@ void BasicLevelLayer::update(float dt)
 		movePlayer();
 	}
 	
-	m_player->update(dt);
+	if (m_player != nullptr)
+	{
+		m_player->update(dt);
+	}
 
-	//遍历待处理的钥匙进行清除
+	//遍历待删除的钥匙进行清除
 	for each (auto bud in m_keyToProgress)
 	{
 		removeBodyFromWorld(bud->body);
@@ -350,3 +358,4 @@ void BasicLevelLayer::doPause()
 	//将游戏界面暂停，压入场景堆栈。并切换到GamePause界面
 	director->pushScene(PausemenuLayer::createScene(renderTexture));
 }
+

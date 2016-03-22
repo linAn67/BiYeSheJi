@@ -33,7 +33,7 @@ struct BasicLevelBodyUserData
 	b2Body* body;
 };
 
-class BasicLevelLayer:public BasicLoadLayer
+class BasicLevelLayer:public RUBELayer
 {
 protected:
 public: 
@@ -98,6 +98,9 @@ private:
 	void loadChains(b2dJson* json);
 	//读取边界
 	void loadEdge(b2dJson* json);
+	//读取门
+	void loadDoor(b2dJson* json);
+
 	//操作按钮层
 	void addControllerLayer();
 
