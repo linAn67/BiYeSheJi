@@ -105,9 +105,8 @@ private:
 	void addControllerLayer();
 
 	void rotateAllObjectBodys();
-	//旋转场景刚体,静态刚体,刚体位置在0,0
-	void rotateAllGroundBodys();
-	//旋转非场景的刚体,动态刚体
+	
+
 };
 
 #endif

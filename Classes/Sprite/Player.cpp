@@ -1,5 +1,8 @@
 #include "Sprite/Player.h"
 #include "Box2D/Box2D.h"
+#include <math.h>
+
+#define MAX_VELOCITY 1.5f
 
 USING_NS_CC;
 
@@ -43,15 +46,15 @@ void Player::update(float delta)
 {
 	setSpritePositionFromPhysicsBody();
 	//根据x轴的线速度判断玩家当前移动的方向
-/*
-	if (m_body->GetLinearVelocity().x>0)
+
+	if (m_body->GetLinearVelocity().x>0.1f )
+	{
+		m_isFlipX = true;
+	}
+	else if (m_body->GetLinearVelocity().x<-0.1f)
 	{
 		m_isFlipX = false;
 	}
-	else if (m_body->GetLinearVelocity().x<0)
-	{
-		m_isFlipX = true;
-	}*/
 	m_sprite->setFlipX(m_isFlipX);
 }
 
@@ -72,19 +75,34 @@ void Player::setSpritePositionFromPhysicsBody()
 
 void Player::move(PlayerMoveDirection dir)
 {
+	b2Vec2 force;
 	switch (dir)
 	{
 	case PLAYER_MOVETOLEFT:
-		m_body->SetTransform(m_body->GetPosition() - b2Vec2(0.025f, 0.0f), m_body->GetAngle());
-		m_isFlipX = false;
+		//m_body->SetTransform(m_body->GetPosition() - b2Vec2(0.025f, 0.0f), m_body->GetAngle());
+
+		force = b2Vec2(-1, 0);
+
+		//m_isFlipX = false;
 		break;
 	case PLAYER_MOVETORIGHT:
-		m_body->SetTransform(m_body->GetPosition() + b2Vec2(0.025f, 0.0f), m_body->GetAngle());
-		m_isFlipX = true;
+		//m_body->SetTransform(m_body->GetPosition() + b2Vec2(0.025f, 0.0f), m_body->GetAngle());
+		
+		force = b2Vec2(1, 0);
+		//m_isFlipX = true;
 		break;
 	case PLAYER_NOTMOVING:
+		force = b2Vec2(0, 0);
 		break;
 	default:
+		force = b2Vec2(0, 0);
 		break;
 	}
+	
+	if (fabs(m_body->GetLinearVelocity().x)<MAX_VELOCITY)
+	{
+		force *= 10 * m_body->GetMass();
+		m_body->ApplyForce(force, m_body->GetPosition(), true);
+	}
+	
 }

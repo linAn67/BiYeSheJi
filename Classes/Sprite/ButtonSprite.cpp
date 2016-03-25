@@ -60,7 +60,7 @@ void ButtonSprite::keepBtnOff()
 {
 	b2Vec2 force = m_btn->GetPosition() - m_btnBase->GetPosition();
 	force.Normalize();
-	force *= 5 * m_btn->GetMass();
+	force *= 50 * m_btn->GetMass();
 	m_btn->ApplyForce(force, m_btn->GetPosition(), true);
 	
 }

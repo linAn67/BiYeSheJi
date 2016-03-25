@@ -30,11 +30,11 @@ bool BasicLoadLayer::init()
     
     setAnchorPoint( Vec2(0,0) );
     
-    // set the starting scale and offset values from the subclass
+    //从子类设置初始位置和缩放
     setPosition( initialWorldOffset() );
     setScale( initialWorldScale() );
     
-    // load the world from RUBE .json file (this will also call afterLoadProcessing)
+    // 从json文件中载入box2d物理世界，在函数结尾处会调用afterLoadProcessing
     loadWorld();
     
     scheduleUpdate();
@@ -42,7 +42,7 @@ bool BasicLoadLayer::init()
     return true;
 }
 
-// Override this in subclasses to specify which .json file to load
+// 在子类中重写这个函数即可修改载入的json文件名
 string BasicLoadLayer::getFilename()
 {
     return "jointTypes.json";
@@ -189,6 +189,7 @@ void BasicLoadLayer::update(float dt)
 	setImagePositionsFromPhysicsBodies();
 }
 
+/*
 // Converts a position in screen pixels to a location in the physics world
 b2Vec2 BasicLoadLayer::screenToWorld(cocos2d::Point screenPos)
 {
@@ -201,9 +202,10 @@ b2Vec2 BasicLoadLayer::screenToWorld(cocos2d::Point screenPos)
     float layerScale = getScale();
     
     return b2Vec2(screenPos.x / layerScale, screenPos.y / layerScale);
-}
+}*/
 
 
+/*
 // Converts a location in the physics world to a position in screen pixels
 cocos2d::Point BasicLoadLayer::worldToScreen(b2Vec2 worldPos)
 {
@@ -212,7 +214,7 @@ cocos2d::Point BasicLoadLayer::worldToScreen(b2Vec2 worldPos)
     Point p = Vec2(worldPos.x + layerOffset.x, worldPos.y + layerOffset.y);
     p.y = Director::getInstance()->getWinSize().height - p.y;
     return p;
-}
+}*/
 
 void BasicLoadLayer::setImagePositionsFromPhysicsBodies()
 {

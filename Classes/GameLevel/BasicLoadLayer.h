@@ -42,8 +42,9 @@ public:
     virtual void afterLoadProcessing(b2dJson* json);            // override this in a subclass to do something else after loading the world (before discarding the JSON info)
     virtual void clear();                                       // undoes everything done by loadWorld and afterLoadProcessing, so that they can be safely called again
 
+/*
     virtual b2Vec2 screenToWorld(cocos2d::Point screenPos);   // converts a position in screen pixels to a location in the physics world
-    virtual cocos2d::Point worldToScreen(b2Vec2 worldPos);    // converts a location in the physics world to a position in screen pixels
+    virtual cocos2d::Point worldToScreen(b2Vec2 worldPos);    // converts a location in the physics world to a position in screen pixels*/
 
 	void loadImages(b2dJson* json);
 	void setImagePositionsFromPhysicsBodies();

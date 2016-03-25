@@ -79,10 +79,7 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 	loadPlayer(json);
 	loadDoor(json);
 	//////////////////////////////////////////////////////////////////////////
-	if (json->getBodyByName("obstacle"))
-	{
-		m_objectBodys.push_back(json->getBodyByName("obstacle"));
-	}
+
 
 	loadChains(json);
 	loadKeys(json);
@@ -248,7 +245,6 @@ void BasicLevelLayer::addControllerLayer()
 void BasicLevelLayer::clear()
 {
 	BasicLoadLayer::clear();
-	m_objectBodys.clear();
 	m_objectBodys.clear();
 	for (std::set<BasicLevelBodyUserData*>::iterator it = m_allKeys.begin(); it != m_allKeys.end(); ++it)
 	{

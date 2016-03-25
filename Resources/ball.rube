@@ -72,7 +72,7 @@
         [
           
           {
-            "density" : 50.92958068847656,
+            "density" : 25.46479034423828,
             "friction" : 0.5,
             "id" : 1,
             "name" : "fixture0",
@@ -94,8 +94,8 @@
         "id" : 1,
         "linearDamping" : 1,
         "linearVelocity" : 0,
-        "massData-I" : 5,
-        "massData-mass" : 40.0,
+        "massData-I" : 2.5,
+        "massData-mass" : 20.0,
         "name" : "ball",
         "position" : 0,
         "sleepingAllowed" : false,

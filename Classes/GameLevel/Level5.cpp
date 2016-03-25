@@ -32,7 +32,6 @@ void Level5::afterLoadProcessing(b2dJson* json)
 	loadWhirlpool(json);
 	loadButton(json);
 	m_whirlpool->m_isOn = true;
-
 }
 
 void Level5::loadWhirlpool(b2dJson* json)
@@ -67,6 +66,10 @@ void Level5::loadButton(b2dJson* json)
 	if (btnBody &&
 		btnBaseBody)
 	{
+		BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+		bud->bodyType=BodyType_Ground;
+		btnBody->SetUserData(bud);
+		btnBaseBody->SetUserData(bud);
 		m_objectBodys.push_back(btnBody);
 		m_objectBodys.push_back(btnBaseBody);
 	}

@@ -1,6 +1,6 @@
 #include "GameUI/ControllerLayer.h"
 #include "GameLevel/BasicLevelLayer.h"
-const float rotateDegree = 0.5f;
+const float rotateDegree = 0.78f;
 
 USING_NS_CC;
 
@@ -144,10 +144,10 @@ void ControllerLayer::update(float delta)
 	switch (m_rotationDirection)
 	{
 	case RD_CLOCKWISE:
-		m_rotateAngle += rotateDegree;
+		m_rotateAngle -= rotateDegree;
 		break;
 	case RD_ANTICLOCKWISE:
-		m_rotateAngle -= rotateDegree;
+		m_rotateAngle += rotateDegree;
 		break;
 	case RD_NOTROTATING:
 		break;
