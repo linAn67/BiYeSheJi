@@ -50,3 +50,11 @@ cocos2d::Scene* GameScene::createScene(int Level)
 
 	return scene;
 }
+
+void GameScene::replaceScene(int Level)
+{
+	auto director = Director::getInstance();
+	auto scene = GameScene::createScene(Level);
+	scene = TransitionFade::create(1.0f, scene, Color3B::BLACK);
+	director->replaceScene(scene);
+}

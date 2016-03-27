@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>control/ClockwiseBtn.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{195,0},{79,79}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{79,79}</string>
+			</dict>
+			<key>control/ConfirmBtn.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,66},{79,79}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{79,79}</string>
+			</dict>
+			<key>control/LeftBtn.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{0,0},{195,66}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{195,66}</string>
+			</dict>
+			<key>control/PauseBtn.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{79,66},{79,79}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{79,79}</string>
+			</dict>
+		</dict>
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>textureFileName</key>
+			<string>ControlBtnPlist.png</string>
+			<key>realTextureFileName</key>
+			<string>ControlBtnPlist.png</string>
+			<key>size</key>
+			<string>{512,256}</string>
+		</dict>
+		<key>texture</key>
+		<dict>
+			<key>width</key>
+			<integer>512</integer>
+			<key>height</key>
+			<integer>256</integer>
+		</dict>
+	</dict>
+</plist>

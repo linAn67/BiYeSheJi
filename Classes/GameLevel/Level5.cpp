@@ -40,7 +40,7 @@ void Level5::loadWhirlpool(b2dJson* json)
 	m_whirlpool = WhirlpoolSprite::create(body, false);
 	if (body)
 	{
-		BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+		MyBodyUserData* bud = new MyBodyUserData;
 		body->SetUserData(bud);
 		bud->bodyType = BodyType_Whirlpool;
 		bud->body = body;
@@ -66,7 +66,7 @@ void Level5::loadButton(b2dJson* json)
 	if (btnBody &&
 		btnBaseBody)
 	{
-		BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+		MyBodyUserData* bud = new MyBodyUserData;
 		bud->bodyType=BodyType_Ground;
 		btnBody->SetUserData(bud);
 		btnBaseBody->SetUserData(bud);
@@ -104,7 +104,7 @@ void Level5::addContactListener()
 	m_contactListener->m_layer = this;
 }
 
-void Level5::addBodyUserDataInWhirlpool(BasicLevelBodyUserData* bud)
+void Level5::addBodyUserDataInWhirlpool(MyBodyUserData* bud)
 {
 	CCLOG("addBodyUserDataToSet");
 	m_objsInWhirlpool.insert(bud);
@@ -127,7 +127,7 @@ void Level5::whirlpoolEffect()
 	}
 }
 
-void Level5::removeBodyUserDataInWhirlpool(BasicLevelBodyUserData* bud)
+void Level5::removeBodyUserDataInWhirlpool(MyBodyUserData* bud)
 {
 	bud->body->SetLinearDamping(0);
 	if (m_objsInWhirlpool.count(bud) == 1)

@@ -3,12 +3,13 @@
 
 void ContactListenerWhirlpool::BeginContact(b2Contact* contact)
 {
+
 	Level5* layer = m_layer;
 	b2Fixture* fA = contact->GetFixtureA();
 	b2Fixture* fB = contact->GetFixtureB();
 
-	BasicLevelBodyUserData* budA = (BasicLevelBodyUserData*)fA->GetBody()->GetUserData();
-	BasicLevelBodyUserData* budB = (BasicLevelBodyUserData*)fB->GetBody()->GetUserData();
+	MyBodyUserData* budA = (MyBodyUserData*)fA->GetBody()->GetUserData();
+	MyBodyUserData* budB = (MyBodyUserData*)fB->GetBody()->GetUserData();
 
 	//isPlayerColideWithKey
 	if (budA && budA->bodyType == BodyType_KEY && budB && budB->bodyType == BodyType_Player)
@@ -102,8 +103,8 @@ void ContactListenerWhirlpool::EndContact(b2Contact* contact)
 	b2Fixture* fA = contact->GetFixtureA();
 	b2Fixture* fB = contact->GetFixtureB();
 
-	BasicLevelBodyUserData* budA = (BasicLevelBodyUserData*)fA->GetBody()->GetUserData();
-	BasicLevelBodyUserData* budB = (BasicLevelBodyUserData*)fB->GetBody()->GetUserData();
+	MyBodyUserData* budA = (MyBodyUserData*)fA->GetBody()->GetUserData();
+	MyBodyUserData* budB = (MyBodyUserData*)fB->GetBody()->GetUserData();
 
 	//isPlayerColideWithDoor
 	if (budA && budA->bodyType == BodyType_Door && fB == layer->m_player->m_footSensor)

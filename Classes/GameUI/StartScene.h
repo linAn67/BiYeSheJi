@@ -15,6 +15,8 @@ public:
 	void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 protected:
 private:
+	
+	cocos2d::ui::Button* startBtn;
 };
 #endif 
 

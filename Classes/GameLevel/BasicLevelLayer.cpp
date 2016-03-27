@@ -73,14 +73,10 @@ float BasicLevelLayer::initialWorldScale()
 
 void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 {
-	BasicLoadLayer::afterLoadProcessing(json);
 	loadGround(json);
 	loadEdge(json);
 	loadPlayer(json);
 	loadDoor(json);
-	//////////////////////////////////////////////////////////////////////////
-
-
 	loadChains(json);
 	loadKeys(json);
 	loadBalls(json);
@@ -91,7 +87,6 @@ void BasicLevelLayer::afterLoadProcessing(b2dJson* json)
 
 	addControllerLayer();
 	addContactListener();
-
 }
 
 void BasicLevelLayer::loadGround(b2dJson* json)
@@ -102,7 +97,7 @@ void BasicLevelLayer::loadGround(b2dJson* json)
 		json->getBodiesByName("ground", groundBodys);
 		for each (auto body in groundBodys)
 		{
-			BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+			MyBodyUserData* bud = new MyBodyUserData;
 			m_objectBodys.push_back(body);
 			body->SetUserData(bud);
 
@@ -117,7 +112,7 @@ void BasicLevelLayer::loadPlayer(b2dJson* json)
 	
 	b2Body* body = json->getBodyByName("player");
 	b2Fixture* foot= json->getFixtureByName("playerfoot");
-	BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+	MyBodyUserData* bud = new MyBodyUserData;
 	bud->body = body;
 	bud->bodyType = BodyType::BodyType_Player;
 	body->SetUserData(bud);
@@ -134,7 +129,7 @@ void BasicLevelLayer::loadBalls(b2dJson* json)
 		json->getBodiesByName("ball", ballBodys);
 		for each (auto body in ballBodys)
 		{
-			BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+			MyBodyUserData* bud = new MyBodyUserData;
 			m_objectBodys.push_back(body);
 			body->SetUserData(bud);
 
@@ -174,7 +169,7 @@ void BasicLevelLayer::loadKeys(b2dJson* json)
 		json->getBodiesByName("key", keyBodys);
 		for each (auto body in keyBodys)
 		{
-			BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+			MyBodyUserData* bud = new MyBodyUserData;
 			m_allKeys.insert(bud);
 			body->SetUserData(bud);
 
@@ -196,7 +191,7 @@ void BasicLevelLayer::loadEdge(b2dJson* json)
 		json->getBodiesByName("edge", edgeBodys);
 		for each (auto body in edgeBodys)
 		{
-			BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+			MyBodyUserData* bud = new MyBodyUserData;
 			m_objectBodys.push_back(body);
 			body->SetUserData(bud);
 			bud->bodyType = BodyType_Edge;
@@ -215,7 +210,7 @@ void BasicLevelLayer::loadDoor(b2dJson* json)
 	m_objectBodys.push_back(m_door);
 	m_isLocked = false;
 	//////////////////////////////////////////////////////////////////////////
-	BasicLevelBodyUserData* bud = new BasicLevelBodyUserData;
+	MyBodyUserData* bud = new MyBodyUserData;
 	bud->body = m_door;
 	bud->bodyType = BodyType::BodyType_Door;
 	m_door->SetUserData(bud);
@@ -246,7 +241,7 @@ void BasicLevelLayer::clear()
 {
 	BasicLoadLayer::clear();
 	m_objectBodys.clear();
-	for (std::set<BasicLevelBodyUserData*>::iterator it = m_allKeys.begin(); it != m_allKeys.end(); ++it)
+	for (std::set<MyBodyUserData*>::iterator it = m_allKeys.begin(); it != m_allKeys.end(); ++it)
 	{
 		delete *it;
 	}
@@ -312,25 +307,25 @@ void BasicLevelLayer::rotateAllObjectBodys()
 
 void BasicLevelLayer::rotateBodyAndChangeAngle(b2Body* body)
 {
-	Vec2 bodyPos = Vec2(body->GetPosition().x, body->GetPosition().y);
-	bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
 	float32 angle = CC_RADIANS_TO_DEGREES(body->GetAngle());
 	angle +=m_controllerLayer->m_rotateAngle - rotateAngle;
-	body->SetTransform(b2Vec2(bodyPos.x, bodyPos.y), CC_DEGREES_TO_RADIANS(angle));
+	body->SetTransform(rotateB2Vec(body->GetPosition()), CC_DEGREES_TO_RADIANS(angle));
+	if (!(body->GetLinearVelocity() == b2Vec2(0, 0)))
+	{
+		body->SetLinearVelocity(rotateB2Vec(body->GetLinearVelocity()));
+	}
 }
 
 void BasicLevelLayer::rotateBodyPosition(b2Body* body)
 {
-	Vec2 bodyPos = Vec2(body->GetPosition().x, body->GetPosition().y);
-	bodyPos = bodyPos.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));
-	body->SetTransform(b2Vec2(bodyPos.x, bodyPos.y), body->GetAngle());
+	body->SetTransform(rotateB2Vec(body->GetPosition()), body->GetAngle());
 	if (!(body->GetLinearVelocity()==b2Vec2(0,0)))
 	{
-		body->SetLinearVelocity(rotateBodyVelocity(body->GetLinearVelocity()));
+		body->SetLinearVelocity(rotateB2Vec(body->GetLinearVelocity()));
 	}
 }
 
-b2Vec2 BasicLevelLayer::rotateBodyVelocity(b2Vec2 velocity)
+b2Vec2 BasicLevelLayer::rotateB2Vec(b2Vec2 velocity)
 {
 	Vec2 v = Vec2(velocity.x, velocity.y);
 	v = v.rotateByAngle(Vec2(0, 0), CC_DEGREES_TO_RADIANS(m_controllerLayer->m_rotateAngle - rotateAngle));

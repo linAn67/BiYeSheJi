@@ -2,6 +2,8 @@
 #include "GameLevel/BasicLevelLayer.h"
 #include "GameScene/GameScene.h"
 #include "GameData/GameManager.h"
+#include "GameUI/ChoseLevelLayer.h"
+#include "GameUI/SettingLayer.h"
 USING_NS_CC;
 using namespace ui;
 
@@ -40,9 +42,7 @@ cocos2d::Scene* PausemenuLayer::createScene(cocos2d::RenderTexture* sqr)
 	spr->setPosition(ccp(568, 320));	//中心位置。
 	spr->setFlipY(true);			     //翻转，因为UI坐标和OpenGL坐标不同
 	spr->setColor(Color3B::GRAY);		 //图片颜色变灰色
-	scene->addChild(spr);
-
-
+	scene->addChild(spr, 0, 998);
 	return scene;
 }
 
@@ -50,8 +50,16 @@ void PausemenuLayer::replayBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget
 {
 	auto director = Director::getInstance();
 	auto curLevel = GameManager::getInstance()->curLevel;
-	auto scene = GameScene::createScene(curLevel);
-	director->replaceScene(scene);
+	Scene* scene;
+	switch (type)
+	{
+	case cocos2d::ui::Widget::TouchEventType::ENDED:
+		scene = GameScene::createScene(curLevel);
+		director->replaceScene(scene);
+		break;
+	default:
+		break;
+	}
 }
 
 void PausemenuLayer::continueBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
@@ -62,11 +70,42 @@ void PausemenuLayer::continueBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widg
 
 void PausemenuLayer::settingBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
-
+	bool isBtnPress;
+	switch (type)
+	{
+	case cocos2d::ui::Widget::TouchEventType::ENDED:
+		isBtnPress = true;
+		break;
+	default:
+		isBtnPress = false;
+		break;
+	}
+	if (isBtnPress)
+	{
+		auto director = Director::getInstance();
+		Sprite* sp = dynamic_cast<Sprite*>(this->getParent()->getChildByTag(998));
+		sp = Sprite::createWithTexture(sp->getTexture());
+		sp->setPosition(ccp(568, 320));	//中心位置。
+		sp->setFlipY(true);			     //翻转，因为UI坐标和OpenGL坐标不同
+		sp->setColor(Color3B::GRAY);		 //图片颜色变灰色
+		director->pushScene(SettingLayer::createScene(sp));
+	}
 }
 
 void PausemenuLayer::exitBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
-
+	auto director = Director::getInstance();
+	auto curLevel = GameManager::getInstance()->curLevel;
+	Scene* scene;
+	switch (type)
+	{
+	case cocos2d::ui::Widget::TouchEventType::ENDED:
+		
+		scene = ChoseLevelLayer::createScene();
+		director->replaceScene(scene);
+		break;
+	default:
+		break;
+	}
 }
 

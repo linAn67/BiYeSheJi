@@ -11,40 +11,23 @@
 #include "GameData/GameManager.h"
 #include "GameScene/GameScene.h"
 #include "Sprite/Player.h"
+#include "GameData/MyBodyUserData.h"
 //检查内存泄漏用
 /*#include <vld.h>*/
 
 class b2dJson;
 
-enum BodyType
-{
-	BodyType_KEY,
-	BodyType_FATALBALL,
-	BodyType_Door,
-	BodyType_Whirlpool,
-	BodyType_Ground,
-	BodyType_Edge,
-	BodyType_Player=99
-};
-
-struct BasicLevelBodyUserData
-{
-	BodyType bodyType;
-	b2Body* body;
-};
-
 class BasicLevelLayer:public BasicLoadLayer
 {
-protected:
+
 public: 
 	Player* m_player;
-	//b2Body* m_playerBody;						//存储主角的刚体用于移动
-	//b2Fixture* m_playerFootSensorFixture;		//碰撞检测当前踩的地方是什么
-	b2Body* m_door;								//通关的门
+	b2Body* m_door;
 	bool m_isPlayerCollideWithDoor;
 	int m_numFootContacts;
-												//由于cocos2dx封装的Vector仅支持继承自CCNode的类，所以这里用STL的Vector
-	std::vector<b2Body*> m_objectBodys;			//存储非场景刚体用于旋转操作
+
+	//存储非场景刚体用于旋转操作
+	std::vector<b2Body*> m_objectBodys;
 	//存储当前场景的旋转角度
 	CC_SYNTHESIZE(float, rotateAngle, RotateAngle);
 
@@ -52,9 +35,9 @@ public:
 	bool m_isLocked;
 
 	//存放所有钥匙的bud
-	std::set<BasicLevelBodyUserData*> m_allKeys;
+	std::set<MyBodyUserData*> m_allKeys;
 	//存放待删除的钥匙的bud
-	std::set<BasicLevelBodyUserData*> m_keyToProgress;
+	std::set<MyBodyUserData*> m_keyToProgress;
 
 
 	ControllerLayer* m_controllerLayer;
@@ -71,7 +54,7 @@ public:
 	void movePlayer();
 
 	void rotateBodyPosition(b2Body* body);
-	b2Vec2 rotateBodyVelocity(b2Vec2 velocity);
+	b2Vec2 rotateB2Vec(b2Vec2 velocity);
 
 	static cocos2d::Scene* createScene();
 

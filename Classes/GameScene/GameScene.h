@@ -7,6 +7,7 @@ class GameScene : public cocos2d::Scene
 {
 public:	
 	static cocos2d::Scene* createScene(int Level);
+	static void replaceScene(int Level);
 };
 
 #endif

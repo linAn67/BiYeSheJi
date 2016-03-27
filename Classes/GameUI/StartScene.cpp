@@ -1,12 +1,14 @@
 #include "GameUI/StartScene.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
-#include "GameLevel/Level1.h"
 #include "SimpleAudioEngine.h"
 #include "GameScene/GameScene.h"
+#include "GameUI/ChoseLevelLayer.h"
+#include "AudioEngine.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
+using namespace cocos2d::experimental;
 
 using namespace ui;
 
@@ -35,12 +37,17 @@ bool StartScene::init()
 	auto rootNode = CSLoader::createNode("startscene/StartScene.csb");
 	addChild(rootNode);
 
-	Button* startBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode,"StartBtn");
+	startBtn = (Button*)Helper::seekWidgetByName((Widget*)rootNode,"StartBtn");
 	startBtn->addTouchEventListener(CC_CALLBACK_2(StartScene::touchEvent, this));
 
 	// preload the sound effects
-	SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/Haggstrom.mp3");
-	SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+	//SimpleAudioEngine::getInstance()->playBackgroundMusic("sounds/Haggstrom.mp3");
+	//SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+
+	AudioProfile bgmProfile;
+	bgmProfile.name = "bgm";
+	int musicId = AudioEngine::play2d("sounds/Haggstrom.mp3", true, 1.0f, &bgmProfile);
+	
 	
 	return true;
 }
@@ -48,7 +55,7 @@ bool StartScene::init()
 void StartScene::touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
 	auto director = Director::getInstance();
-	auto scene = GameScene::createScene(1);
+	auto scene = ChoseLevelLayer::createScene();
 	scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
 	switch (type)
 	{

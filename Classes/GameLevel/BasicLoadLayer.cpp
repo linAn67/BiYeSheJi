@@ -87,25 +87,23 @@ void BasicLoadLayer::loadWorld()
     // and also whatever is done in the afterLoadProcessing method.
     clear();
     
-    // Get the name of the .json file to load, eg. "jointTypes.json"
+    // 获取待加载的json文件的文件名
     string filename = getFilename();
     
-    // Find out the absolute path for the file
+    // 找到文件的绝对路径
     string fullpath = CCFileUtils::getInstance()->fullPathForFilename(filename.c_str());
     
-    // This will print out the actual location on disk that the file is read from.
-    // When using the simulator, exporting your RUBE scene to this folder means
-    // you can edit the scene and reload it without needing to restart the app.
+    // 输出文件的实际位置
+    // 直接将场景发布到这个位置，然后不用重新编译即可载入场景
     CCLOG("Full path is: %s", fullpath.c_str());
     
-    // Create the world from the contents of the RUBE .json file. If something
-    // goes wrong, m_world will remain NULL and errMsg will contain some info
-    // about what happened.
+	//从json文件中创造world，如果出错，world将保持NULL，错误信息将会提示发生了什么事
     b2dJson json;
     std::string errMsg;
     std::string jsonContent = CCFileUtils::getInstance()->getStringFromFile(fullpath.c_str());
     m_world = json.readFromString(jsonContent, errMsg);
     
+	//如果世界创建成功，则进行图片的载入以及其他的需要初始化的东西
     if ( m_world ) {
         CCLOG("Loaded JSON ok");
 		loadImages(&json);
@@ -118,7 +116,9 @@ void BasicLoadLayer::loadWorld()
 void BasicLoadLayer::loadImages(b2dJson* json)
 {
 	vector<b2dJsonImage*> b2dImages;
+	//获取json文件中包含的图片信息放到vector中
 	json->getAllImages(b2dImages);
+	//通过遍历这些图片信息为之创造精灵，并且初始化各项属性
 	for each (auto img in b2dImages)
 	{
 		Sprite* sprite = Sprite::create(img->file.c_str());
@@ -189,33 +189,6 @@ void BasicLoadLayer::update(float dt)
 	setImagePositionsFromPhysicsBodies();
 }
 
-/*
-// Converts a position in screen pixels to a location in the physics world
-b2Vec2 BasicLoadLayer::screenToWorld(cocos2d::Point screenPos)
-{
-    screenPos.y = Director::getInstance()->getWinSize().height - screenPos.y;
-    
-    Vec2 layerOffset = getPosition();
-    screenPos.x -= layerOffset.x;
-    screenPos.y -= layerOffset.y;
-    
-    float layerScale = getScale();
-    
-    return b2Vec2(screenPos.x / layerScale, screenPos.y / layerScale);
-}*/
-
-
-/*
-// Converts a location in the physics world to a position in screen pixels
-cocos2d::Point BasicLoadLayer::worldToScreen(b2Vec2 worldPos)
-{
-    worldPos *= getScale();
-    Point layerOffset = getPosition();
-    Point p = Vec2(worldPos.x + layerOffset.x, worldPos.y + layerOffset.y);
-    p.y = Director::getInstance()->getWinSize().height - p.y;
-    return p;
-}*/
-
 void BasicLoadLayer::setImagePositionsFromPhysicsBodies()
 {
 	for each (auto imgInfo in m_imageInfos)
@@ -235,6 +208,7 @@ void BasicLoadLayer::setImagePositionsFromPhysicsBodies()
 		imgInfo->sprite->setPosition(pos);
 	}
 }
+
 
 void BasicLoadLayer::removeBodyFromWorld(b2Body* body)
 {
@@ -256,12 +230,14 @@ void BasicLoadLayer::removeBodyFromWorld(b2Body* body)
 	}
 }
 
+//将精灵从父节点中移除，同时也移除图片信息
 void BasicLoadLayer::removeImageFromWorld(ImageInfo* imgInfo)
 {
 	removeChild(imgInfo->sprite, true);
 	m_imageInfos.erase(imgInfo);
 }
 
+//遍历刚体获取对应的精灵
 cocos2d::Sprite* BasicLoadLayer::getAnySpriteOnBody(b2Body* body)
 {
 	for each (auto imgInfo in m_imageInfos)
@@ -272,6 +248,7 @@ cocos2d::Sprite* BasicLoadLayer::getAnySpriteOnBody(b2Body* body)
 	return nullptr;
 }
 
+//遍历图片名字获取对应的精灵
 cocos2d::Sprite* BasicLoadLayer::getSpriteWithImageName(std::string name)
 {
 	for each(auto imgInfo in m_imageInfos)

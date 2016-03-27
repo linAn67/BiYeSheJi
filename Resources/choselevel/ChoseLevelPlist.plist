@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>frames</key>
+		<dict>
+			<key>choselevel/level1.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1,643},{320,320}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{320,320}</string>
+			</dict>
+			<key>choselevel/level2.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1,1},{640,640}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{640,640}</string>
+			</dict>
+			<key>choselevel/level3.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1,965},{320,320}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{320,320}</string>
+			</dict>
+			<key>choselevel/level4.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1,1287},{320,320}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{320,320}</string>
+			</dict>
+			<key>choselevel/level5.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{1,1609},{320,320}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{320,320}</string>
+			</dict>
+			<key>choselevel/level6.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{323,643},{320,320}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{320,320}</string>
+			</dict>
+			<key>choselevel/level7.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{643,1},{320,320}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{320,320}</string>
+			</dict>
+			<key>choselevel/level8.png</key>
+			<dict>
+				<key>frame</key>
+				<string>{{323,965},{320,320}}</string>
+				<key>offset</key>
+				<string>{0,0}</string>
+				<key>rotated</key>
+				<false />
+				<key>sourceSize</key>
+				<string>{320,320}</string>
+			</dict>
+		</dict>
+		<key>metadata</key>
+		<dict>
+			<key>format</key>
+			<integer>2</integer>
+			<key>textureFileName</key>
+			<string>ChoseLevelPlist.png</string>
+			<key>realTextureFileName</key>
+			<string>ChoseLevelPlist.png</string>
+			<key>size</key>
+			<string>{1024,2048}</string>
+		</dict>
+		<key>texture</key>
+		<dict>
+			<key>width</key>
+			<integer>1024</integer>
+			<key>height</key>
+			<integer>2048</integer>
+		</dict>
+	</dict>
+</plist>
