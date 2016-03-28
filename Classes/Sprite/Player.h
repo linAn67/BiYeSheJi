@@ -14,10 +14,12 @@ public:
 	virtual void update(float delta);
 	void setSpritePositionFromPhysicsBody();
 	void move(PlayerMoveDirection dir);
+	b2Body* getBody();
 public:
+	b2Fixture* m_footSensor;
+private:
 	Sprite* m_sprite;
 	b2Body* m_body;
-	b2Fixture* m_footSensor;
 };
 
 #endif

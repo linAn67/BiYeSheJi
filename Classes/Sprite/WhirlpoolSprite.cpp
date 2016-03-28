@@ -60,10 +60,23 @@ void WhirlpoolSprite::setSpritePositionFromPhysicsBody()
 	if (m_body)
 	{
 		b2Vec2 bvec = m_body->GetPosition();
-
-
 		pos = Vec2(bvec.x, bvec.y);
 	}
 	this->setRotation(CC_RADIANS_TO_DEGREES(angle));
 	this->setPosition(pos);
+}
+
+b2Body* WhirlpoolSprite::getBody()
+{
+	return m_body;
+}
+
+cocos2d::Sprite* WhirlpoolSprite::getSprite()
+{
+	return m_sprite;
+}
+
+float WhirlpoolSprite::getGravity()
+{
+	return m_whirlpoolGravity;
 }

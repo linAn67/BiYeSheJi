@@ -74,7 +74,7 @@ void Level5::loadButton(b2dJson* json)
 		m_objectBodys.push_back(btnBaseBody);
 	}
 	m_button = ButtonSprite::create(btnBody, btnBaseBody, btnSensor, btnBaseSensor);
-	if (m_button!=nullptr)
+	if (m_button != nullptr)
 	{
 		addChild(m_button);
 	}
@@ -112,7 +112,7 @@ void Level5::addBodyUserDataInWhirlpool(MyBodyUserData* bud)
 
 void Level5::whirlpoolEffect()
 {
-	b2Body* whirlpoolBody = m_whirlpool->m_body;
+	b2Body* whirlpoolBody = m_whirlpool->getBody();
 	for each (auto bud in m_objsInWhirlpool)
 	{
 		if (bud&&bud->body)
@@ -120,9 +120,9 @@ void Level5::whirlpoolEffect()
 			b2Body* body = bud->body;
 			b2Vec2 force = whirlpoolBody->GetPosition() - body->GetPosition();
 			force.Normalize();
-			force *= m_whirlpool->m_whirlpoolGravity * body->GetMass();
+			force *= m_whirlpool->getGravity() * body->GetMass();
 			body->ApplyForce(force, body->GetPosition(), true);
-			body->SetLinearDamping(9);
+			body->SetLinearDamping(3);
 		}
 	}
 }

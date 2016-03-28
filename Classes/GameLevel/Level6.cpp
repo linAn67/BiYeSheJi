@@ -27,7 +27,7 @@ std::string Level6::getFilename()
 void Level6::afterLoadProcessing(b2dJson* json)
 {
 	Level5::afterLoadProcessing(json);
-	m_whirlpool->m_sprite->setScale(1.5);
+	m_whirlpool->getSprite()->setScale(1.5);
 	time = 0;
 }
 

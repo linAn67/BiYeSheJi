@@ -3,9 +3,11 @@
 
 void ContactListener::BeginContact(b2Contact* contact)
 {
-	BasicLevelLayer* layer = (BasicLevelLayer*)m_layer;
+	
 	b2Fixture* fA = contact->GetFixtureA();
 	b2Fixture* fB = contact->GetFixtureB();
+
+	
 
 	MyBodyUserData* budA = (MyBodyUserData*)fA->GetBody()->GetUserData();
 	MyBodyUserData* budB = (MyBodyUserData*)fB->GetBody()->GetUserData();
@@ -21,13 +23,13 @@ void ContactListener::BeginContact(b2Contact* contact)
 	}
 
 	//isPlayerColideWithDoor
-	if (fA->GetBody() == layer->m_door && fB == layer->m_player->m_footSensor)
+	if (fA->GetBody() == m_layer->m_door && fB == m_layer->m_player->m_footSensor)
 	{
-		layer->m_isPlayerCollideWithDoor = true;
+		m_layer->m_isPlayerCollideWithDoor = true;
 	}
-	if (fB->GetBody() == layer->m_door && fA == layer->m_player->m_footSensor)
+	if (fB->GetBody() == m_layer->m_door && fA == m_layer->m_player->m_footSensor)
 	{
-		layer->m_isPlayerCollideWithDoor = true;
+		m_layer->m_isPlayerCollideWithDoor = true;
 	}
 	
 
@@ -39,13 +41,13 @@ void ContactListener::BeginContact(b2Contact* contact)
 	
 
 	//判断玩家是否离开地面
-	if (fA == layer->m_player->m_footSensor && budB && budB->bodyType == BodyType_Ground)
+	if (fA == m_layer->m_player->m_footSensor && budB && budB->bodyType == BodyType_Ground)
 	{
-		layer->m_numFootContacts++;
+		m_layer->m_numFootContacts++;
 	}
-	if (fB == layer->m_player->m_footSensor && budA && budA->bodyType == BodyType_Ground)
+	if (fB == m_layer->m_player->m_footSensor && budA && budA->bodyType == BodyType_Ground)
 	{
-		layer->m_numFootContacts++;
+		m_layer->m_numFootContacts++;
 	}
 
 	//判断玩家是否接触到边界

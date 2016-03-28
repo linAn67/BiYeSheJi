@@ -11,8 +11,11 @@ public:
 	virtual bool init(b2Body* body, bool isOn);
 	static WhirlpoolSprite* create(b2Body* body, bool isOn);
 	virtual void update(float delta);
+	b2Body* getBody();
+	cocos2d::Sprite* getSprite();
+	float getGravity();
 	void setSpritePositionFromPhysicsBody();
-public:
+private:
 	cocos2d::Sprite* m_sprite;
 	b2Body* m_body;
 	float m_whirlpoolGravity;

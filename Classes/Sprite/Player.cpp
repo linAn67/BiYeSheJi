@@ -106,3 +106,8 @@ void Player::move(PlayerMoveDirection dir)
 	}
 	
 }
+
+b2Body* Player::getBody()
+{
+	return m_body;
+}

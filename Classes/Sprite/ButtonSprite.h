@@ -12,7 +12,6 @@ public:
 	virtual bool init(b2Body* btnBody,b2Body* btnBaseBody,b2Fixture* btnSensor, b2Fixture* btnBaseSensor);
 	static ButtonSprite* create(b2Body* btnBody, b2Body* btnBaseBody, b2Fixture* btnSensor, b2Fixture* btnBaseSensor);
 	virtual void update(float delta);
-	void keepBtnOff();
 	b2Fixture* getBtnSensor();
 	b2Fixture* getbtnBaseSensor();
 private:
@@ -20,7 +19,7 @@ private:
 	b2Fixture* m_btnBaseSensor;
 	b2Body* m_btn;
 	b2Body* m_btnBase;
-	
+	void keepBtnOff();
 
 };
 

@@ -1,6 +1,7 @@
 #include "GameUI/LoseLayer.h"
 #include "GameScene/GameScene.h"
 #include "GameData/GameManager.h"
+#include "ChoseLevelLayer.h"
 USING_NS_CC;
 using namespace ui;
 
@@ -47,6 +48,18 @@ void LoseLayer::replayBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::Tou
 
 void LoseLayer::exitBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type)
 {
+	auto director = Director::getInstance();
+	auto curLevel = GameManager::getInstance()->curLevel;
+	Scene* scene;
+	switch (type)
+	{
+	case cocos2d::ui::Widget::TouchEventType::ENDED:
 
+		scene = ChoseLevelLayer::createScene();
+		director->replaceScene(scene);
+		break;
+	default:
+		break;
+	}
 }
 

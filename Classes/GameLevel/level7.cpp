@@ -23,7 +23,7 @@ std::string Level7::getFilename()
 void Level7::afterLoadProcessing(b2dJson* json)
 {
 	Level5::afterLoadProcessing(json);
-	m_whirlpool->m_sprite->setScale(1.1);
+	m_whirlpool->getSprite()->setScale(1.1);
 
 }
 

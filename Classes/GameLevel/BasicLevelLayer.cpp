@@ -294,7 +294,8 @@ void BasicLevelLayer::movePlayer()
 
 void BasicLevelLayer::rotateAllObjectBodys()
 {
-	rotateBodyPosition(m_player->m_body);
+	rotateBodyPosition(m_player->getBody());
+	//遍历所有刚体，并旋转位置和角度
 	for each (auto body in m_objectBodys)
 	{
 		rotateBodyAndChangeAngle(body);
