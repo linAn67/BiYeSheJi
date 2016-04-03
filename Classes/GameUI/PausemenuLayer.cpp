@@ -36,8 +36,8 @@ cocos2d::Scene* PausemenuLayer::createScene(cocos2d::RenderTexture* sqr)
 	PausemenuLayer* mylayer = PausemenuLayer::create();
 	scene->addChild(mylayer, 10);
 	
-	//增加部分：使用Game界面中截图的sqr纹理图片创建Sprite
-	//并将Sprite添加到GamePause场景层中
+	//使用关卡界面中截图的sqr纹理图片创建Sprite
+	//并将Sprite添加到Pausemenu场景层中
 	CCSprite *spr = CCSprite::createWithTexture(sqr->getSprite()->getTexture());
 	spr->setPosition(ccp(568, 320));	//中心位置。
 	spr->setFlipY(true);			     //翻转，因为UI坐标和OpenGL坐标不同

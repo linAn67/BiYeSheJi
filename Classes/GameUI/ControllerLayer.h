@@ -7,7 +7,7 @@
 
 enum RotationDirection
 {
-	RD_CLOCKWISE,
+	RotDir_CLOCKWISE,
 	RD_ANTICLOCKWISE,
 	RD_NOTROTATING
 };
@@ -36,8 +36,6 @@ public:
 	virtual void update(float delta);
 protected:
 private:
-	
-
 	void moveToRightBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void moveToLeftBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 	void clockwiseBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);

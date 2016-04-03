@@ -48,7 +48,7 @@ cocos2d::Scene* GameScene::createScene(int Level)
 		break;
 	}
 
-	return scene;
+ 	return scene;
 }
 
 void GameScene::replaceScene(int Level)

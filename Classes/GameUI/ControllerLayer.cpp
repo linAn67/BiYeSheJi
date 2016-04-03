@@ -102,10 +102,10 @@ void ControllerLayer::clockwiseBtnCallBack(cocos2d::Ref* sender, cocos2d::ui::Wi
 	switch (type)
 	{
 	case cocos2d::ui::Widget::TouchEventType::BEGAN:
-		m_rotationDirection = RD_CLOCKWISE;
+		m_rotationDirection = RotDir_CLOCKWISE;
 		break;
 	case Widget::TouchEventType::MOVED:
-		m_rotationDirection = RD_CLOCKWISE;
+		m_rotationDirection = RotDir_CLOCKWISE;
 		break;
 	case Widget::TouchEventType::CANCELED:
 		m_rotationDirection = RD_NOTROTATING;
@@ -141,9 +141,17 @@ void ControllerLayer::antiClockwiseBtnCallBack(cocos2d::Ref* sender, cocos2d::ui
 
 void ControllerLayer::update(float delta)
 {
+	if (m_rotateAngle>360)
+	{
+		m_rotateAngle -= 360;
+	}
+	if (m_rotateAngle<-360)
+	{
+		m_rotateAngle += 360;
+	}
 	switch (m_rotationDirection)
 	{
-	case RD_CLOCKWISE:
+	case RotDir_CLOCKWISE:
 		m_rotateAngle -= rotateDegree;
 		break;
 	case RD_ANTICLOCKWISE:
@@ -164,7 +172,7 @@ void ControllerLayer::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, coco
 		m_rotationDirection = RD_ANTICLOCKWISE;
 		break;
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-		m_rotationDirection = RD_CLOCKWISE;
+		m_rotationDirection = RotDir_CLOCKWISE;
 		break;
 	case EventKeyboard::KeyCode::KEY_A:
 		m_playerMoveDirection = PLAYER_MOVETOLEFT;

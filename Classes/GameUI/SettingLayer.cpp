@@ -32,8 +32,7 @@ cocos2d::Scene* SettingLayer::createScene(cocos2d::Sprite* scrshot)
 	SettingLayer* mylayer = SettingLayer::create();
 	scene->addChild(mylayer, 10);
 	
-	//增加部分：使用Game界面中截图的sqr纹理图片创建Sprite
-	//并将Sprite添加到GamePause场景层中
+	//将截图添加到层中
 	mylayer->addChild(scrshot,-2);
 
 	return scene;
@@ -46,7 +45,6 @@ void SettingLayer::sliderEvent(Ref *pSender, Slider::EventType type)
 		Slider* slider = dynamic_cast<Slider*>(pSender);
 		int percent = slider->getPercent();
 		int maxPercent = slider->getMaxPercent();
-		//SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(percent / maxPercent);
 		AudioEngine::setVolume(0, (float)percent / (float)maxPercent);
 	}
 }

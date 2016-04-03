@@ -39,10 +39,6 @@ void ChoseLevelLayer::touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::Touc
 	ssize_t index = m_btns.getIndex((Button*)sender);
 	switch (type)
 	{
-	case cocos2d::ui::Widget::TouchEventType::BEGAN:
-		break;
-	case cocos2d::ui::Widget::TouchEventType::MOVED:
-		break;
 	case cocos2d::ui::Widget::TouchEventType::ENDED:
 		if (!m_locked)
 		{
@@ -50,8 +46,6 @@ void ChoseLevelLayer::touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::Touc
 			GameScene::replaceScene(index + 1);
 			m_locked = true;
 		}
-		break;
-	case cocos2d::ui::Widget::TouchEventType::CANCELED:
 		break;
 	default:
 		break;

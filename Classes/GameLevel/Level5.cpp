@@ -122,7 +122,7 @@ void Level5::whirlpoolEffect()
 			force.Normalize();
 			force *= m_whirlpool->getGravity() * body->GetMass();
 			body->ApplyForce(force, body->GetPosition(), true);
-			body->SetLinearDamping(3);
+			body->SetLinearDamping(4);
 		}
 	}
 }

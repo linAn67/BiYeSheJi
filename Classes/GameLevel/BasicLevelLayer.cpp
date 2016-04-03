@@ -338,10 +338,10 @@ void BasicLevelLayer::doPause()
 	//Node::pause();
 	auto director = Director::getInstance();
 
-	//创建CCRenderTexture，纹理画布大小为窗口大小(1136, 640)
+	//创建RenderTexture，纹理画布大小为窗口大小(1136, 640)
 	RenderTexture *renderTexture = RenderTexture::create(1136, 640);
 
-	//遍历Game类的所有子节点信息，画入renderTexture中。
+	//遍历所有子节点信息，画入renderTexture中。
 	//这里类似截图。
 	renderTexture->begin();
 	this->getParent()->visit();

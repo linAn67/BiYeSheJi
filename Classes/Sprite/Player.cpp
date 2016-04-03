@@ -19,6 +19,7 @@ bool Player::init(b2Body* body, b2Fixture* footSensor, cocos2d::Sprite* sprite)
 	}
 
 	m_body = body;
+	m_body->SetLinearDamping(1);
 	m_sprite = sprite;
 	m_footSensor = footSensor;
 	m_isFlipX = sprite->isFlipX();
@@ -79,32 +80,20 @@ void Player::move(PlayerMoveDirection dir)
 	switch (dir)
 	{
 	case PLAYER_MOVETOLEFT:
-		//m_body->SetTransform(m_body->GetPosition() - b2Vec2(0.025f, 0.0f), m_body->GetAngle());
-
 		force = b2Vec2(-1, 0);
-
-		//m_isFlipX = false;
 		break;
 	case PLAYER_MOVETORIGHT:
-		//m_body->SetTransform(m_body->GetPosition() + b2Vec2(0.025f, 0.0f), m_body->GetAngle());
-		
 		force = b2Vec2(1, 0);
-		//m_isFlipX = true;
-		break;
-	case PLAYER_NOTMOVING:
-		force = b2Vec2(0, 0);
 		break;
 	default:
 		force = b2Vec2(0, 0);
 		break;
 	}
-	
 	if (fabs(m_body->GetLinearVelocity().x)<MAX_VELOCITY)
 	{
 		force *= 10 * m_body->GetMass();
 		m_body->ApplyForce(force, m_body->GetPosition(), true);
 	}
-	
 }
 
 b2Body* Player::getBody()

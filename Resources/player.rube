@@ -73,7 +73,7 @@
         [
           
           {
-            "density" : 0.3971860706806183,
+            "density" : 1.050073385238648,
             "id" : 1,
             "name" : "fixture0",
             "shapes" : 
@@ -103,7 +103,7 @@
           },
           
           {
-            "density" : 5,
+            "density" : 13.21890926361084,
             "friction" : 0.2,
             "id" : 2,
             "name" : "playerfoot",
@@ -135,7 +135,7 @@
           },
           
           {
-            "density" : 0.3971860706806183,
+            "density" : 1.050073385238648,
             "friction" : 0.5,
             "id" : 4,
             "name" : "fixture1",
@@ -156,13 +156,13 @@
         ],
         "id" : 1,
         "linearVelocity" : 0,
-        "massData-I" : 0.01102049089968205,
+        "massData-I" : 0.02913577109575272,
         "massData-center" : 
         {
           "x" : -9.037215204443783e-005,
-          "y" : -0.2040160000324249
+          "y" : -0.2040159851312637
         },
-        "massData-mass" : 0.2647722065448761,
+        "massData-mass" : 0.7,
         "name" : "player",
         "position" : 0,
         "sleepingAllowed" : false,

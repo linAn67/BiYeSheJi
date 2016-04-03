@@ -18,7 +18,7 @@ bool WhirlpoolSprite::init(b2Body* body, bool isOn)
 	m_sprite = Sprite::create("basic-object/whirlpool.png");
 	m_sprite->setOpacity(125);
 	addChild(m_sprite);
-	m_whirlpoolGravity = 15;
+	m_whirlpoolGravity = 20;
 	return true;
 }
 
