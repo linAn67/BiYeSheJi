@@ -15,11 +15,6 @@ Scene* Level3::createScene()
 	return scene;
 }
 
-void Level3::clear()
-{
-	BasicLevelLayer::clear();
-}
-
 std::string Level3::getFilename()
 {
 	return "level3.json";

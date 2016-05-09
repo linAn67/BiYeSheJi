@@ -12,6 +12,7 @@
 
 USING_NS_CC;
 
+#define MAXLEVEL 8
 
 cocos2d::Scene* GameScene::createScene(int Level)
 {
@@ -44,7 +45,7 @@ cocos2d::Scene* GameScene::createScene(int Level)
 		scene = Level8::createScene();
 		break;
 	default:
-		CCLOG("error");
+		CCLOG("error in GameScene:createScene");
 		break;
 	}
 
@@ -57,4 +58,9 @@ void GameScene::replaceScene(int Level)
 	auto scene = GameScene::createScene(Level);
 	scene = TransitionFade::create(1.0f, scene, Color3B::BLACK);
 	director->replaceScene(scene);
+}
+
+cocos2d::Scene* GameScene::getNextLevel()
+{
+	return createScene(GameManager::getInstance()->curLevel + 1);
 }

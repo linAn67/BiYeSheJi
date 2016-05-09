@@ -10,9 +10,10 @@ public:
 	virtual void BeginContact(b2Contact* contact);      // called by Box2D during the Step function when two fixtures begin touching
 	virtual void EndContact(b2Contact* contact);        // called by Box2D during the Step function when two fixtures finish touching
 
-	bool isPlayerColideWithDoor(MyBodyUserData* budA, MyBodyUserData* budB);
+	bool isPlayerColideWithDoor(b2Fixture* fA, b2Fixture* fB);
 	bool isPlayerColideWithBall(MyBodyUserData* budA, MyBodyUserData* budB);
 	bool isPlayerColideWithEdge(MyBodyUserData* budA, MyBodyUserData* budB);
+	bool isPlayerLeaveGround(b2Fixture* fA, b2Fixture* fB);
 	class BasicLevelLayer* m_layer;
 };
 

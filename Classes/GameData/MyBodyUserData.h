@@ -11,7 +11,7 @@ enum BodyType
 	BodyType_Whirlpool,
 	BodyType_Ground,
 	BodyType_Edge,
-	BodyType_Player = 99
+	BodyType_Player
 };
 
 struct MyBodyUserData

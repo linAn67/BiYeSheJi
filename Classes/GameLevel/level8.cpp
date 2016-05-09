@@ -27,20 +27,6 @@ void Level8::afterLoadProcessing(b2dJson* json)
 
 }
 
-void Level8::update(float dt)
-{
-	Level5::update(dt);
-	m_whirlpool->m_isOn = !m_button->m_isOn;
-	if (m_whirlpool->m_isOn == false)
-	{
-		for each (auto bud in m_objsInWhirlpool)
-		{
-			bud->body->SetLinearDamping(0);
-		}
-		m_objsInWhirlpool.clear();
-	}
-}
-
 float Level8::initialWorldScale()
 {
 	Size s = Director::getInstance()->getWinSize();

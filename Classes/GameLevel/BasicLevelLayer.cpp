@@ -28,11 +28,11 @@ void BasicLevelLayer::win()
 {
 	if (!m_isLocked)
 	{
+		m_isLocked = true;
 		auto director = Director::getInstance();
-		auto scene = GameScene::createScene(GameManager::getInstance()->curLevel + 1);
+		auto scene = GameScene::getNextLevel();
 		scene = TransitionFade::create(1.0f, scene, Color3B::WHITE);
 		director->replaceScene(scene);
-		m_isLocked = true;
 	}
 }
 
@@ -106,6 +106,8 @@ void BasicLevelLayer::loadGround(b2dJson* json)
 		}
 	}
 }
+
+
 
 void BasicLevelLayer::loadPlayer(b2dJson* json)
 {
@@ -279,7 +281,7 @@ void BasicLevelLayer::update(float dt)
 		removeBodyFromWorld(bud->body);
 		m_allKeys.erase(bud);
 	}
-	//遍历完后要clear list
+	//遍历完后要clear
 	m_keyToProgress.clear();
 }
 
@@ -349,5 +351,27 @@ void BasicLevelLayer::doPause()
 
 	//将游戏界面暂停，压入场景堆栈。并切换到GamePause界面
 	director->pushScene(PausemenuLayer::createScene(renderTexture));
+}
+
+b2Fixture* BasicLevelLayer::getPlayerFootSensorFixture()
+{
+	return m_player->m_footSensor;
+}
+
+b2Body* BasicLevelLayer::getDoorBody()
+{
+	return m_door;
+}
+
+void BasicLevelLayer::addKeysBudToContainer(MyBodyUserData* bud)
+{
+	if (bud->bodyType==BodyType_KEY)
+	{
+		m_keyToProgress.insert(bud);
+	}
+	else
+	{
+		CCLOG("the bud is not a key's bud");
+	}
 }
 

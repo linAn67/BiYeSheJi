@@ -52,11 +52,6 @@ string BasicLoadLayer::getFilename()
 // Override this in subclasses to set the inital view position
 Point BasicLoadLayer::initialWorldOffset()
 {
-    // This function should return the location in pixels to place
-    // the (0,0) point of the physics world. The screen position
-    // will be relative to the bottom left corner of the screen.
-    
-    //place (0,0) of physics world at center of bottom edge of screen
     Size s = Director::getInstance()->getWinSize();
     return Vec2( s.width/2, 0 );
 }
@@ -65,26 +60,12 @@ Point BasicLoadLayer::initialWorldOffset()
 // Override this in subclasses to set the inital view scale
 float BasicLoadLayer::initialWorldScale()
 {
-    // This method should return the number of pixels for one physics unit.
-    // When creating the scene in RUBE I can see that the jointTypes scene
-    // is about 8 units high, so I want the height of the view to be about
-    // 10 units, which for iPhone in landscape (480x320) we would return 32.
-    // But for an iPad in landscape (1024x768) we would return 76.8, so to
-    // handle the general case, we can make the return value depend on the
-    // current screen height.
-    
     Size s = Director::getInstance()->getWinSize();
     return s.height / 10; //screen will be 10 physics units high
 }
 
-// Attempts to load the world from the .json file given by getFilename.
-// If successful, the method afterLoadProcessing will also be called,
-// to allow subclasses to do something extra while the b2dJson information
-// is still available.
 void BasicLoadLayer::loadWorld()
 {
-    // The clear method should undo anything that is done in this method,
-    // and also whatever is done in the afterLoadProcessing method.
     clear();
     
     // 获取待加载的json文件的文件名
@@ -154,17 +135,11 @@ void BasicLoadLayer::loadImages(b2dJson* json)
 	setImagePositionsFromPhysicsBodies();
 }
 
-
-// Override this in subclasses to do some extra processing (eg. acquire references
-// to named bodies, joints etc) after the world has been loaded, and while the b2dJson
-// information is still available.
 void BasicLoadLayer::afterLoadProcessing(b2dJson* json)
 {
     
 }
 
-// This method should undo anything that was done by the loadWorld and afterLoadProcessing
-// methods, and return to a state where loadWorld can safely be called again.
 void BasicLoadLayer::clear()
 {
 	for each (auto imgInfo in m_imageInfos)
@@ -179,7 +154,6 @@ void BasicLoadLayer::clear()
     }
 }
 
-// Standard Cocos2d method, just step the physics world with fixed time step length
 void BasicLoadLayer::update(float dt)
 {
 	if (m_world)
@@ -196,7 +170,7 @@ void BasicLoadLayer::setImagePositionsFromPhysicsBodies()
 		Vec2 pos = imgInfo->center;
 		float angle = -imgInfo->angle;
 		if (imgInfo->body) {
-			//need to rotate image local center by body angle
+			//根据刚体角度旋转图片的本地中心角度
 			b2Vec2 localPos(pos.x, pos.y);
 			b2Rot rot(imgInfo->body->GetAngle());
 			localPos = b2Mul(rot, localPos) + imgInfo->body->GetPosition();

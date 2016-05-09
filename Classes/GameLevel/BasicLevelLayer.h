@@ -69,6 +69,10 @@ public:
 	//box2d的碰撞检测
 	virtual void addContactListener();
 
+	b2Fixture* getPlayerFootSensorFixture();
+	b2Body* getDoorBody();
+	void addKeysBudToContainer(MyBodyUserData* bud);
+
 private:
 	//读取地面，设置其userdata，并其存入m_objectBodys
 	void loadGround(b2dJson* json);

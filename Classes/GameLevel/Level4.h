@@ -10,7 +10,6 @@ public:
 	virtual void afterLoadProcessing(b2dJson* json);
 	static cocos2d::Scene* createScene();
 
-	virtual void clear();
 };
 
 #endif
